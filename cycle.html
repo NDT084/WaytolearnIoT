@@ -2,22 +2,42 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Comprendre le cycle Fetch-Decode-Execute (FDE). Pipeline, latence, et optimisation des cycles d'horloge pour l'efficacité IoT.">
-    <meta name="theme-color" content="#0f172a">
-    <title>Cycle Instruction - WaytolearnIoT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Analyse détaillée du cycle d'instruction (Fetch-Decode-Execute) et de l'impact des sauts et des interruptions sur la latence dans les systèmes embarqués temps réel.">
+    <title>Cycle d'Instruction | WaytolearnIoT</title>
     
     <style>
-        /* ... Styles essentiels et de responsivité ... */
+        /* Styles CSS critiques pour le comportement du site (non gérés par Tailwind) */
         @layer base {
             :root{--bg:#f8fafc;--muted:#94a3b8;--accent:#10b981}
             html,body{height:100%}
             body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter, "Helvetica Neue", Arial; background:var(--bg); color:#0f172a; margin:0}
+            /* Style pour le lien de navigation actif */
             .nav-link.active { border-bottom: 3px solid #10b981; color: #10b981; font-weight: 700; }
         }
-        .nav-links-mobile { display: none; flex-direction: column; width: 100%; gap: 0.5rem; padding: 0.5rem 0; }
-        @media (min-width: 768px) { .nav-links-mobile { display: flex !important; flex-direction: row; } }
-        @media (max-width: 768px) { .min-h\[80vh\] { min-height: 60vh; } }
+        
+        /* Adaptation des styles pour la transition */
+        .nav-links-mobile { 
+            flex-direction: column; 
+            width: 100%; 
+            gap: 0.5rem; 
+            padding: 0.5rem 0; 
+        }
+        
+        @media (min-width: 768px) { 
+            .nav-links-mobile { 
+                display: flex !important; 
+                flex-direction: row; 
+                opacity: 1 !important; 
+            }
+            .nav-links-mobile.hidden {
+                display: flex !important; 
+            }
+        }
+        
+        /* Styles Responsifs... */
+        @media (max-width: 768px) { .text-6xl { font-size: 2.25rem; } }
+        @media (max-width: 480px) { .text-6xl { font-size: 1.75rem; } }
         #nav-toggle { background: transparent; border: 0; font-size: 1.25rem; }
     </style>
     
@@ -25,7 +45,6 @@
         tailwind.config = { theme: { extend: { colors: { slate: '#0f172a', emerald: '#10b981', amber: '#f59e0b', blue: '#3b82f6' } } } }
     </script>
     <script src="https://cdn.tailwindcss.com"></script> 
-    <script> function toggleNav() { const menu = document.getElementById('nav-menu'); menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex'; }</script>
 </head>
 <body class="bg-slate-50 text-slate-800">
     <nav role="navigation" class="sticky top-0 z-50 bg-white shadow-lg">
@@ -34,68 +53,130 @@
                 <div class="flex items-center py-2">
                     <a href="index.html" class="text-3xl font-extrabold text-slate-900 tracking-tight">Waytolearn<span class="text-emerald-600">IoT</span></a>
                 </div>
-                <button id="nav-toggle" aria-label="Ouvrir le menu" onclick="toggleNav()" class="md:hidden">☰</button>
-                <div id="nav-menu" class="nav-links-mobile md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 bg-white md:bg-transparent shadow-xl md:shadow-none p-4 md:p-0">
-                    <a href="index.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Accueil</a>
-                    <a href="architecture.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Architecture CPU</a>
-                    <a href="cycle.html" class="nav-link active inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Cycle Instruction</a>
-                    <a href="memory.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Gestion Mémoire</a>
-                    <a href="communication.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">🌐 Communication</a>
-                    <a href="rtos.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">⏱️ RTOS</a>
-                    <a href="ressources.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">📂 Ressources</a>
-                </div>
+                <button id="nav-toggle" aria-label="Ouvrir le menu" class="md:hidden" aria-expanded="false">☰</button>
+                
+              <div id="nav-menu" 
+    class="nav-links-mobile md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 bg-white md:bg-transparent shadow-xl md:shadow-none p-4 md:p-0
+           hidden opacity-0 md:opacity-100 transition-all duration-200 ease-in-out">
+    
+    <a href="index.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Accueil</a>
+    <a href="architecture.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Architecture CPU</a>
+    <a href="cycle.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Cycle Instruction</a>
+    <a href="memory.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Gestion Mémoire</a>
+    <a href="communication.html" class="nav-link inline-flex items-items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Communication</a>
+    <a href="rtos.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">RTOS</a>
+    <a href="ressources.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Ressources</a>
+</div>
             </div>
         </div>
     </nav>
 
     <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 min-h-[80vh]">
 
-        <section id="cycle">
-            <div class="text-center mb-10">
-                <h2 class="text-4xl font-extrabold tracking-tight text-slate-900">⚡ Cycle d'Instruction : Le Cœur de la Performance</h2>
-                <p class="mt-3 max-w-3xl mx-auto text-lg text-slate-500">
-                    Le cycle Fetch-Decode-Execute (FDE) est la séquence fondamentale qui dicte la vitesse d'exécution de votre code. 
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-2">
+                Le Cycle d'Instruction et le Temps Réel
+            </h1>
+            <p class="text-xl text-slate-600">Comment le CPU exécute une instruction et pourquoi la prévisibilité est vitale dans l'IoT.</p>
+        </header>
 
-[Image of Fetch-Decode-Execute Cycle Diagram]
- Chaque instruction passe par ces trois étapes.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="bg-amber-50 p-6 rounded-xl border-l-4 border-amber-600">
-                    <h3 class="font-bold text-amber-900 text-2xl mb-2">1. Fetch (Recherche)</h3>
-                    <p class="text-sm text-slate-700">Le Compteur Ordinal (PC) pointe vers la FLASH. L'instruction est lue et chargée dans le Registre d'Instruction (IR). C'est souvent l'étape la plus coûteuse en énergie et en temps.</p>
-                </div>
-                <div class="bg-emerald-50 p-6 rounded-xl border-l-4 border-emerald-600">
-                    <h3 class="font-bold text-emerald-900 text-2xl mb-2">2. Decode (Décodage)</h3>
-                    <p class="text-sm text-slate-700">L'Unité de Contrôle (UC) interprète l'Opcode (le type d'instruction) et prépare l'UAL et les Registres pour les opérations à venir. Le PC est incrémenté.</p>
-                </div>
-                <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600">
-                    <h3 class="font-bold text-blue-900 text-2xl mb-2">3. Execute (Exécution)</h3>
-                    <p class="text-sm text-slate-700">L'UAL effectue l'opération. Les données sont traitées (calcul, logique) et le résultat est stocké dans un registre ou renvoyé en mémoire (Store).</p>
-                </div>
-            </div>
-
-            <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mt-12">
-                <h3 class="text-2xl font-bold text-slate-900 mb-4">🚀 Optimisation : Pipeline et MIPS</h3>
-                <p class="text-slate-700 mb-4">Pour les microcontrôleurs comme le Cortex-M, le **Pipeline** est crucial. Il permet d'avoir 3 étapes du cycle FDE en cours simultanément (une instruction est recherchée, une autre est décodée, et une troisième est exécutée).</p>
-
-                <div class="bg-slate-100 p-4 rounded text-sm text-slate-700 mb-4">
-                    **Performance (IoT) : MIPS (Millions d'Instructions par Seconde)**
-                    $$MIPS \approx \frac{Fréquence (MHz)}{CPI}$$
-                    (CPI = Cycles par Instruction, idéalement 1 pour un RISC pur. ARM Cortex-M atteint souvent 1.2-1.5 CPI.)
-                </div>
+        <section class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12">
+            <h2 class="text-3xl font-bold text-emerald-600 mb-6 border-b pb-2">1. Les Étapes du Cycle Fondamental (F-D-E)</h2>
+            
+            <p class="text-slate-700 mb-4">
+                Chaque instruction exécutée par le CPU suit un cycle bien défini, appelé cycle Fetch-Decode-Execute. Dans un système embarqué, la rapidité et la constance de ce cycle sont cruciales pour garantir les contraintes de temps réel.
                 
-                <h4 class="font-bold text-slate-900 mt-6">Latence et Temps Réel</h4>
-                <p class="text-sm text-slate-700">En IoT, la **latence** (délai entre un événement et la réponse) est critique. Un pipeline peut être rapide, mais il augmente la latence lors d'un changement de flux (saut, interruption). Les architectures RISC (comme ARM) sont préférées car leur pipeline plus court minimise le temps de 'purge' (flush) du pipeline lors d'une interruption, garantissant un comportement plus **déterministe**.</p>
+
+[Image of Fetch-Decode-Execute cycle diagram]
+
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-600 shadow-sm">
+                    <h3 class="text-xl font-semibold text-blue-900 mb-2">1. Fetch (Recherche) 📥</h3>
+                    <p class="text-sm text-slate-700">Le CPU récupère l'instruction à l'adresse indiquée par le Program Counter (PC) dans la mémoire (Flash ou RAM).</p>
+                </div>
+                <div class="p-4 bg-amber-50 rounded-lg border-l-4 border-amber-600 shadow-sm">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-2">2. Decode (Décodage) ⚙️</h3>
+                    <p class="text-sm text-slate-700">L'unité de contrôle (CU) interprète l'instruction (ADD, MOV, JUMP, etc.) et détermine les données et les adresses nécessaires.</p>
+                </div>
+                <div class="p-4 bg-emerald-50 rounded-lg border-l-4 border-emerald-600 shadow-sm">
+                    <h3 class="text-xl font-semibold text-emerald-900 mb-2">3. Execute (Exécution) ⚡</h3>
+                    <p class="text-sm text-slate-700">L'unité arithmétique et logique (ALU) effectue l'opération, écrit le résultat dans un registre ou en mémoire, et le PC est mis à jour.</p>
+                </div>
             </div>
         </section>
 
+        <section class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12">
+            <h2 class="text-3xl font-bold text-emerald-600 mb-6 border-b pb-2">2. Impact des Sauts et Interruptions</h2>
+            
+            <p class="text-slate-700 mb-4">
+                Le flux d'instructions n'est pas toujours linéaire. Les **sauts conditionnels** (boucles, `if/else`) et, plus important encore, les **interruptions** peuvent casser le pipeline et introduire des latences. Dans l'IoT, cette latence doit être minimisée pour respecter le temps réel.
+            </p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
+                <div>
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-4 flex items-center">
+                        <span class="text-3xl mr-3 text-red-500" role="img" aria-label="Explosion">💥</span> Les Sauts et le Pipeline
+                    </h3>
+                    <p class="text-slate-700 mb-4">
+                        Lorsqu'un saut se produit, toutes les instructions qui avaient été pré-chargées dans le pipeline (étapes Fetch et Decode) deviennent invalides et doivent être purgées. C'est ce qu'on appelle une **Stalle** ou une **Bulle de Pipeline**, ce qui gaspille des cycles d'horloge.
+                        
+                    </p>
+                    <div class="bg-red-50 p-4 rounded-lg text-sm text-red-800 border-l-4 border-red-600">
+                        <span class="font-bold">Défi Temps Réel :</span> L'incertitude du temps de stalle rend difficile de garantir une réponse dans un délai fixe (déterminisme).
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-4 flex items-center">
+                        <span class="text-3xl mr-3 text-blue-500" role="img" aria-label="Notification">🔔</span> Gestion des Interruptions (ISR)
+                    </h3>
+                    <p class="text-slate-700 mb-4">
+                        Une interruption (ex: réception d'un paquet WiFi) suspend l'exécution du programme principal pour passer à l'**Interrupt Service Routine (ISR)**. Le temps entre la demande d'interruption et le début de l'exécution de l'ISR est la **latence d'interruption**.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-700 text-sm bg-blue-50 p-4 rounded-lg">
+                        <li>**Sauvegarde/Restauration :** Sauver les registres et restaurer l'état du CPU après l'ISR ajoute des cycles.</li>
+                        <li>**Vecteur d'Interruption :** Le CPU saute directement à l'adresse de l'ISR (un type de saut critique).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="p-8 bg-emerald-50 rounded-xl shadow-xl border-t-4 border-emerald-600">
+            <h2 class="text-3xl font-bold text-emerald-900 mb-6">3. Optimisation pour le Déterminisme</h2>
+            
+            <p class="text-slate-700 mb-4">
+                Pour assurer le déterminisme (réponse garantie dans un temps maximal), les développeurs IoT utilisent des techniques spécifiques :
+            </p>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-5 rounded-lg shadow">
+                    <h4 class="font-bold text-emerald-700">Minimiser les ISR</h4>
+                    <p class="text-sm text-slate-600 mt-1">Garder les routines d'interruption (ISR) extrêmement courtes pour réduire le temps de blocage.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow">
+                    <h4 class="font-bold text-emerald-700">Boucles Sans Saut</h4>
+                    <p class="text-sm text-slate-600 mt-1">Utiliser des boucles simples ou des méthodes sans branchement complexes pour éviter les stalles de pipeline.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow">
+                    <h4 class="font-bold text-emerald-700">Compteurs de Cycles</h4>
+                    <p class="text-sm text-slate-600 mt-1">Utiliser les registres de compteurs de cycles matériels (si disponibles) pour mesurer précisément la latence réelle.</p>
+                </div>
+            </div>
+            
+            <a href="memory.html" class="mt-8 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition duration-300 transform hover:scale-105 inline-block">
+                Continuer vers la Gestion Mémoire ➔
+            </a>
+        </section>
+
     </main>
+
     <footer class="bg-slate-900 text-white mt-16 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
             <p>&copy; 2025 WaytolearnIoT. Plateforme éducative pour Systèmes Embarqués.</p>
         </div>
     </footer>
+    
+    <script src="main.js" defer></script>
 </body>
 </html>
