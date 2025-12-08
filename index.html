@@ -8,38 +8,21 @@
     <title>WaytolearnIoT : Devenez Expert en Systèmes Embarqués</title>
     
     <style>
-        /* Styles CSS critiques pour le comportement du site (non gérés par Tailwind) */
         @layer base {
             :root{--bg:#f8fafc;--muted:#94a3b8;--accent:#10b981}
             html,body{height:100%}
             body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter, "Helvetica Neue", Arial; background:var(--bg); color:#0f172a; margin:0}
-            /* Style pour le lien de navigation actif */
-            .nav-link.active { border-bottom: 3px solid #10b981; color: #10b981; font-weight: 700; }
-        }
-        
-        /* * MISE À JOUR CRITIQUE POUR L'ANIMATION et le menu mobile *
-          * La structure Flexbox est gérée par les classes Tailwind maintenant.
-          */
-        .nav-links-mobile { 
-            flex-direction: column; 
-            width: 100%; 
-            /* p-6 et space-y-4 gèrent l'espacement */
-        }
-        
-        @media (min-width: 768px) { 
-            /* En desktop, on assure que le menu est toujours affiché en ligne */
-            .nav-links-mobile { 
-                display: flex !important; 
-                flex-direction: row; 
-                opacity: 1 !important; /* Pleine opacité */
-            }
-            .nav-links-mobile.hidden {
-                /* Évite que 'hidden' masque le menu en desktop par accident */
-                display: flex !important; 
+            /* Style pour le lien de navigation actif - Correction de l'alignement vertical par marge négative */
+            .nav-link.active { 
+                border-bottom: 3px solid #10b981; 
+                color: #10b981; 
+                font-weight: 700;
+                /* Compenser la hauteur de la bordure */
+                margin-bottom: -3px; 
             }
         }
         
-        /* Styles adaptatifs et bouton */
+        /* Styles Responsive */
         @media (max-width: 768px) {
             .text-6xl { font-size: 2.25rem; }
             .lg\:grid-cols-2 > div:first-child { order: 2; }
@@ -51,7 +34,6 @@
     </style>
     
     <script>
-        // Configuration essentielle pour que vos couleurs personnalisées fonctionnent (slate, emerald, amber, blue)
         tailwind.config = { theme: { extend: { colors: { slate: '#0f172a', emerald: '#10b981', amber: '#f59e0b', blue: '#3b82f6' } } } }
     </script>
     <script src="https://cdn.tailwindcss.com"></script> 
@@ -66,24 +48,24 @@
                 <button id="nav-toggle" aria-label="Ouvrir le menu" class="md:hidden" aria-expanded="false">☰</button>
                 
                 <div id="nav-menu" 
-                    class="nav-links-mobile md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 w-full bg-white md:bg-transparent shadow-xl md:shadow-none p-6 md:p-0
-                    hidden opacity-0 md:opacity-100 transition-all duration-200 ease-in-out flex-col items-start space-y-4">
+                    class="md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 w-full bg-white md:bg-transparent shadow-xl md:shadow-none p-6 md:p-0
+                    hidden opacity-0 md:opacity-100 transition-all duration-200 ease-in-out flex-col md:flex-row"> 
             
-                    <a href="index.html" class="nav-link active block w-full px-1 pt-1 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Accueil</a>
-                    <a href="architecture.html" class="nav-link block w-full px-1 pt-1 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Architecture CPU</a>
-                    <a href="cycle.html" class="nav-link block w-full px-1 pt-1 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Cycle Instruction</a>
-                    <a href="memory.html" class="nav-link block w-full px-1 pt-1 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Gestion Mémoire</a>
-                    <a href="communication.html" class="nav-link block w-full px-1 pt-1 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Communication</a>
-                    <a href="rtos.html" class="nav-link block w-full px-1 pt-1 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">RTOS</a>
-                    <a href="ressources.html" class="nav-link block w-full px-1 pt-1 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Ressources</a>
+                    <a href="index.html" class="nav-link active w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Accueil</a>
+                    <a href="architecture.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Architecture CPU</a>
+                    <a href="cycle.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Cycle Instruction</a>
+                    <a href="memory.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Gestion Mémoire</a>
+                    <a href="communication.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Communication</a>
+                    <a href="rtos.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">RTOS</a>
+                    <a href="ressources.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Ressources</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 min-h-[80vh]">
+    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-        <section id="accueil">
+        <section id="accueil" class="min-h-[80vh]">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="grid grid-cols-2 gap-6 p-6 bg-white rounded-xl shadow-xl">
                     
@@ -121,6 +103,9 @@
             
             <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mt-12">
                 <h3 class="text-2xl font-bold text-slate-900 mb-4">📚 Fondamentaux : Architectures Microprocesseurs</h3>
+                
+                
+
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     
                     <div class="bg-amber-50 p-6 rounded-lg border-l-4 border-amber-600 transition duration-300 hover:shadow-xl hover:scale-[1.02]">
@@ -144,6 +129,65 @@
                             <li>**Avantage :** Open standard, licence gratuite, flexible</li>
                         </ul>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="intro-rtos" class="py-16">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-6 border-b-4 border-emerald-300 inline-block pb-1">Systèmes d'exploitation Temps Réel (RTOS)</h2>
+            <p class="text-lg text-slate-700 mb-8">
+                Dans l'IoT, le temps de réponse n'est pas une option, c'est une nécessité. Un RTOS garantit que les tâches critiques (comme la lecture d'un capteur ou le déclenchement d'un actionneur) s'exécutent avec une prévisibilité temporelle garantie.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-amber-200">
+                    <span class="text-5xl text-amber-600" role="img" aria-label="Microchip">💡</span>
+                    <h3 class="font-bold text-slate-800 mt-4 text-xl">Priorité Déterministe</h3>
+                    <p class="text-sm text-slate-600 mt-2">Les tâches sont exécutées en fonction de leur criticité, jamais en retard.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-amber-200">
+                    <span class="text-5xl text-amber-600" role="img" aria-label="List">📜</span>
+                    <h3 class="font-bold text-slate-800 mt-4 text-xl">Gestion des Tâches</h3>
+                    <p class="text-sm text-slate-600 mt-2">Allocation efficace des ressources CPU et basculement rapide (Context Switching).</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-amber-200">
+                    <span class="text-5xl text-amber-600" role="img" aria-label="Lock">🔒</span>
+                    <h3 class="font-bold text-slate-800 mt-4 text-xl">Synchronisation</h3>
+                    <p class="text-sm text-slate-600 mt-2">Utilisation de sémaphores et de mutex pour prévenir les conditions de course (Race Conditions).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="communication-iot" class="py-16 bg-white rounded-xl shadow-xl p-8">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-6 border-b-4 border-emerald-300 inline-block pb-1">Les Protocoles de Communication</h2>
+            <p class="text-lg text-slate-700 mb-8">
+                L'Internet des Objets repose sur des protocoles légers et efficaces. Maîtriser MQTT et CoAP est essentiel pour l'échange de données dans des environnements à bande passante limitée.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-6 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                    <h3 class="font-bold text-blue-900 text-xl mb-2">MQTT (Message Queuing Telemetry Transport)</h3>
+                    <p class="text-sm text-slate-700">Protocole Publisher/Subscriber, idéal pour les communications unidirectionnelles fiables. Fonctionne sur TCP/IP.
+                    
+                    </p>
+                    <ul class="list-disc list-inside mt-3 text-sm text-slate-600 space-y-1">
+                        <li>**Avantages :** Très faible surcharge (overhead), qualité de service (QoS) gérée.</li>
+                        <li>**Utilisation :** Télémétrie, notification, cloud IoT (AWS IoT, Azure IoT Hub).</li>
+                    </ul>
+                </div>
+                
+                <div class="p-6 bg-emerald-50 rounded-lg border-l-4 border-emerald-500">
+                    <h3 class="font-bold text-emerald-900 text-xl mb-2">CoAP (Constrained Application Protocol)</h3>
+                    <p class="text-sm text-slate-700">Protocole Web Restful pour les périphériques contraints. Fonctionne sur UDP pour une faible latence.
+                    
+                    </p>
+                    <ul class="list-disc list-inside mt-3 text-sm text-slate-600 space-y-1">
+                        <li>**Avantages :** Modèle Requête/Réponse, faible consommation d'énergie, s'intègre au Web.</li>
+                        <li>**Utilisation :** Domotique (Home Automation), communications locales entre appareils.</li>
+                    </ul>
                 </div>
             </div>
         </section>
