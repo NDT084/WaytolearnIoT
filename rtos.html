@@ -2,22 +2,42 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Les concepts de RTOS (Real-Time Operating Systems) pour l'IoT : FreeRTOS, Zephyr, tâches, sémaphores, mutex. Gestion du temps et des priorités.">
-    <meta name="theme-color" content="#0f172a">
-    <title>RTOS (Temps Réel) - WaytolearnIoT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Introduction aux RTOS (FreeRTOS, Zephyr) pour l'IoT. Comprendre les tâches, la commutation de contexte, les ordonnanceurs (scheduling) et la communication inter-tâches (IPC).">
+    <title>RTOS pour l'IoT | WaytolearnIoT</title>
     
     <style>
-        /* ... Styles essentiels et de responsivité ... */
+        /* Styles CSS critiques pour le comportement du site (non gérés par Tailwind) */
         @layer base {
             :root{--bg:#f8fafc;--muted:#94a3b8;--accent:#10b981}
             html,body{height:100%}
             body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter, "Helvetica Neue", Arial; background:var(--bg); color:#0f172a; margin:0}
+            /* Style pour le lien de navigation actif */
             .nav-link.active { border-bottom: 3px solid #10b981; color: #10b981; font-weight: 700; }
         }
-        .nav-links-mobile { display: none; flex-direction: column; width: 100%; gap: 0.5rem; padding: 0.5rem 0; }
-        @media (min-width: 768px) { .nav-links-mobile { display: flex !important; flex-direction: row; } }
-        @media (max-width: 768px) { .min-h\[80vh\] { min-height: 60vh; } }
+        
+        /* Adaptation des styles pour la transition */
+        .nav-links-mobile { 
+            flex-direction: column; 
+            width: 100%; 
+            gap: 0.5rem; 
+            padding: 0.5rem 0; 
+        }
+        
+        @media (min-width: 768px) { 
+            .nav-links-mobile { 
+                display: flex !important; 
+                flex-direction: row; 
+                opacity: 1 !important; 
+            }
+            .nav-links-mobile.hidden {
+                display: flex !important; 
+            }
+        }
+        
+        /* Styles Responsifs... */
+        @media (max-width: 768px) { .text-6xl { font-size: 2.25rem; } }
+        @media (max-width: 480px) { .text-6xl { font-size: 1.75rem; } }
         #nav-toggle { background: transparent; border: 0; font-size: 1.25rem; }
     </style>
     
@@ -25,7 +45,6 @@
         tailwind.config = { theme: { extend: { colors: { slate: '#0f172a', emerald: '#10b981', amber: '#f59e0b', blue: '#3b82f6' } } } }
     </script>
     <script src="https://cdn.tailwindcss.com"></script> 
-    <script> function toggleNav() { const menu = document.getElementById('nav-menu'); menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex'; }</script>
 </head>
 <body class="bg-slate-50 text-slate-800">
     <nav role="navigation" class="sticky top-0 z-50 bg-white shadow-lg">
@@ -34,65 +53,130 @@
                 <div class="flex items-center py-2">
                     <a href="index.html" class="text-3xl font-extrabold text-slate-900 tracking-tight">Waytolearn<span class="text-emerald-600">IoT</span></a>
                 </div>
-                <button id="nav-toggle" aria-label="Ouvrir le menu" onclick="toggleNav()" class="md:hidden">☰</button>
-                <div id="nav-menu" class="nav-links-mobile md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 bg-white md:bg-transparent shadow-xl md:shadow-none p-4 md:p-0">
-                    <a href="index.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Accueil</a>
-                    <a href="architecture.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Architecture CPU</a>
-                    <a href="cycle.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Cycle Instruction</a>
-                    <a href="memory.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Gestion Mémoire</a>
-                    <a href="communication.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">🌐 Communication</a>
-                    <a href="rtos.html" class="nav-link active inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">⏱️ RTOS</a>
-                    <a href="ressources.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">📂 Ressources</a>
-                </div>
+                <button id="nav-toggle" aria-label="Ouvrir le menu" class="md:hidden" aria-expanded="false">☰</button>
+                
+                <div id="nav-menu" 
+    class="nav-links-mobile md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 bg-white md:bg-transparent shadow-xl md:shadow-none p-4 md:p-0
+           hidden opacity-0 md:opacity-100 transition-all duration-200 ease-in-out">
+    
+    <a href="index.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Accueil</a>
+    <a href="architecture.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Architecture CPU</a>
+    <a href="cycle.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Cycle Instruction</a>
+    <a href="memory.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Gestion Mémoire</a>
+    <a href="communication.html" class="nav-link inline-flex items-items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Communication</a>
+    <a href="rtos.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">RTOS</a>
+    <a href="ressources.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Ressources</a>
+</div>
             </div>
         </div>
     </nav>
 
     <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 min-h-[80vh]">
 
-        <section id="rtos">
-            <div class="text-center mb-10">
-                <h2 class="text-4xl font-extrabold tracking-tight text-slate-900">⏱️ Systèmes d'Exploitation Temps Réel (RTOS)</h2>
-                <p class="mt-3 max-w-3xl mx-auto text-lg text-slate-500">
-                    Un RTOS permet de diviser le programme en tâches indépendantes et garantit que les opérations critiques se déroulent dans des délais stricts (déterminisme). 
-                </p>
-            </div>
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-2">
+                RTOS : Systèmes d'exploitation temps réel
+            </h1>
+            <p class="text-xl text-slate-600">Garantir le déterminisme et la concurrence pour les applications IoT complexes.</p>
+        </header>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
-                    <h3 class="text-xl font-bold text-slate-900 mb-4">Concepts Clés d'un RTOS (FreeRTOS)</h3>
-                    <ul class="list-disc list-inside text-slate-700 space-y-3 ml-4">
-                        <li>**Tâches (Tasks) :** Fonctions qui s'exécutent de manière indépendante. Chaque tâche a sa propre pile (Stack) et sa propre priorité.</li>
-                        <li>**Planificateur (Scheduler) :** Le cœur du RTOS. Il décide quelle tâche s'exécute à quel moment en fonction des priorités et des événements (préemption).</li>
-                        <li>**Commutation de Contexte :** Le processus de sauvegarde de l'état d'une tâche (registres CPU) pour en charger une autre. Doit être extrêmement rapide.</li>
-                    </ul>
+        <section class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12">
+            <h2 class="text-3xl font-bold text-emerald-600 mb-6 border-b pb-2">1. Fondamentaux : Tâches et Commutation de Contexte</h2>
+            
+            <p class="text-slate-700 mb-4">
+                Un RTOS (Real-Time Operating System) est un noyau léger qui permet de diviser un programme unique en plusieurs entités indépendantes appelées **tâches** ou *threads*. Cela permet une meilleure organisation du code et garantit la gestion des priorités.
+                
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-600 shadow-sm">
+                    <h3 class="text-xl font-semibold text-blue-900 mb-2">Cycle de Vie d'une Tâche 🔄</h3>
+                    <p class="text-sm text-slate-700">
+                        Chaque tâche passe par des états (Running, Ready, Blocked). L'ordonnanceur (Scheduler) décide quelle tâche passe à l'état *Running*.
+                        
+                    </p>
                 </div>
-
-                <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
-                    <h3 class="text-xl font-bold text-slate-900 mb-4">Mécanismes de Synchronisation (IPC)</h3>
-                    <p class="text-slate-700 mb-2">Pour que les tâches travaillent ensemble sans corrompre les données :</p>
-                    <ul class="list-disc list-inside text-slate-700 space-y-3 ml-4">
-                        <li>**Sémaphores :** Utilisés pour signaler des événements (ex: une donnée est prête). Permet la synchronisation des tâches.</li>
-                        <li>**Mutex :** Utilisés pour protéger l'accès aux ressources partagées (Shared Resources), assurant qu'une seule tâche peut modifier une variable critique à la fois.</li>
-                        <li>**Queues (Files d'attente) :** Mécanisme de communication inter-tâches (Inter-Task Communication - IPC) pour envoyer des messages ou des données de manière asynchrone.</li>
-                    </ul>
+                <div class="p-4 bg-amber-50 rounded-lg border-l-4 border-amber-600 shadow-sm">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-2">Commutation de Contexte (Context Switching) ⏱️</h3>
+                    <p class="text-sm text-slate-700">
+                        C'est le processus par lequel le CPU sauve l'état complet de la tâche courante (registres, PC) et charge l'état de la prochaine tâche à exécuter. C'est le cœur de la concurrence, mais cela introduit une latence.
+                        
+                    </p>
                 </div>
-            </div>
-
-            <div class="mt-8 bg-amber-50 p-6 rounded-xl border-l-4 border-amber-600">
-                <h3 class="text-xl font-bold text-amber-900 mb-2">Problèmes Communs : Deadlock et Inversion de Priorité</h3>
-                <p class="text-sm text-slate-700">
-                    **Deadlock :** Deux tâches attendent indéfiniment l'une sur l'autre (ex: Tâche A possède Mutex 1, attend Mutex 2. Tâche B possède Mutex 2, attend Mutex 1). <br>
-                    **Inversion de Priorité :** Une tâche de faible priorité qui détient un mutex peut bloquer l'exécution d'une tâche de très haute priorité. Le RTOS doit implémenter un mécanisme d'héritage de priorité pour mitiger ce risque.
-                </p>
             </div>
         </section>
 
+        <section class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12">
+            <h2 class="text-3xl font-bold text-emerald-600 mb-6 border-b pb-2">2. L'Ordonnanceur (Scheduler) et les Priorités</h2>
+            
+            <p class="text-slate-700 mb-4">
+                Pour garantir les contraintes de temps réel, un RTOS utilise un ordonnanceur (souvent préemptif) basé sur la priorité.
+            </p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
+                <div>
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-4 flex items-center">
+                        <span class="text-3xl mr-3 text-red-500" role="img" aria-label="Clock">⏰</span> Ordonnancement Préemptif
+                    </h3>
+                    <p class="text-slate-700 mb-4">
+                        Si une tâche de haute priorité devient prête (par exemple, après une attente ou une interruption), elle suspend immédiatement la tâche de faible priorité en cours, garantissant la réactivité du système.
+                        
+                    </p>
+                    <div class="bg-red-50 p-4 rounded-lg text-sm text-red-800 border-l-4 border-red-600">
+                        <span class="font-bold">Déterminisme :</span> C'est le prérequis pour le temps réel dur (hard real-time) où le délai manqué est une défaillance du système.
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-4 flex items-center">
+                        <span class="text-3xl mr-3 text-green-500" role="img" aria-label="Chain">🔗</span> L'Héritage de Priorité (Priority Inversion)
+                    </h3>
+                    <p class="text-slate-700 mb-4">
+                        Lorsque deux tâches partagent une ressource (protégée par un Mutex ou un Sémaphore), une tâche de faible priorité peut bloquer une tâche de haute priorité. Le RTOS doit implémenter des mécanismes (comme l'Héritage de Priorité) pour résoudre ce problème critique.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-700 text-sm bg-green-50 p-4 rounded-lg">
+                        <li>**Solution :** La tâche de faible priorité qui détient la ressource critique voit temporairement sa priorité augmentée.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="p-8 bg-emerald-50 rounded-xl shadow-xl border-t-4 border-emerald-600">
+            <h2 class="text-3xl font-bold text-emerald-900 mb-6">3. Communication Inter-Tâches (IPC)</h2>
+            
+            <p class="text-slate-700 mb-4">
+                Les tâches doivent souvent échanger des données ou se synchroniser. Le RTOS fournit des outils d'IPC (Inter-Process Communication) pour le faire de manière sûre.
+                
+            </p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-5 rounded-lg shadow">
+                    <h4 class="font-bold text-emerald-700">Sémaphores/Mutex</h4>
+                    <p class="text-sm text-slate-600 mt-1">Utilisés pour la synchronisation des tâches et la protection des ressources partagées contre les accès concurrents.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow">
+                    <h4 class="font-bold text-emerald-700">Files de messages (Queues)</h4>
+                    <p class="text-sm text-slate-600 mt-1">Permettent l'échange de données de taille variable entre les tâches de manière asynchrone et sécurisée.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow">
+                    <h4 class="font-bold text-emerald-700">Événements (Events)</h4>
+                    <p class="text-sm text-slate-600 mt-1">Mécanismes légers pour notifier les tâches qu'un certain événement s'est produit (ex: un capteur a terminé sa lecture).</p>
+                </div>
+            </div>
+            
+            <a href="ressources.html" class="mt-8 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition duration-300 transform hover:scale-105 inline-block">
+                Continuer vers les Ressources ➔
+            </a>
+        </section>
+
     </main>
+
     <footer class="bg-slate-900 text-white mt-16 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
             <p>&copy; 2025 WaytolearnIoT. Plateforme éducative pour Systèmes Embarqués.</p>
         </div>
     </footer>
+    
+    <script src="main.js" defer></script>
 </body>
 </html>
