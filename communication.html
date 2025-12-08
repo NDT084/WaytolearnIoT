@@ -2,22 +2,42 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Les protocoles réseau de l'Internet des Objets : MQTT, CoAP, LoRaWAN, 6LoWPAN. Comprendre l'efficacité énergétique des communications.">
-    <meta name="theme-color" content="#0f172a">
-    <title>Communication IoT - WaytolearnIoT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Protocoles de communication dans l'IoT : bus internes (I2C, SPI, UART) et protocoles de réseau (MQTT, CoAP, LoRaWAN, 6LoWPAN) pour l'efficacité énergétique.">
+    <title>Communication IoT | WaytolearnIoT</title>
     
     <style>
-        /* ... Styles essentiels et de responsivité ... */
+        /* Styles CSS critiques pour le comportement du site (non gérés par Tailwind) */
         @layer base {
             :root{--bg:#f8fafc;--muted:#94a3b8;--accent:#10b981}
             html,body{height:100%}
             body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter, "Helvetica Neue", Arial; background:var(--bg); color:#0f172a; margin:0}
+            /* Style pour le lien de navigation actif */
             .nav-link.active { border-bottom: 3px solid #10b981; color: #10b981; font-weight: 700; }
         }
-        .nav-links-mobile { display: none; flex-direction: column; width: 100%; gap: 0.5rem; padding: 0.5rem 0; }
-        @media (min-width: 768px) { .nav-links-mobile { display: flex !important; flex-direction: row; } }
-        @media (max-width: 768px) { .min-h\[80vh\] { min-height: 60vh; } }
+        
+        /* Adaptation des styles pour la transition */
+        .nav-links-mobile { 
+            flex-direction: column; 
+            width: 100%; 
+            gap: 0.5rem; 
+            padding: 0.5rem 0; 
+        }
+        
+        @media (min-width: 768px) { 
+            .nav-links-mobile { 
+                display: flex !important; 
+                flex-direction: row; 
+                opacity: 1 !important; 
+            }
+            .nav-links-mobile.hidden {
+                display: flex !important; 
+            }
+        }
+        
+        /* Styles Responsifs... */
+        @media (max-width: 768px) { .text-6xl { font-size: 2.25rem; } }
+        @media (max-width: 480px) { .text-6xl { font-size: 1.75rem; } }
         #nav-toggle { background: transparent; border: 0; font-size: 1.25rem; }
     </style>
     
@@ -25,7 +45,6 @@
         tailwind.config = { theme: { extend: { colors: { slate: '#0f172a', emerald: '#10b981', amber: '#f59e0b', blue: '#3b82f6' } } } }
     </script>
     <script src="https://cdn.tailwindcss.com"></script> 
-    <script> function toggleNav() { const menu = document.getElementById('nav-menu'); menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex'; }</script>
 </head>
 <body class="bg-slate-50 text-slate-800">
     <nav role="navigation" class="sticky top-0 z-50 bg-white shadow-lg">
@@ -34,71 +53,141 @@
                 <div class="flex items-center py-2">
                     <a href="index.html" class="text-3xl font-extrabold text-slate-900 tracking-tight">Waytolearn<span class="text-emerald-600">IoT</span></a>
                 </div>
-                <button id="nav-toggle" aria-label="Ouvrir le menu" onclick="toggleNav()" class="md:hidden">☰</button>
-                <div id="nav-menu" class="nav-links-mobile md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 bg-white md:bg-transparent shadow-xl md:shadow-none p-4 md:p-0">
-                    <a href="index.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Accueil</a>
-                    <a href="architecture.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Architecture CPU</a>
-                    <a href="cycle.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Cycle Instruction</a>
-                    <a href="memory.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Gestion Mémoire</a>
-                    <a href="communication.html" class="nav-link active inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">🌐 Communication</a>
-                    <a href="rtos.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">⏱️ RTOS</a>
-                    <a href="ressources.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">📂 Ressources</a>
-                </div>
+                <button id="nav-toggle" aria-label="Ouvrir le menu" class="md:hidden" aria-expanded="false">☰</button>
+                
+               <div id="nav-menu" 
+    class="nav-links-mobile md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 bg-white md:bg-transparent shadow-xl md:shadow-none p-4 md:p-0
+           hidden opacity-0 md:opacity-100 transition-all duration-200 ease-in-out">
+    
+    <a href="index.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Accueil</a>
+    <a href="architecture.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Architecture CPU</a>
+    <a href="cycle.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Cycle Instruction</a>
+    <a href="memory.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Gestion Mémoire</a>
+    <a href="communication.html" class="nav-link inline-flex items-items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Communication</a>
+    <a href="rtos.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">RTOS</a>
+    <a href="ressources.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Ressources</a>
+</div>
             </div>
         </div>
     </nav>
 
     <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 min-h-[80vh]">
 
-        <section id="communication">
-            <div class="text-center mb-10">
-                <h2 class="text-4xl font-extrabold tracking-tight text-slate-900">🌐 Protocoles de Communication IoT</h2>
-                <p class="mt-3 max-w-3xl mx-auto text-lg text-slate-500">
-                    Les dispositifs IoT doivent parler à distance. Maîtrisez les protocoles légers et énergiquement efficaces qui rendent cette communication possible. 
-                </p>
-            </div>
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-2">
+                Protocoles de Communication IoT
+            </h1>
+            <p class="text-xl text-slate-600">Du bus interne aux réseaux WAN : la fondation de la connectivité dans les systèmes embarqués.</p>
+        </header>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="bg-emerald-50 p-6 rounded-xl shadow border-l-4 border-emerald-600">
-                    <h3 class="text-xl font-bold text-emerald-900 mb-2">MQTT</h3>
-                    <p class="text-sm text-slate-700">Protocole de messagerie léger (Pub/Sub) basé sur TCP/IP. Idéal pour les réseaux instables et les contraintes de bande passante/batterie.</p>
-                    <ul class="text-xs mt-2 space-y-1">
-                        <li>**Modèle :** Publish/Subscribe (Broker)</li>
-                        <li>**Force :** Faible surcharge, QoS (Qualité de Service)</li>
-                    </ul>
-                </div>
-                <div class="bg-amber-50 p-6 rounded-xl shadow border-l-4 border-amber-600">
-                    <h3 class="text-xl font-bold text-amber-900 mb-2">CoAP</h3>
-                    <p class="text-sm text-slate-700">Protocole web spécialisé pour les appareils contraints. Similaire à HTTP, mais basé sur UDP pour être encore plus léger.</p>
-                    <ul class="text-xs mt-2 space-y-1">
-                        <li>**Modèle :** Requête/Réponse (Client/Serveur)</li>
-                        <li>**Force :** Faible consommation d'énergie, basé sur UDP</li>
-                    </ul>
-                </div>
-                <div class="bg-blue-50 p-6 rounded-xl shadow border-l-4 border-blue-600">
-                    <h3 class="text-xl font-bold text-blue-900 mb-2">LPWAN (LoRaWAN/Sigfox)</h3>
-                    <p class="text-sm text-slate-700">Réseaux étendus à faible puissance. Offre une très longue portée avec des débits de données extrêmement faibles pour les capteurs.</p>
-                    <ul class="text-xs mt-2 space-y-1">
-                        <li>**Modèle :** Statique (petits paquets)</li>
-                        <li>**Force :** Portée kilométrique, durée de vie des batteries (10+ ans)</li>
-                    </ul>
-                </div>
-            </div>
+        <section class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12">
+            <h2 class="text-3xl font-bold text-emerald-600 mb-6 border-b pb-2">1. Les Bus Périphériques (Communication Interne)</h2>
             
-            <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mt-12">
-                <h3 class="text-2xl font-bold text-slate-900 mb-4">Securité des Protocoles</h3>
-                <p class="text-slate-700">La sécurité est primordiale en IoT. MQTT supporte SSL/TLS (MQTTS), tandis que CoAP utilise DTLS (Datagram Transport Layer Security). L'embarqué impose des algorithmes cryptographiques légers comme l'utilisation de primitives ECC (Elliptic Curve Cryptography) pour minimiser les cycles CPU.</p>
-                <div class="mt-6 bg-emerald-50 p-4 rounded border-l-4 border-emerald-600">
-                    <strong class="text-emerald-900">💡 Pratique :</strong> Utiliser **Mosquitto** comme broker MQTT local pour vos premiers tests et comprenez les trois niveaux de QoS (0: Au plus une fois, 1: Au moins une fois, 2: Exactement une fois).
+            <p class="text-slate-700 mb-4">
+                La communication interne entre le microcontrôleur et ses périphériques (capteurs, mémoires externes, écrans) est gérée par des bus optimisés pour la vitesse et le faible nombre de broches.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-600 shadow-sm">
+                    <h3 class="text-xl font-semibold text-blue-900 mb-2">I²C (Inter-Integrated Circuit) 🤏</h3>
+                    <p class="text-sm text-slate-700">
+                        Bus série synchrone maître/esclave. N'utilise que deux fils (SDA & SCL). Idéal pour les petits capteurs I/O.
+                        
+
+[Image of I2C bus connection diagram]
+
+                    </p>
+                </div>
+                <div class="p-4 bg-amber-50 rounded-lg border-l-4 border-amber-600 shadow-sm">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-2">SPI (Serial Peripheral Interface) 🚀</h3>
+                    <p class="text-sm text-slate-700">
+                        Bus série synchrone maître/esclave. Plus rapide que I²C, utilise quatre fils. Préféré pour les mémoires flash et les écrans rapides.
+                        
+
+[Image of SPI bus connection diagram]
+
+                    </p>
+                </div>
+                <div class="p-4 bg-slate-100 rounded-lg border-l-4 border-slate-500 shadow-sm">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">UART (Universal Asynchronous) 🗣️</h3>
+                    <p class="text-sm text-slate-700">
+                        Bus série asynchrone (sans horloge). Utilisé principalement pour le debugging et la communication avec des modules (comme le GPS ou le GSM).
+                    </p>
                 </div>
             </div>
         </section>
 
+        <section class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12">
+            <h2 class="text-3xl font-bold text-emerald-600 mb-6 border-b pb-2">2. Protocoles Applicatifs pour l'Internet des Objets</h2>
+            
+            <p class="text-slate-700 mb-4">
+                Au-delà de la couche physique, les protocoles applicatifs sont essentiels pour le cloud. Ils doivent être légers (faible surcharge d'en-tête) et optimisés pour les connexions intermittentes et la faible bande passante.
+            </p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
+                <div>
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-4 flex items-center">
+                        <span class="text-3xl mr-3 text-red-500" role="img" aria-label="Cloud">☁️</span> MQTT (Message Queuing Telemetry Transport)
+                    </h3>
+                    <p class="text-slate-700 mb-4">
+                        Protocole de messagerie léger basé sur un modèle **Publier/S'abonner (Pub/Sub)**. Idéal pour les communications asynchrones entre dispositifs et le Cloud.
+                        
+                    </p>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700 text-sm bg-red-50 p-4 rounded-lg border-l-4 border-red-600">
+                        <li>**QoS :** Gère la qualité de service (0, 1, 2) pour garantir la livraison.</li>
+                        <li>**Faible Surcharge :** Seulement 2 octets d'en-tête minimal.</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-4 flex items-center">
+                        <span class="text-3xl mr-3 text-green-500" role="img" aria-label="Leaf">🍃</span> CoAP (Constrained Application Protocol)
+                    </h3>
+                    <p class="text-slate-700 mb-4">
+                        Protocole de transfert de données basé sur le modèle **Requête/Réponse** (similaire à HTTP, mais optimisé pour l'embarqué). Utilise UDP pour minimiser la taille des paquets.
+                    </p>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700 text-sm bg-green-50 p-4 rounded-lg border-l-4 border-green-600">
+                        <li>**Transfert :** Souvent utilisé pour la gestion des ressources et les interactions directes entre appareils.</li>
+                        <li>**6LoWPAN :** Fonctionne bien avec ce protocole pour les réseaux maillés IPv6 basse consommation.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="p-8 bg-emerald-50 rounded-xl shadow-xl border-t-4 border-emerald-600">
+            <h2 class="text-3xl font-bold text-emerald-900 mb-6">3. Les Réseaux Longue Portée (LPWAN)</h2>
+            
+            <p class="text-slate-700 mb-4">
+                Pour les applications IoT nécessitant une longue portée et une très faible consommation (plusieurs années d'autonomie), les réseaux LPWAN sont la norme.
+            </p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white p-5 rounded-lg shadow">
+                    <h4 class="font-bold text-emerald-700">LoRaWAN</h4>
+                    <p class="text-sm text-slate-600 mt-1">Très longue portée (plusieurs km) et faible bande passante. Utilise des modulations *spread spectrum* pour la robustesse. 
+
+[Image of LoRaWAN network architecture]
+</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow">
+                    <h4 class="font-bold text-emerald-700">6LoWPAN / Zigbee</h4>
+                    <p class="text-sm text-slate-600 mt-1">Protocoles maillés basés sur IPv6 et courts-courriers (quelques mètres). Essentiels pour la domotique et les réseaux denses.</p>
+                </div>
+            </div>
+            
+            <a href="rtos.html" class="mt-8 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition duration-300 transform hover:scale-105 inline-block">
+                Continuer vers les RTOS ➔
+            </a>
+        </section>
+
     </main>
+
     <footer class="bg-slate-900 text-white mt-16 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
             <p>&copy; 2025 WaytolearnIoT. Plateforme éducative pour Systèmes Embarqués.</p>
         </div>
     </footer>
+    
+    <script src="main.js" defer></script>
 </body>
 </html>
