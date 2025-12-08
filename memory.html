@@ -2,184 +2,328 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Gestion de la mémoire dans l'IoT : distinction entre Flash, RAM (SRAM/DRAM) et EEPROM. Allocation statique et dynamique (Heap/Stack) et importance pour la consommation énergétique.">
+    <meta name="keywords" content="IoT, mémoire, Flash, RAM, SRAM, EEPROM, Stack, Heap, allocation mémoire">
+    <meta name="author" content="WaytolearnIoT">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#10b981">
+    <link rel="canonical" href="https://waytolearniot.com/memory.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://waytolearniot.com/memory.html">
+    <meta property="og:title" content="Gestion Mémoire | WaytolearnIoT">
+    <meta property="og:description" content="Optimiser l'utilisation de la Flash, de la RAM (SRAM) et comprendre l'allocation mémoire dynamique.">
+    <meta property="og:locale" content="fr_FR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Gestion Mémoire | WaytolearnIoT">
+    <meta name="twitter:description" content="Optimiser l'utilisation de la Flash, de la RAM (SRAM) et comprendre l'allocation mémoire dynamique.">
+    
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    
     <title>Gestion Mémoire | WaytolearnIoT</title>
     
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalArticle",
+        "headline": "Gestion Mémoire : Efficacité et Persistence",
+        "description": "Gestion de la mémoire dans l'IoT : distinction entre Flash, RAM (SRAM/DRAM) et EEPROM. Allocation statique et dynamique (Heap/Stack)",
+        "author": {
+            "@type": "Organization",
+            "name": "WaytolearnIoT"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "WaytolearnIoT"
+        },
+        "inLanguage": "fr-FR",
+        "educationalLevel": "Intermediate"
+    }
+    </script>
+    
     <style>
-        /* Styles CSS critiques pour le comportement du site (non gérés par Tailwind) */
-        @layer base {
-            :root{--bg:#f8fafc;--muted:#94a3b8;--accent:#10b981}
-            html,body{height:100%}
-            body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter, "Helvetica Neue", Arial; background:var(--bg); color:#0f172a; margin:0}
-            /* Style pour le lien de navigation actif */
-            .nav-link.active { border-bottom: 3px solid #10b981; color: #10b981; font-weight: 700; }
-        }
+        :root{--bg:#ffffff;--muted:#94a3b8;--accent:#10b981;--text:#1e293b;--border:#e2e8f0}
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+        .nav-link.active{border-bottom:3px solid var(--accent);color:var(--accent);font-weight:700;margin-bottom:-3px}
+        .skip-link{position:absolute;left:-9999px;z-index:999}
+        .skip-link:focus{left:6px;top:6px;background:var(--accent);color:#fff;padding:8px 16px;text-decoration:none;border-radius:4px}
         
-        /* Adaptation des styles pour la transition */
-        .nav-links-mobile { 
-            flex-direction: column; 
-            width: 100%; 
-            gap: 0.5rem; 
-            padding: 0.5rem 0; 
-        }
+        /* Hamburger Menu Styles - Visible uniquement sur mobile */
+        #nav-toggle{background:transparent;border:0;cursor:pointer;padding:8px;width:40px;height:40px;display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;position:relative;z-index:100}
+        @media (max-width:767px){#nav-toggle{display:flex}}
+        .hamburger-line{width:24px;height:3px;background:#1e293b;border-radius:2px;transition:all 0.3s ease;transform-origin:center}
+        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1){transform:rotate(45deg) translate(7px,7px)}
+        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2){opacity:0;transform:translateX(-10px)}
+        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
         
-        @media (min-width: 768px) { 
-            .nav-links-mobile { 
-                display: flex !important; 
-                flex-direction: row; 
-                opacity: 1 !important; 
-            }
-            .nav-links-mobile.hidden {
-                display: flex !important; 
-            }
-        }
+        /* Menu mobile vertical */
+        #nav-menu{max-height:0;overflow:hidden;transition:max-height 0.3s ease,opacity 0.3s ease}
+        #nav-menu:not(.hidden){max-height:500px}
+        @media (min-width:768px){#nav-menu{max-height:none!important}}
         
-        /* Styles Responsifs... */
-        @media (max-width: 768px) { .text-6xl { font-size: 2.25rem; } }
-        @media (max-width: 480px) { .text-6xl { font-size: 1.75rem; } }
-        #nav-toggle { background: transparent; border: 0; font-size: 1.25rem; }
+        .card-hover{transition:all 0.3s ease;transform:translateY(0)}
+        .card-hover:hover{transform:translateY(-4px);box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04)}
+        @media (max-width:768px){.text-6xl{font-size:2.25rem}}
+        @media (max-width:480px){.text-6xl{font-size:1.75rem}}
     </style>
     
     <script>
-        tailwind.config = { theme: { extend: { colors: { slate: '#0f172a', emerald: '#10b981', amber: '#f59e0b', blue: '#3b82f6' } } } }
+        tailwind.config={theme:{extend:{colors:{slate:'#1e293b',emerald:'#10b981',amber:'#f59e0b',blue:'#3b82f6'}}}}
     </script>
-    <script src="https://cdn.tailwindcss.com"></script> 
+    <script src="https://cdn.tailwindcss.com" defer></script>
 </head>
-<body class="bg-slate-50 text-slate-800">
-    <nav role="navigation" class="sticky top-0 z-50 bg-white shadow-lg">
+<body class="bg-white text-slate-800">
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    
+    <!-- Navigation -->
+    <nav role="navigation" aria-label="Navigation principale" class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm backdrop-blur-sm bg-white/95">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24">
-                <div class="flex items-center py-2">
-                    <a href="index.html" class="text-3xl font-extrabold text-slate-900 tracking-tight">Waytolearn<span class="text-emerald-600">IoT</span></a>
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-slate-900 tracking-tight hover:text-emerald-600 transition-colors">
+                        Waytolearn<span class="text-emerald-600">IoT</span>
+                    </a>
                 </div>
-                <button id="nav-toggle" aria-label="Ouvrir le menu" class="md:hidden" aria-expanded="false">☰</button>
+                <button id="nav-toggle" aria-label="Ouvrir le menu" aria-controls="nav-menu" class="md:hidden" aria-expanded="false" type="button">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
                 
-               <div id="nav-menu" 
-                    class="md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 w-full bg-white md:bg-transparent shadow-xl md:shadow-none p-6 md:p-0
-                    hidden opacity-0 md:opacity-100 transition-all duration-200 ease-in-out flex-col md:flex-row"> 
+                <div id="nav-menu" 
+                    class="md:flex md:space-x-1 absolute md:static top-20 left-0 w-full bg-white md:bg-transparent shadow-lg md:shadow-none border-t md:border-t-0 border-slate-200
+                    hidden opacity-0 md:opacity-100 md:flex-row flex-col
+                    transition-all duration-300 ease-in-out"> 
             
-                    <a href="index.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Accueil</a>
-                    <a href="architecture.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Architecture CPU</a>
-                    <a href="cycle.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Cycle Instruction</a>
-                    <a href="memory.html" class="nav-link active w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Gestion Mémoire</a>
-                    <a href="communication.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Communication</a>
-                    <a href="rtos.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">RTOS</a>
-                    <a href="ressources.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Ressources</a>
+                    <a href="index.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">Accueil</a>
+                    <a href="architecture.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">Architecture CPU</a>
+                    <a href="cycle.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">Cycle Instruction</a>
+                    <a href="memory.html" class="nav-link active w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">Gestion Mémoire</a>
+                    <a href="communication.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">Communication</a>
+                    <a href="rtos.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">RTOS</a>
+                    <a href="ressources.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors">Ressources</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 min-h-[80vh]">
-
-        <header class="text-center mb-12">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-2">
+    <!-- Main Content -->
+    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Header -->
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
                 Gestion Mémoire : Efficacité et Persistence
             </h1>
-            <p class="text-xl text-slate-600">Optimiser l'utilisation de la Flash, de la RAM (SRAM) et comprendre l'allocation mémoire dynamique.</p>
+            <p class="text-xl text-slate-600 max-w-3xl mx-auto mb-4">
+                Optimiser l'utilisation de la Flash, de la RAM (SRAM) et comprendre l'allocation mémoire dynamique.
+            </p>
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg max-w-3xl mx-auto">
+                <p class="text-slate-700 text-sm">
+                    <strong>🎯 Objectifs pédagogiques :</strong> Comprendre la hiérarchie mémoire (Flash, RAM, EEPROM), maîtriser l'allocation statique vs dynamique, analyser les risques de Stack Overflow et de fragmentation, et utiliser les outils de profilage mémoire pour optimiser vos projets IoT.
+                </p>
+            </div>
         </header>
 
-        <section class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12">
-            <h2 class="text-3xl font-bold text-emerald-600 mb-6 border-b pb-2">1. Hiérarchie des Mémoires Embarquées</h2>
-            
-            <p class="text-slate-700 mb-4">
-                Les microcontrôleurs IoT possèdent plusieurs types de mémoire, chacun ayant un rôle critique. Le choix et l'optimisation de ces mémoires ont un impact direct sur la consommation d'énergie et la vitesse d'exécution.
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                <div class="p-4 bg-amber-50 rounded-lg border-l-4 border-amber-600 shadow-sm">
-                    <h3 class="text-xl font-semibold text-amber-900 mb-2">Mémoire Flash (ROM) 💾</h3>
-                    <p class="text-sm text-slate-700">
-                        Stocke le code du programme (firmware) et les données constantes. C'est une mémoire non volatile (persiste sans alimentation). 
-                        
-
-[Image of Flash memory structure]
-
-                    </p>
+        <!-- Section 1: Hiérarchie Mémoires -->
+        <section class="mb-16">
+            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
+                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">1. Hiérarchie des Mémoires Embarquées</h2>
+                
+                <p class="text-lg text-slate-700 mb-6 leading-relaxed">
+                    Les microcontrôleurs IoT possèdent plusieurs types de mémoire, chacun ayant un rôle critique. Le choix et l'optimisation de ces mémoires ont un impact direct sur la consommation d'énergie et la vitesse d'exécution.
+                </p>
+                
+                <div class="bg-amber-50 p-5 rounded-lg border-l-4 border-amber-600 mb-8">
+                    <h4 class="font-bold text-amber-900 mb-2">📊 Exemples de configurations mémoire (microcontrôleurs courants)</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div class="bg-white p-3 rounded">
+                            <strong>STM32F103C8</strong><br>
+                            Flash: 64 KB<br>
+                            RAM: 20 KB<br>
+                            EEPROM: Externe
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <strong>ESP32</strong><br>
+                            Flash: 4-16 MB<br>
+                            RAM: 520 KB<br>
+                            EEPROM: 512 KB
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <strong>Arduino Nano</strong><br>
+                            Flash: 32 KB<br>
+                            RAM: 2 KB<br>
+                            EEPROM: 1 KB
+                        </div>
+                    </div>
                 </div>
-                <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-600 shadow-sm">
-                    <h3 class="text-xl font-semibold text-blue-900 mb-2">SRAM (RAM) ⚡</h3>
-                    <p class="text-sm text-slate-700">
-                        Mémoire de travail rapide et volatile. Stocke les variables, la pile (Stack) et le tas (Heap). Sa petite taille oblige une gestion rigoureuse.
-                        
 
-[Image of SRAM cell schematic]
-
-                    </p>
-                </div>
-                <div class="p-4 bg-slate-100 rounded-lg border-l-4 border-slate-500 shadow-sm">
-                    <h3 class="text-xl font-semibold text-slate-800 mb-2">EEPROM (Persistence) 📜</h3>
-                    <p class="text-sm text-slate-700">
-                        Non volatile, mais plus lente que la Flash. Utilisée pour stocker les paramètres de configuration (clés de sécurité, calibrations) qui changent rarement.
-                    </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-6 rounded-xl border-l-4 border-amber-600 shadow-sm card-hover">
+                        <h3 class="text-xl font-bold text-amber-900 mb-3 flex items-center">
+                            <span class="text-2xl mr-2" aria-hidden="true">💾</span> Mémoire Flash (ROM)
+                        </h3>
+                        <p class="text-slate-700 mb-3">
+                            Stocke le code du programme (firmware) et les données constantes. C'est une mémoire non volatile (persiste sans alimentation).
+                        </p>
+                        <p class="text-xs text-slate-600">
+                            <strong>Caractéristiques :</strong> Lecture rapide (1 cycle), écriture lente (millisecondes). Consommation : ~0.1 mW en lecture. Les constantes (<code>const</code>) sont stockées ici pour économiser la RAM.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg text-center text-xs text-slate-500 mt-3">
+                            [Structure Flash]
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
+                        <h3 class="text-xl font-bold text-blue-900 mb-3 flex items-center">
+                            <span class="text-2xl mr-2" aria-hidden="true">⚡</span> SRAM (RAM)
+                        </h3>
+                        <p class="text-slate-700 mb-3">
+                            Mémoire de travail rapide et volatile. Stocke les variables, la pile (Stack) et le tas (Heap). Sa petite taille oblige une gestion rigoureuse.
+                        </p>
+                        <p class="text-xs text-slate-600">
+                            <strong>Caractéristiques :</strong> Accès en 1 cycle, consommation élevée (~2-5 mW). Perd toutes les données à la coupure d'alimentation. Sur un STM32F103, vous n'avez que 20 KB pour tout votre programme !
+                        </p>
+                        <div class="bg-white p-3 rounded-lg text-center text-xs text-slate-500 mt-3">
+                            [Schéma SRAM]
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-xl border-l-4 border-slate-500 shadow-sm card-hover">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 flex items-center">
+                            <span class="text-2xl mr-2" aria-hidden="true">📜</span> EEPROM (Persistence)
+                        </h3>
+                        <p class="text-slate-700">
+                            Non volatile, mais plus lente que la Flash. Utilisée pour stocker les paramètres de configuration (clés de sécurité, calibrations) qui changent rarement.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12">
-            <h2 class="text-3xl font-bold text-emerald-600 mb-6 border-b pb-2">2. Stack (Pile) vs. Heap (Tas)</h2>
-            
-            <p class="text-slate-700 mb-4">
-                La RAM est divisée entre l'allocation statique (Stack) et l'allocation dynamique (Heap). La façon dont ces deux zones sont utilisées impacte la stabilité et le déterminisme du système.
-            </p>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
-                <div>
-                    <h3 class="text-2xl font-semibold text-slate-800 mb-4 flex items-center">
-                        <span class="text-3xl mr-3 text-blue-500" role="img" aria-label="Pile">📦</span> Le Stack (Pile)
-                    </h3>
-                    <p class="text-slate-700 mb-4">
-                        Utilisé pour les variables locales et les appels de fonctions. L'allocation et la libération sont rapides et automatiques (LIFO : Dernier Entré, Premier Sorti). C'est la méthode préférée pour le temps réel car elle est prédictible.
+        <!-- Section 2: Stack vs Heap -->
+        <section class="mb-16">
+            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
+                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">2. Stack (Pile) vs. Heap (Tas)</h2>
+                
+                <p class="text-lg text-slate-700 mb-8 leading-relaxed">
+                    La RAM est divisée entre l'allocation statique (Stack) et l'allocation dynamique (Heap). La façon dont ces deux zones sont utilisées impacte la stabilité et le déterminisme du système.
+                </p>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
+                        <h3 class="text-2xl font-bold text-blue-900 mb-4 flex items-center">
+                            <span class="text-3xl mr-3" aria-hidden="true">📦</span> Le Stack (Pile)
+                        </h3>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            Utilisé pour les variables locales et les appels de fonctions. L'allocation et la libération sont rapides et automatiques (LIFO : Dernier Entré, Premier Sorti). C'est la méthode préférée pour le temps réel car elle est prédictible.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg mb-4">
+                            <p class="text-xs text-slate-600 mb-2"><strong>💻 Exemple de code :</strong></p>
+                            <pre class="bg-slate-800 text-white p-2 rounded text-xs overflow-x-auto"><code>void fonction() {
+    int local = 10;  // Alloué sur le Stack
+    char buffer[100]; // 100 bytes sur le Stack
+    // À la fin de la fonction, 
+    // tout est automatiquement libéré
+}</code></pre>
+                            <p class="text-xs text-slate-600 mt-2">
+                                <strong>⚠️ Attention :</strong> Sur Arduino (2 KB RAM), un buffer de 1000 bytes peut facilement causer un Stack Overflow !
+                            </p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border-l-4 border-blue-600">
+                            <p class="text-sm text-blue-800">
+                                <span class="font-bold">Risque :</span> Si le Stack grandit trop et rencontre le Heap (ou dépasse la mémoire allouée), on parle de <strong>Stack Overflow</strong>, menant souvent à un crash.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl border-l-4 border-amber-600 shadow-sm card-hover">
+                        <h3 class="text-2xl font-bold text-amber-900 mb-4 flex items-center">
+                            <span class="text-3xl mr-3" aria-hidden="true">🧱</span> Le Heap (Tas)
+                        </h3>
+                        <p class="text-slate-700 mb-4 leading-relaxed">
+                            Utilisé pour l'allocation dynamique (via `malloc` ou `new`). La taille n'est pas connue à la compilation. C'est flexible, mais plus lent et non déterministe.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg mb-4">
+                            <p class="text-xs text-slate-600 mb-2"><strong>💻 Exemple de code :</strong></p>
+                            <pre class="bg-slate-800 text-white p-2 rounded text-xs overflow-x-auto"><code>// Allocation dynamique (à éviter en IoT)
+int* data = malloc(100 * sizeof(int));
+// ... utilisation ...
+free(data);  // ⚠️ Oublier = Memory Leak !</code></pre>
+                            <p class="text-xs text-slate-600 mt-2">
+                                <strong>💡 Meilleure pratique :</strong> Utilisez des tableaux statiques de taille fixe pour garantir la prédictibilité.
+                            </p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border-l-4 border-amber-600">
+                            <p class="text-sm text-amber-900">
+                                <span class="font-bold">Risque :</span> L'utilisation excessive cause la <strong>fragmentation de la mémoire</strong> et augmente le risque de fuite mémoire (Memory Leak).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Optimisation -->
+        <section class="mb-16">
+            <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-8 md:p-10 rounded-2xl shadow-md border-l-4 border-emerald-600">
+                <h2 class="text-3xl font-bold text-emerald-900 mb-6">3. Optimisation et Cartographie Mémoire</h2>
+                
+                <p class="text-lg text-slate-700 mb-6 leading-relaxed">
+                    En embarqué, la <strong>cartographie mémoire</strong> (Memory Map) est définie par le fichier Linker Script. Cela permet de séparer précisément le code (`.text`), les données initialisées (`.data`), et les données non initialisées (`.bss`) entre la Flash et la RAM.
+                </p>
+                
+                <div class="bg-slate-50 p-5 rounded-lg border-l-4 border-slate-500 mb-8">
+                    <h4 class="font-bold text-slate-800 mb-3">📖 Sections mémoire expliquées</h4>
+                    <ul class="space-y-2 text-sm text-slate-700">
+                        <li><strong>.text :</strong> Code exécutable → Stocké en Flash (non volatile)</li>
+                        <li><strong>.data :</strong> Variables initialisées → Copiées de Flash vers RAM au démarrage</li>
+                        <li><strong>.bss :</strong> Variables non initialisées → Allouées en RAM, mises à zéro au boot</li>
+                        <li><strong>.rodata :</strong> Constantes (read-only) → Restent en Flash pour économiser la RAM</li>
+                    </ul>
+                    <p class="text-xs text-slate-600 mt-3">
+                        <strong>💡 Astuce :</strong> Utilisez <code>const</code> partout où possible pour forcer le stockage en Flash plutôt qu'en RAM.
                     </p>
-                    <div class="bg-blue-50 p-4 rounded-lg text-sm text-blue-800 border-l-4 border-blue-600">
-                        <span class="font-bold">Risque :</span> Si le Stack grandit trop et rencontre le Heap (ou dépasse la mémoire allouée), on parle de **Stack Overflow**, menant souvent à un crash.
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                        <h4 class="text-lg font-bold text-emerald-700 mb-3">Objectif du Linker Script</h4>
+                        <p class="text-slate-600">S'assurer que les données et le code sont chargés aux bonnes adresses pour le boot et l'exécution.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                        <h4 class="text-lg font-bold text-emerald-700 mb-3">Stratégies d'Optimisation</h4>
+                        <p class="text-slate-600">Éviter le Heap au maximum, dimensionner le Stack pour chaque tâche (RTOS) et utiliser des structures statiques.</p>
                     </div>
                 </div>
                 
-                <div>
-                    <h3 class="text-2xl font-semibold text-slate-800 mb-4 flex items-center">
-                        <span class="text-3xl mr-3 text-amber-500" role="img" aria-label="Tas">🧱</span> Le Heap (Tas)
-                    </h3>
-                    <p class="text-slate-700 mb-4">
-                        Utilisé pour l'allocation dynamique (via `malloc` ou `new`). La taille n'est pas connue à la compilation. C'est flexible, mais plus lent et non déterministe.
-                        
-                    </p>
-                    <div class="bg-amber-50 p-4 rounded-lg text-sm text-amber-900 border-l-4 border-amber-600">
-                        <span class="font-bold">Risque :</span> L'utilisation excessive cause la **fragmentation de la mémoire** et augmente le risque de fuite mémoire (Memory Leak).
-                    </div>
+                <div class="text-center">
+                    <a href="communication.html" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
+                        Continuer vers la Communication →
+                    </a>
                 </div>
             </div>
         </section>
-
-        <section class="p-8 bg-emerald-50 rounded-xl shadow-xl border-t-4 border-emerald-600">
-            <h2 class="text-3xl font-bold text-emerald-900 mb-6">3. Optimisation et Cartographie Mémoire</h2>
-            
-            <p class="text-slate-700 mb-4">
-                En embarqué, la **cartographie mémoire** (Memory Map) est définie par le fichier Linker Script. Cela permet de séparer précisément le code (`.text`), les données initialisées (`.data`), et les données non initialisées (`.bss`) entre la Flash et la RAM.
-            </p>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white p-5 rounded-lg shadow">
-                    <h4 class="font-bold text-emerald-700">Objectif du Linker Script</h4>
-                    <p class="text-sm text-slate-600 mt-1">S'assurer que les données et le code sont chargés aux bonnes adresses pour le boot et l'exécution.</p>
-                </div>
-                <div class="bg-white p-5 rounded-lg shadow">
-                    <h4 class="font-bold text-emerald-700">Stratégies d'Optimisation</h4>
-                    <p class="text-sm text-slate-600 mt-1">Éviter le Heap au maximum, dimensionner le Stack pour chaque tâche (RTOS) et utiliser des structures statiques.</p>
-                </div>
-            </div>
-            
-            <a href="communication.html" class="mt-8 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition duration-300 transform hover:scale-105 inline-block">
-                Continuer vers la Communication ➔
-            </a>
-        </section>
-
     </main>
 
-    <footer class="bg-slate-900 text-white mt-16 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-            <p>&copy; 2025 WaytolearnIoT. Plateforme éducative pour Systèmes Embarqués.</p>
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white mt-20 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-4">Waytolearn<span class="text-emerald-400">IoT</span></h3>
+                <p class="text-slate-400 mb-6">Plateforme éducative pour Systèmes Embarqués</p>
+                <p class="text-sm text-slate-500">&copy; 2025 WaytolearnIoT. Tous droits réservés.</p>
+            </div>
         </div>
     </footer>
     
