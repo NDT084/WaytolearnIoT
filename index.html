@@ -3,200 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="WaytolearnIoT — plateforme interactive pour étudiants : architectures embarquées, communication, gestion mémoire, et systèmes d'exploitation temps réel (RTOS) pour l'Internet des Objets.">
-    <meta name="theme-color" content="#0f172a">
+    <meta name="keywords" content="IoT, systèmes embarqués, ARM Cortex-M, RISC-V, RTOS, FreeRTOS, MQTT, CoAP, microcontrôleurs">
+    <meta name="author" content="WaytolearnIoT">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#10b981">
+    <link rel="canonical" href="https://waytolearniot.com/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://waytolearniot.com/">
+    <meta property="og:title" content="WaytolearnIoT : Devenez Expert en Systèmes Embarqués">
+    <meta property="og:description" content="Plateforme interactive pour apprendre les systèmes embarqués IoT : architectures, communication, mémoire et RTOS.">
+    <meta property="og:locale" content="fr_FR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WaytolearnIoT : Devenez Expert en Systèmes Embarqués">
+    <meta name="twitter:description" content="Plateforme interactive pour apprendre les systèmes embarqués IoT.">
+    
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    
     <title>WaytolearnIoT : Devenez Expert en Systèmes Embarqués</title>
     
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "WaytolearnIoT",
+        "description": "Plateforme éducative pour l'apprentissage des systèmes embarqués IoT",
+        "url": "https://waytolearniot.com",
+        "inLanguage": "fr-FR",
+        "educationalCredentialAwarded": "Knowledge in Embedded Systems"
+    }
+    </script>
+    
     <style>
-        @layer base {
-            :root{--bg:#f8fafc;--muted:#94a3b8;--accent:#10b981}
-            html,body{height:100%}
-            body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter, "Helvetica Neue", Arial; background:var(--bg); color:#0f172a; margin:0}
-            /* Style pour le lien de navigation actif - Correction de l'alignement vertical par marge négative */
-            .nav-link.active { 
-                border-bottom: 3px solid #10b981; 
-                color: #10b981; 
-                font-weight: 700;
-                /* Compenser la hauteur de la bordure */
-                margin-bottom: -3px; 
-            }
-        }
+        :root{--bg:#ffffff;--muted:#94a3b8;--accent:#10b981;--text:#1e293b;--border:#e2e8f0}
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+        .nav-link.active{border-bottom:3px solid var(--accent);color:var(--accent);font-weight:700;margin-bottom:-3px}
+        .skip-link{position:absolute;left:-9999px;z-index:999}
+        .skip-link:focus{left:6px;top:6px;background:var(--accent);color:#fff;padding:8px 16px;text-decoration:none;border-radius:4px}
         
-        /* Styles Responsive */
-        @media (max-width: 768px) {
-            .text-6xl { font-size: 2.25rem; }
-            .lg\:grid-cols-2 > div:first-child { order: 2; }
-            .lg\:grid-cols-2 > div:last-child { order: 1; }
-            .min-h\[80vh\] { min-height: 60vh; }
+        /* Hamburger Menu Styles - Visible uniquement sur mobile */
+        #nav-toggle{background:transparent;border:0;cursor:pointer;padding:8px;width:40px;height:40px;display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;position:relative;z-index:100}
+        @media (max-width:767px){#nav-toggle{display:flex}}
+        .hamburger-line{width:24px;height:3px;background:#1e293b;border-radius:2px;transition:all 0.3s ease;transform-origin:center}
+        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1){transform:rotate(45deg) translate(7px,7px)}
+        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2){opacity:0;transform:translateX(-10px)}
+        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+        
+        /* Menu mobile vertical */
+        #nav-menu{max-height:0;overflow:hidden;transition:max-height 0.3s ease,opacity 0.3s ease}
+        #nav-menu:not(.hidden){max-height:500px}
+        @media (min-width:768px){#nav-menu{max-height:none!important}}
+        
+        .card-hover{transition:all 0.3s ease;transform:translateY(0)}
+        .card-hover:hover{transform:translateY(-4px);box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04)}
+        @media (max-width:768px){
+            .text-6xl{font-size:2.25rem}
+            .lg\:grid-cols-2>div:first-child{order:2}
+            .lg\:grid-cols-2>div:last-child{order:1}
         }
-        @media (max-width: 480px) { .text-6xl { font-size: 1.75rem; } }
-        #nav-toggle { background: transparent; border: 0; font-size: 1.25rem; }
+        @media (max-width:480px){.text-6xl{font-size:1.75rem}}
     </style>
     
     <script>
-        tailwind.config = { theme: { extend: { colors: { slate: '#0f172a', emerald: '#10b981', amber: '#f59e0b', blue: '#3b82f6' } } } }
+        tailwind.config={theme:{extend:{colors:{slate:'#1e293b',emerald:'#10b981',amber:'#f59e0b',blue:'#3b82f6'}}}}
     </script>
-    <script src="https://cdn.tailwindcss.com"></script> 
+    <script src="https://cdn.tailwindcss.com" defer></script>
 </head>
-<body class="bg-slate-50 text-slate-800">
-    <nav role="navigation" class="sticky top-0 z-50 bg-white shadow-lg">
+<body class="bg-white text-slate-800">
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    
+    <!-- Navigation -->
+    <nav role="navigation" aria-label="Navigation principale" class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm backdrop-blur-sm bg-white/95">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24">
-                <div class="flex items-center py-2">
-                    <a href="index.html" class="text-3xl font-extrabold text-slate-900 tracking-tight">Waytolearn<span class="text-emerald-600">IoT</span></a>
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-slate-900 tracking-tight hover:text-emerald-600 transition-colors">
+                        Waytolearn<span class="text-emerald-600">IoT</span>
+                    </a>
                 </div>
-                <button id="nav-toggle" aria-label="Ouvrir le menu" class="md:hidden" aria-expanded="false">☰</button>
+                <button id="nav-toggle" aria-label="Ouvrir le menu" aria-controls="nav-menu" class="md:hidden" aria-expanded="false" type="button">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
                 
                 <div id="nav-menu" 
-                    class="md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 w-full bg-white md:bg-transparent shadow-xl md:shadow-none p-6 md:p-0
-                    hidden opacity-0 md:opacity-100 transition-all duration-200 ease-in-out flex-col md:flex-row"> 
+                    class="md:flex md:space-x-1 absolute md:static top-20 left-0 w-full bg-white md:bg-transparent shadow-lg md:shadow-none border-t md:border-t-0 border-slate-200
+                    hidden opacity-0 md:opacity-100 md:flex-row flex-col
+                    transition-all duration-300 ease-in-out"> 
             
-                    <a href="index.html" class="nav-link active w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Accueil</a>
-                    <a href="architecture.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Architecture CPU</a>
-                    <a href="cycle.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Cycle Instruction</a>
-                    <a href="memory.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Gestion Mémoire</a>
-                    <a href="communication.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Communication</a>
-                    <a href="rtos.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">RTOS</a>
-                    <a href="ressources.html" class="nav-link w-full md:w-auto px-4 py-4 text-sm font-medium text-slate-500 hover:text-emerald-500 transition duration-150 transform hover:scale-105">Ressources</a>
+                    <a href="index.html" class="nav-link active w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">Accueil</a>
+                    <a href="architecture.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">Architecture CPU</a>
+                    <a href="cycle.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">Cycle Instruction</a>
+                    <a href="memory.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">Gestion Mémoire</a>
+                    <a href="communication.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">Communication</a>
+                    <a href="rtos.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors border-b md:border-b-0 border-slate-100 md:border-0">RTOS</a>
+                    <a href="ressources.html" class="nav-link w-full md:w-auto px-6 py-4 md:px-4 md:py-3 text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-slate-50 md:hover:bg-transparent transition-colors">Ressources</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Hero Section -->
+    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="py-16 md:py-24">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-slate-900 mb-6 leading-tight">
+                    Maîtrisez les Systèmes <span class="text-emerald-600">Embarqués IoT</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-4">
+                    Votre parcours guidé pour comprendre comment le matériel, le logiciel et la communication s'entremêlent pour créer des dispositifs connectés performants.
+                </p>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg max-w-3xl mx-auto mb-8">
+                    <p class="text-slate-700 text-sm">
+                        <strong>📚 Niveau :</strong> Deuxième année (L2) - Ce cours couvre les fondamentaux des systèmes embarqués IoT : architectures CPU, gestion mémoire, protocoles de communication et systèmes temps réel. Chaque concept est expliqué avec des exemples pratiques adaptés aux microcontrôleurs modernes (STM32, ESP32, Arduino).
+                    </p>
+                </div>
+                <a href="architecture.html" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                    Commencer l'apprentissage →
+                </a>
+            </div>
 
-        <section id="accueil" class="min-h-[80vh]">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="grid grid-cols-2 gap-6 p-6 bg-white rounded-xl shadow-xl">
-                    
-                    <div class="bg-blue-50 p-6 rounded-lg border-t-4 border-blue-500 transition duration-300 hover:shadow-xl hover:scale-[1.02]">
-                        <span class="text-4xl" role="img" aria-label="Antenne">📡</span>
-                        <h3 class="font-bold text-slate-800 mt-2">Protocoles Com</h3>
-                        <p class="text-sm text-slate-600 mt-1">MQTT, CoAP, LoRaWAN. Le cœur de la connexion IoT.</p>
-                    </div>
-                    
-                    <div class="bg-amber-50 p-6 rounded-lg border-t-4 border-amber-500 transition duration-300 hover:shadow-xl hover:scale-[1.02]">
-                        <span class="text-4xl" role="img" aria-label="Horloge">⏱️</span>
-                        <h3 class="font-bold text-slate-800 mt-2">RTOS</h3>
-                        <p class="text-sm text-slate-600 mt-1">FreeRTOS, Zephyr. Gérer le temps pour le temps réel.</p>
-                    </div>
-                    
-                    <div class="bg-slate-100 p-6 rounded-lg border-t-4 border-slate-500 col-span-2 transition duration-300 hover:shadow-xl hover:scale-[1.02]">
-                        <span class="text-3xl text-slate-600" role="img" aria-label="High voltage">⚡</span>
-                        <h3 class="font-bold text-slate-800 mt-2">Le Défi : Efficacité Énergie & Temps Réel</h3>
-                        <p class="text-sm text-slate-600 mt-1">Maîtriser l'architecture RISC, les cycles d'instruction optimisés et les systèmes d'exploitation temps réel pour garantir une autonomie maximale et une réponse instantanée.</p>
-                    </div>
+            <!-- Feature Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border border-blue-200 card-hover">
+                    <div class="text-5xl mb-4">📡</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Protocoles de Communication</h3>
+                    <p class="text-slate-700">MQTT, CoAP, LoRaWAN. Maîtrisez les protocoles essentiels pour connecter vos dispositifs IoT.</p>
+                    <a href="communication.html" class="inline-block mt-4 text-blue-600 font-semibold hover:text-blue-700">En savoir plus →</a>
+                </div>
+                
+                <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl border border-amber-200 card-hover">
+                    <div class="text-5xl mb-4">⏱️</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Systèmes Temps Réel</h3>
+                    <p class="text-slate-700">FreeRTOS, Zephyr. Apprenez à gérer le temps réel pour des applications critiques.</p>
+                    <a href="rtos.html" class="inline-block mt-4 text-amber-600 font-semibold hover:text-amber-700">En savoir plus →</a>
+                </div>
+                
+                <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-8 rounded-xl border border-emerald-200 card-hover">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Efficacité Énergétique</h3>
+                    <p class="text-slate-700">Optimisez la consommation d'énergie avec des architectures RISC et des cycles d'instruction optimisés.</p>
+                    <a href="architecture.html" class="inline-block mt-4 text-emerald-600 font-semibold hover:text-emerald-700">En savoir plus →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Section -->
+        <section class="py-16 bg-slate-50 rounded-2xl mb-16">
+            <div class="px-8">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4 text-center">Architectures Microprocesseurs</h2>
+                <p class="text-lg text-slate-600 mb-6 text-center max-w-2xl mx-auto">
+                    Comprenez les différences entre les architectures RISC et leurs applications dans l'IoT.
+                </p>
+                <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-lg max-w-2xl mx-auto mb-12">
+                    <p class="text-slate-700 text-sm">
+                        <strong>💡 Pourquoi c'est important :</strong> Les microcontrôleurs IoT utilisent des architectures RISC (ARM Cortex-M, RISC-V) optimisées pour la faible consommation. Contrairement aux processeurs de PC (x86), ils privilégient l'efficacité énergétique et la prédictibilité temporelle plutôt que la puissance brute. C'est essentiel pour des dispositifs fonctionnant sur batterie pendant des mois ou des années.
+                    </p>
                 </div>
 
-                <div class="p-6">
-                    <h1 class="text-6xl font-extrabold text-slate-900 mb-4">
-                        Maîtrise des Systèmes <span class="text-emerald-600">Embarqués IoT</span>
-                    </h1>
-                    <p class="text-xl text-slate-600 mb-6">
-                        WaytolearnIoT est votre parcours guidé pour comprendre comment le matériel, le logiciel et la communication s'entremêlent pour créer un dispositif connecté. Du Cortex-M à FreeRTOS, apprenez les bases solides.
-                    </p>
-                    <a href="architecture.html" class="mt-8 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition duration-300 transform hover:scale-105 inline-block">
-                        Démarrer l'Architecture ➔
-                    </a>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-amber-100 p-3 rounded-lg mr-4">
+                                <span class="text-3xl">🔧</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900">ARM Cortex-M (RISC)</h3>
+                        </div>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">✓</span>
+                                <span><strong>Cycles/Instruction :</strong> 1-3 (ultra rapide)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">✓</span>
+                                <span><strong>Jeu d'instructions :</strong> ~200 instructions simples</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">✓</span>
+                                <span><strong>Énergie :</strong> 0.5 - 2 mW en mode actif</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">✓</span>
+                                <span><strong>Utilisation :</strong> Arduino, ESP32, STM32</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">✓</span>
+                                <span><strong>Avantage :</strong> Prédictibilité temps réel, low-power</span>
+                            </li>
+                        </ul>
+                        <a href="architecture.html" class="inline-block mt-6 text-amber-600 font-semibold hover:text-amber-700">Explorer l'architecture →</a>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                <span class="text-3xl">🚀</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900">RISC-V (Open Source)</h3>
+                        </div>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">✓</span>
+                                <span><strong>Cycles/Instruction :</strong> 1-4 (comparable ARM)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">✓</span>
+                                <span><strong>Jeu d'instructions :</strong> Modulaire, extensible</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">✓</span>
+                                <span><strong>Énergie :</strong> 0.3 - 1.5 mW (ultra-low-power)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">✓</span>
+                                <span><strong>Utilisation :</strong> Research, custom IoT, microcontrôleurs edge</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">✓</span>
+                                <span><strong>Avantage :</strong> Open standard, licence gratuite, flexible</span>
+                            </li>
+                        </ul>
+                        <a href="architecture.html" class="inline-block mt-6 text-blue-600 font-semibold hover:text-blue-700">Explorer l'architecture →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RTOS Section -->
+        <section class="py-16 mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Systèmes d'exploitation Temps Réel (RTOS)</h2>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                    Dans l'IoT, le temps de réponse n'est pas une option, c'est une nécessité. Un RTOS garantit que les tâches critiques s'exécutent avec une prévisibilité temporelle garantie.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 text-center card-hover">
+                    <div class="text-6xl text-amber-600 mb-4">💡</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Priorité Déterministe</h3>
+                    <p class="text-slate-600">Les tâches sont exécutées en fonction de leur criticité, jamais en retard.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 text-center card-hover">
+                    <div class="text-6xl text-amber-600 mb-4">📜</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Gestion des Tâches</h3>
+                    <p class="text-slate-600">Allocation efficace des ressources CPU et basculement rapide (Context Switching).</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 text-center card-hover">
+                    <div class="text-6xl text-amber-600 mb-4">🔒</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Synchronisation</h3>
+                    <p class="text-slate-600">Utilisation de sémaphores et de mutex pour prévenir les conditions de course.</p>
                 </div>
             </div>
             
-            <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mt-12">
-                <h3 class="text-2xl font-bold text-slate-900 mb-4">📚 Fondamentaux : Architectures Microprocesseurs</h3>
-                
-                
+            <div class="text-center mt-12">
+                <a href="rtos.html" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
+                    Apprendre les RTOS →
+                </a>
+            </div>
+        </section>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    
-                    <div class="bg-amber-50 p-6 rounded-lg border-l-4 border-amber-600 transition duration-300 hover:shadow-xl hover:scale-[1.02]">
-                        <h4 class="font-bold text-amber-900 text-lg mb-2">ARM Cortex-M (RISC)</h4>
-                        <ul class="text-sm text-slate-700 space-y-2">
-                            <li>**Cycles/Instruction :** 1-3 (ultra rapide)</li>
-                            <li>**Jeu d'instructions :** ~200 instructions simples</li>
-                            <li>**Énergie :** 0.5 - 2 mW en mode actif</li>
-                            <li>**Utilisation :** Arduino, ESP32, STM32</li>
-                            <li>**Avantage :** Prédictibilité temps réel, low-power</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-600 transition duration-300 hover:shadow-xl hover:scale-[1.02]">
-                        <h4 class="font-bold text-blue-900 text-lg mb-2">RISC-V (Open Source)</h4>
-                        <ul class="text-sm text-slate-700 space-y-2">
-                            <li>**Cycles/Instruction :** 1-4 (comparable ARM)</li>
-                            <li>**Jeu d'instructions :** Modulaire, extensible</li>
-                            <li>**Énergie :** 0.3 - 1.5 mW (ultra-low-power)</li>
-                            <li>**Utilisation :** Research, custom IoT, microcontrôleurs edge</li>
-                            <li>**Avantage :** Open standard, licence gratuite, flexible</li>
-                        </ul>
+        <!-- Communication Section -->
+        <section class="py-16 bg-gradient-to-br from-slate-50 to-white rounded-2xl mb-16">
+            <div class="px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-slate-900 mb-4">Protocoles de Communication IoT</h2>
+                    <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-4">
+                        L'Internet des Objets repose sur des protocoles légers et efficaces. Maîtrisez MQTT et CoAP pour l'échange de données dans des environnements à bande passante limitée.
+                    </p>
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg max-w-3xl mx-auto">
+                        <p class="text-slate-700 text-sm">
+                            <strong>🌍 Contexte Sénégal :</strong> Les protocoles IoT comme LoRaWAN sont particulièrement adaptés aux zones rurales où la connectivité Internet est limitée. Un capteur LoRaWAN peut transmettre des données sur plusieurs kilomètres avec une batterie qui dure des années, idéal pour l'agriculture intelligente et la surveillance environnementale.
+                        </p>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section id="intro-rtos" class="py-16">
-            <h2 class="text-4xl font-extrabold text-slate-900 mb-6 border-b-4 border-emerald-300 inline-block pb-1">Systèmes d'exploitation Temps Réel (RTOS)</h2>
-            <p class="text-lg text-slate-700 mb-8">
-                Dans l'IoT, le temps de réponse n'est pas une option, c'est une nécessité. Un RTOS garantit que les tâches critiques (comme la lecture d'un capteur ou le déclenchement d'un actionneur) s'exécutent avec une prévisibilité temporelle garantie.
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg border border-amber-200">
-                    <span class="text-5xl text-amber-600" role="img" aria-label="Microchip">💡</span>
-                    <h3 class="font-bold text-slate-800 mt-4 text-xl">Priorité Déterministe</h3>
-                    <p class="text-sm text-slate-600 mt-2">Les tâches sont exécutées en fonction de leur criticité, jamais en retard.</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg border border-amber-200">
-                    <span class="text-5xl text-amber-600" role="img" aria-label="List">📜</span>
-                    <h3 class="font-bold text-slate-800 mt-4 text-xl">Gestion des Tâches</h3>
-                    <p class="text-sm text-slate-600 mt-2">Allocation efficace des ressources CPU et basculement rapide (Context Switching).</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg border border-amber-200">
-                    <span class="text-5xl text-amber-600" role="img" aria-label="Lock">🔒</span>
-                    <h3 class="font-bold text-slate-800 mt-4 text-xl">Synchronisation</h3>
-                    <p class="text-sm text-slate-600 mt-2">Utilisation de sémaphores et de mutex pour prévenir les conditions de course (Race Conditions).</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="communication-iot" class="py-16 bg-white rounded-xl shadow-xl p-8">
-            <h2 class="text-4xl font-extrabold text-slate-900 mb-6 border-b-4 border-emerald-300 inline-block pb-1">Les Protocoles de Communication</h2>
-            <p class="text-lg text-slate-700 mb-8">
-                L'Internet des Objets repose sur des protocoles légers et efficaces. Maîtriser MQTT et CoAP est essentiel pour l'échange de données dans des environnements à bande passante limitée.
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="p-6 bg-blue-50 rounded-lg border-l-4 border-blue-500">
-                    <h3 class="font-bold text-blue-900 text-xl mb-2">MQTT (Message Queuing Telemetry Transport)</h3>
-                    <p class="text-sm text-slate-700">Protocole Publisher/Subscriber, idéal pour les communications unidirectionnelles fiables. Fonctionne sur TCP/IP.
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-md border-l-4 border-blue-500 card-hover">
+                        <h3 class="text-2xl font-bold text-blue-900 mb-4 flex items-center">
+                            <span class="text-3xl mr-3" aria-hidden="true">☁️</span> MQTT
+                        </h3>
+                        <p class="text-slate-700 mb-4">
+                            Protocole Publisher/Subscriber, idéal pour les communications unidirectionnelles fiables. Fonctionne sur TCP/IP.
+                        </p>
+                        <ul class="space-y-2 text-slate-600">
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                <span><strong>Avantages :</strong> Très faible surcharge (overhead), qualité de service (QoS) gérée.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                <span><strong>Utilisation :</strong> Télémétrie, notification, cloud IoT (AWS IoT, Azure IoT Hub).</span>
+                            </li>
+                        </ul>
+                    </div>
                     
-                    </p>
-                    <ul class="list-disc list-inside mt-3 text-sm text-slate-600 space-y-1">
-                        <li>**Avantages :** Très faible surcharge (overhead), qualité de service (QoS) gérée.</li>
-                        <li>**Utilisation :** Télémétrie, notification, cloud IoT (AWS IoT, Azure IoT Hub).</li>
-                    </ul>
+                    <div class="bg-white p-8 rounded-xl shadow-md border-l-4 border-emerald-500 card-hover">
+                        <h3 class="text-2xl font-bold text-emerald-900 mb-4 flex items-center">
+                            <span class="text-3xl mr-3" aria-hidden="true">🍃</span> CoAP
+                        </h3>
+                        <p class="text-slate-700 mb-4">
+                            Protocole Web Restful pour les périphériques contraints. Fonctionne sur UDP pour une faible latence.
+                        </p>
+                        <ul class="space-y-2 text-slate-600">
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">•</span>
+                                <span><strong>Avantages :</strong> Modèle Requête/Réponse, faible consommation d'énergie, s'intègre au Web.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-emerald-600 mr-2">•</span>
+                                <span><strong>Utilisation :</strong> Domotique (Home Automation), communications locales entre appareils.</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 
-                <div class="p-6 bg-emerald-50 rounded-lg border-l-4 border-emerald-500">
-                    <h3 class="font-bold text-emerald-900 text-xl mb-2">CoAP (Constrained Application Protocol)</h3>
-                    <p class="text-sm text-slate-700">Protocole Web Restful pour les périphériques contraints. Fonctionne sur UDP pour une faible latence.
-                    
-                    </p>
-                    <ul class="list-disc list-inside mt-3 text-sm text-slate-600 space-y-1">
-                        <li>**Avantages :** Modèle Requête/Réponse, faible consommation d'énergie, s'intègre au Web.</li>
-                        <li>**Utilisation :** Domotique (Home Automation), communications locales entre appareils.</li>
-                    </ul>
+                <div class="text-center mt-12">
+                    <a href="communication.html" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
+                        Explorer les protocoles →
+                    </a>
                 </div>
             </div>
         </section>
-
     </main>
 
-    <footer class="bg-slate-900 text-white mt-16 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-            <p>&copy; 2025 WaytolearnIoT. Plateforme éducative pour Systèmes Embarqués.</p>
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white mt-20 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-4">Waytolearn<span class="text-emerald-400">IoT</span></h3>
+                <p class="text-slate-400 mb-6">Plateforme éducative pour Systèmes Embarqués</p>
+                <p class="text-sm text-slate-500">&copy; 2025 WaytolearnIoT. Tous droits réservés.</p>
+            </div>
         </div>
     </footer>
     
