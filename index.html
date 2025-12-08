@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="WaytolearnIoT — plateforme interactive pour étudiants : architectures embarquées, communication, gestion mémoire, et systèmes d'exploitation temps réel (RTOS) pour l'Internet des Objets.">
+    <meta name="theme-color" content="#0f172a">
+    <title>WaytolearnIoT : Devenez Expert en Systèmes Embarqués</title>
+    
+    <style>
+        @layer base {
+            :root{--bg:#f8fafc;--muted:#94a3b8;--accent:#10b981}
+            html,body{height:100%}
+            body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter, "Helvetica Neue", Arial; background:var(--bg); color:#0f172a; margin:0}
+            .nav-link.active { border-bottom: 3px solid #10b981; color: #10b981; font-weight: 700; }
+        }
+        .nav-links-mobile { display: none; flex-direction: column; width: 100%; gap: 0.5rem; padding: 0.5rem 0; }
+        @media (min-width: 768px) { .nav-links-mobile { display: flex !important; flex-direction: row; } }
+        @media (max-width: 768px) {
+            .text-6xl { font-size: 2.25rem; }
+            .lg\:grid-cols-2 > div:first-child { order: 2; }
+            .lg\:grid-cols-2 > div:last-child { order: 1; }
+            .min-h\[80vh\] { min-height: 60vh; }
+        }
+        @media (max-width: 480px) { .text-6xl { font-size: 1.75rem; } }
+        #nav-toggle { background: transparent; border: 0; font-size: 1.25rem; }
+    </style>
+    
+    <script>
+        tailwind.config = { theme: { extend: { colors: { slate: '#0f172a', emerald: '#10b981', amber: '#f59e0b', blue: '#3b82f6' } } } }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script> 
+    <script>
+        function toggleNav() {
+            const menu = document.getElementById('nav-menu');
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <nav role="navigation" class="sticky top-0 z-50 bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <div class="flex items-center py-2">
+                    <a href="index.html" class="text-3xl font-extrabold text-slate-900 tracking-tight">Waytolearn<span class="text-emerald-600">IoT</span></a>
+                </div>
+                <button id="nav-toggle" aria-label="Ouvrir le menu" onclick="toggleNav()" class="md:hidden">☰</button>
+                <div id="nav-menu" class="nav-links-mobile md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 bg-white md:bg-transparent shadow-xl md:shadow-none p-4 md:p-0">
+                    <a href="index.html" class="nav-link active inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Accueil</a>
+                    <a href="architecture.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Architecture CPU</a>
+                    <a href="cycle.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Cycle Instruction</a>
+                    <a href="memory.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Gestion Mémoire</a>
+                    <a href="communication.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">🌐 Communication</a>
+                    <a href="rtos.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">⏱️ RTOS</a>
+                    <a href="ressources.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">📂 Ressources</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 min-h-[80vh]">
+
+        <section id="accueil">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="grid grid-cols-2 gap-6 p-6 bg-white rounded-xl shadow-xl">
+                    <div class="bg-blue-50 p-6 rounded-lg border-t-4 border-blue-500">
+                        <span class="text-4xl" role="img" aria-label="Antenne">📡</span>
+                        <h3 class="font-bold text-slate-800 mt-2">Protocoles Com</h3>
+                        <p class="text-sm text-slate-600 mt-1">MQTT, CoAP, LoRaWAN. Le cœur de la connexion IoT.</p>
+                    </div>
+                    <div class="bg-amber-50 p-6 rounded-lg border-t-4 border-amber-500">
+                        <span class="text-4xl" role="img" aria-label="Horloge">⏱️</span>
+                        <h3 class="font-bold text-slate-800 mt-2">RTOS</h3>
+                        <p class="text-sm text-slate-600 mt-1">FreeRTOS, Zephyr. Gérer le temps pour le temps réel.</p>
+                    </div>
+                    <div class="bg-slate-100 p-6 rounded-lg border-t-4 border-slate-500 col-span-2">
+                        <span class="text-3xl text-slate-600" role="img" aria-label="High voltage">⚡</span>
+                        <h3 class="font-bold text-slate-800 mt-2">Le Défi : Efficacité Énergie & Temps Réel</h3>
+                        <p class="text-sm text-slate-600 mt-1">Maîtriser l'architecture RISC, les cycles d'instruction optimisés et les systèmes d'exploitation temps réel pour garantir une autonomie maximale et une réponse instantanée.</p>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <h1 class="text-6xl font-extrabold text-slate-900 mb-4">
+                        Maîtrise des Systèmes <span class="text-emerald-600">Embarqués IoT</span>
+                    </h1>
+                    <p class="text-xl text-slate-600 mb-6">
+                        WaytolearnIoT est votre parcours guidé pour comprendre comment le matériel, le logiciel et la communication s'entremêlent pour créer un dispositif connecté. Du Cortex-M à FreeRTOS, apprenez les bases solides.
+                    </p>
+                    <a href="architecture.html" class="mt-8 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition duration-300 transform hover:scale-105 inline-block">
+                        Démarrer l'Architecture ➔
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mt-12">
+                <h3 class="text-2xl font-bold text-slate-900 mb-4">📚 Fondamentaux : Architectures Microprocesseurs</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-amber-50 p-6 rounded-lg border-l-4 border-amber-600">
+                        <h4 class="font-bold text-amber-900 text-lg mb-2">ARM Cortex-M (RISC)</h4>
+                        <ul class="text-sm text-slate-700 space-y-2">
+                            <li>**Cycles/Instruction :** 1-3 (ultra rapide)</li>
+                            <li>**Jeu d'instructions :** ~200 instructions simples</li>
+                            <li>**Énergie :** 0.5 - 2 mW en mode actif</li>
+                            <li>**Utilisation :** Arduino, ESP32, STM32</li>
+                            <li>**Avantage :** Prédictibilité temps réel, low-power</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-600">
+                        <h4 class="font-bold text-blue-900 text-lg mb-2">RISC-V (Open Source)</h4>
+                        <ul class="text-sm text-slate-700 space-y-2">
+                            <li>**Cycles/Instruction :** 1-4 (comparable ARM)</li>
+                            <li>**Jeu d'instructions :** Modulaire, extensible</li>
+                            <li>**Énergie :** 0.3 - 1.5 mW (ultra-low-power)</li>
+                            <li>**Utilisation :** Research, custom IoT, microcontrôleurs edge</li>
+                            <li>**Avantage :** Open standard, licence gratuite, flexible</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-white mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 WaytolearnIoT. Plateforme éducative pour Systèmes Embarqués.</p>
+        </div>
+    </footer>
+    
+</body>
+</html>

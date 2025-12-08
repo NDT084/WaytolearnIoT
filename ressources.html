@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Documentation, tutoriels, et liens vers des cours en ligne pour les architectures microcontrôleurs (ARM, RISC-V) et le développement IoT (MQTT, FreeRTOS, Zephyr).">
+    <meta name="theme-color" content="#0f172a">
+    <title>Ressources IoT - WaytolearnIoT</title>
+    
+    <style>
+        /* ... Styles essentiels et de responsivité ... */
+        @layer base {
+            :root{--bg:#f8fafc;--muted:#94a3b8;--accent:#10b981}
+            html,body{height:100%}
+            body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter, "Helvetica Neue", Arial; background:var(--bg); color:#0f172a; margin:0}
+            .nav-link.active { border-bottom: 3px solid #10b981; color: #10b981; font-weight: 700; }
+        }
+        .nav-links-mobile { display: none; flex-direction: column; width: 100%; gap: 0.5rem; padding: 0.5rem 0; }
+        @media (min-width: 768px) { .nav-links-mobile { display: flex !important; flex-direction: row; } }
+        @media (max-width: 768px) { .min-h\[80vh\] { min-height: 60vh; } }
+        #nav-toggle { background: transparent; border: 0; font-size: 1.25rem; }
+
+        .resource-card { transition: all 0.3s ease; }
+        .resource-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+    </style>
+    
+    <script>
+        tailwind.config = { theme: { extend: { colors: { slate: '#0f172a', emerald: '#10b981', amber: '#f59e0b', blue: '#3b82f6' } } } }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script> 
+    <script> function toggleNav() { const menu = document.getElementById('nav-menu'); menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex'; }</script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <nav role="navigation" class="sticky top-0 z-50 bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <div class="flex items-center py-2">
+                    <a href="index.html" class="text-3xl font-extrabold text-slate-900 tracking-tight">Waytolearn<span class="text-emerald-600">IoT</span></a>
+                </div>
+                <button id="nav-toggle" aria-label="Ouvrir le menu" onclick="toggleNav()" class="md:hidden">☰</button>
+                <div id="nav-menu" class="nav-links-mobile md:flex md:space-x-8 -mb-px absolute md:static top-24 left-0 bg-white md:bg-transparent shadow-xl md:shadow-none p-4 md:p-0">
+                    <a href="index.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Accueil</a>
+                    <a href="architecture.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Architecture CPU</a>
+                    <a href="cycle.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Cycle Instruction</a>
+                    <a href="memory.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">Gestion Mémoire</a>
+                    <a href="communication.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">🌐 Communication</a>
+                    <a href="rtos.html" class="nav-link inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">⏱️ RTOS</a>
+                    <a href="ressources.html" class="nav-link active inline-flex items-center px-1 pt-1 border-b-3 text-sm font-medium text-slate-500 hover:text-slate-700 transition duration-150">📂 Ressources</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 min-h-[80vh]">
+
+        <section id="ressources">
+            <div class="text-center mb-10">
+                <h2 class="text-4xl font-extrabold tracking-tight text-slate-900">📂 Documentation et Plateformes IoT</h2>
+                <p class="mt-3 max-w-3xl mx-auto text-lg text-slate-500">
+                    Poursuivez votre apprentissage avec les ressources et la documentation officielles utilisées par les professionnels de l'IoT.
+                </p>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-slate-900 mt-8 mb-4">Documentation Officielle et Compilateurs</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <a href="https://developer.arm.com/architectures/cpu-architecture/a-profile/armv7-a-and-armv8-a-architecture-reference-manuals" target="_blank" class="resource-card block bg-white p-6 rounded-xl shadow border-l-4 border-amber-500 hover:bg-amber-50">
+                    <h4 class="font-bold text-amber-900 text-lg">Manuels ARM Cortex-M</h4>
+                    <p class="text-sm text-slate-700 mt-1">La référence absolue pour l'architecture et les jeux d'instructions des microcontrôleurs.</p>
+                </a>
+                
+                <a href="https://riscv.org/technical/specifications/" target="_blank" class="resource-card block bg-white p-6 rounded-xl shadow border-l-4 border-blue-500 hover:bg-blue-50">
+                    <h4 class="font-bold text-blue-900 text-lg">Spécifications RISC-V</h4>
+                    <p class="text-sm text-slate-700 mt-1">Accès aux spécifications de l'ISA open source (base et extensions).</p>
+                </a>
+                
+                <a href="https://gcc.gnu.org/onlinedocs/gcc-4.8.5/gcc/ARM-Options.html" target="_blank" class="resource-card block bg-white p-6 rounded-xl shadow border-l-4 border-emerald-500 hover:bg-emerald-50">
+                    <h4 class="font-bold text-emerald-900 text-lg">GCC et Optimisation C/C++</h4>
+                    <p class="text-sm text-slate-700 mt-1">Comprendre les drapeaux d'optimisation pour les architectures embarquées (-Os, -O3).</p>
+                </a>
+            </div>
+
+            <h3 class="text-2xl font-bold text-slate-900 mt-12 mb-4">Plateformes et Tutos RTOS/Communication</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <a href="https://www.freertos.org/a00104.html" target="_blank" class="resource-card block bg-white p-6 rounded-xl shadow border-l-4 border-emerald-600 hover:bg-emerald-50">
+                    <h4 class="font-bold text-emerald-900 text-lg">FreeRTOS Tutorial officiel</h4>
+                    <p class="text-sm text-slate-700 mt-1">Le guide de démarrage par excellence pour les primitives (Tasks, Queues, Semaphores).</p>
+                </a>
+                
+                <a href="https://docs.zephyrproject.org/latest/index.html" target="_blank" class="resource-card block bg-white p-6 rounded-xl shadow border-l-4 border-slate-500 hover:bg-slate-100">
+                    <h4 class="font-bold text-slate-900 text-lg">Documentation Zephyr RTOS</h4>
+                    <p class="text-sm text-slate-700 mt-1">Pour les projets modernes utilisant la gestion de la configuration (Kconfig) et la sécurité.</p>
+                </a>
+                
+                <a href="https://www.hivemq.com/mqtt-essentials/" target="_blank" class="resource-card block bg-white p-6 rounded-xl shadow border-l-4 border-blue-600 hover:bg-blue-50">
+                    <h4 class="font-bold text-blue-900 text-lg">MQTT Essentials</h4>
+                    <p class="text-sm text-slate-700 mt-1">Une série d'articles pour maîtriser le protocole de messagerie le plus populaire en IoT.</p>
+                </a>
+                
+                <a href="https://iot-developer.samsung.com/onlinedocs/iot-platform-overview" target="_blank" class="resource-card block bg-white p-6 rounded-xl shadow border-l-4 border-red-600 hover:bg-red-50">
+                    <h4 class="font-bold text-red-900 text-lg">Plateformes Cloud IoT</h4>
+                    <p class="text-sm text-slate-700 mt-1">Liens vers AWS IoT, Azure IoT Hub et Google Cloud IoT pour la partie backend.</p>
+                </a>
+            </div>
+            
+        </section>
+
+    </main>
+    <footer class="bg-slate-900 text-white mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 WaytolearnIoT. Plateforme éducative pour Systèmes Embarqués.</p>
+        </div>
+    </footer>
+</body>
+</html>
