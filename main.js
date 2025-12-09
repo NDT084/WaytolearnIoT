@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   showSlide(0);
 });
-
+//Bouton pour remonter
 document.addEventListener('DOMContentLoaded', () => {
   const backToTop = document.getElementById('back-to-top');
   if (!backToTop) return;
@@ -164,12 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Clic → remonter en haut
   backToTop.addEventListener('click', () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth' // supporté nativement par les navigateurs modernes[web:92]
     });
   });
 });
-
 
