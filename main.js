@@ -149,3 +149,27 @@ document.addEventListener('DOMContentLoaded', () => {
   showSlide(0);
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  const backToTop = document.getElementById('back-to-top');
+  if (!backToTop) return;
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY || document.documentElement.scrollTop;
+    if (scrolled > 300) {
+      backToTop.classList.remove('hidden');
+      backToTop.classList.add('opacity-100');
+    } else {
+      backToTop.classList.add('hidden');
+      backToTop.classList.remove('opacity-100');
+    }
+  });
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});
+
+
