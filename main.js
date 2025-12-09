@@ -112,3 +112,40 @@
         setActiveNavLink();
     }
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const slider = document.getElementById('iot-slider');
+  if (!slider) return;
+
+  const slides = Array.from(slider.querySelectorAll('img'));
+  const dots = Array.from(document.querySelectorAll('[data-slide]'));
+  let current = 0;
+
+  function showSlide(index) {
+    slides.forEach((img, i) => {
+      img.style.opacity = i === index ? '1' : '0';
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('bg-emerald-500', i === index);
+      dot.classList.toggle('bg-slate-500', i !== index);
+    });
+    current = index;
+  }
+
+  // Auto-play
+  setInterval(() => {
+    const next = (current + 1) % slides.length;
+    showSlide(next);
+  }, 5000);
+
+  // Clic sur les indicateurs
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const index = Number(dot.getAttribute('data-slide'));
+      showSlide(index);
+    });
+  });
+
+  showSlide(0);
+});
+
