@@ -284,41 +284,90 @@
 
 
         <!-- Section 2: Références -->
-        <section class="mb-16">
-            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">3. Références et Communautés</h2>
-                
-                <p class="text-lg text-slate-700 mb-8 leading-relaxed">
-                    Le domaine des systèmes embarqués évolue rapidement. Voici quelques références pour maintenir vos connaissances à jour.
-                </p>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
-                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
-                        <h4 class="text-lg font-bold text-emerald-700 mb-4">Documentation Architecture</h4>
-                        <ul class="space-y-2 text-slate-700">
-                            <li><a href="#" class="text-emerald-700 hover:text-emerald-800 hover:underline">ARM Architecture Reference Manuals</a></li>
-                            <li><a href="#" class="text-emerald-700 hover:text-emerald-800 hover:underline">Spécification Technique RISC-V ISA</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
-                        <h4 class="text-lg font-bold text-emerald-700 mb-4">Systèmes RTOS</h4>
-                        <ul class="space-y-2 text-slate-700">
-                            <li><a href="#" class="text-emerald-700 hover:text-emerald-800 hover:underline">Documentation Officielle FreeRTOS</a></li>
-                            <li><a href="#" class="text-emerald-700 hover:text-emerald-800 hover:underline">Projet et Communauté Zephyr RTOS</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
-                        <h4 class="text-lg font-bold text-emerald-700 mb-4">Forums et Standards</h4>
-                        <ul class="space-y-2 text-slate-700">
-                            <li><a href="#" class="text-emerald-700 hover:text-emerald-800 hover:underline">Embedded Stack Overflow</a></li>
-                            <li><a href="#" class="text-emerald-700 hover:text-emerald-800 hover:underline">Standards de codage MISRA C</a></li>
-                        </ul>
-                    </div>
-                </div>
+       <section class="mb-16">
+    <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
+        <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">
+            3. Références et Communautés
+        </h2>
+        
+        <p class="text-lg text-slate-700 mb-8 leading-relaxed">
+            Le domaine des systèmes embarqués évolue rapidement. Voici quelques références pour maintenir vos connaissances à jour.
+        </p>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+
+            <!-- Documentation Architecture -->
+            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
+                <h4 class="text-lg font-bold text-emerald-700 mb-4">Documentation Architecture</h4>
+                <ul class="space-y-2 text-slate-700">
+                    <li>
+                        <a href="https://www.arm.com/architecture/learn-the-architecture/a-profile"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
+                            ARM Architecture Reference Manuals
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://riscv.org/technical/specifications/"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
+                            Spécification Technique RISC-V ISA
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </section>
+            
+            <!-- Systèmes RTOS -->
+            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
+                <h4 class="text-lg font-bold text-emerald-700 mb-4">Systèmes RTOS</h4>
+                <ul class="space-y-2 text-slate-700">
+                    <li>
+                        <a href="https://www.freertos.org/features.html"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
+                            Documentation Officielle FreeRTOS
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/zephyrproject-rtos/example-application"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
+                            Projet et Communauté Zephyr RTOS
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Forums et Standards -->
+            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
+                <h4 class="text-lg font-bold text-emerald-700 mb-4">Forums et Standards</h4>
+                <ul class="space-y-2 text-slate-700">
+                    <li>
+                        <a href="https://stackoverflow.com/questions/tagged/embedded"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
+                            Embedded Stack Overflow
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.misra.org.uk"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
+                            Standards de codage MISRA C
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
 
         <!-- Section 3: Vidéos YouTube -->
        <section class="mb-16">
