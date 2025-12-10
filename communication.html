@@ -180,7 +180,7 @@
             </p>
             <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg max-w-3xl mx-auto">
                 <p class="text-slate-700 text-sm">
-                    <strong>🎯 Objectifs pédagogiques :</strong> Comprendre les bus internes (I2C, SPI, UART), maîtriser les protocoles IoT (MQTT, CoAP), choisir le bon protocole selon les contraintes (bande passante, consommation, portée), et implémenter des communications fiables dans vos projets IoT.
+                    <strong>Objectifs pédagogiques :</strong> Comprendre les bus internes (I2C, SPI, UART), maîtriser les protocoles IoT (MQTT, CoAP), choisir le bon protocole selon les contraintes (bande passante, consommation, portée), et implémenter des communications fiables dans vos projets IoT.
                 </p>
             </div>
         </header>
@@ -195,7 +195,7 @@
                 </p>
                 
                 <div class="bg-slate-50 p-5 rounded-lg border-l-4 border-slate-500 mb-8">
-                    <h4 class="font-bold text-slate-800 mb-2">💡 Pourquoi plusieurs bus ?</h4>
+                    <h4 class="font-bold text-slate-800 mb-2">Pourquoi plusieurs bus ?</h4>
                     <p class="text-slate-700 text-sm">
                         Chaque bus a ses avantages : <strong>I2C</strong> pour économiser les broches (2 fils), <strong>SPI</strong> pour la vitesse (écrans, mémoires), <strong>UART</strong> pour la simplicité (debug, modules). Sur un ESP32, vous pouvez utiliser les 3 simultanément !
                     </p>
@@ -204,7 +204,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
                         <h3 class="text-xl font-bold text-blue-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true">🤏</span> I²C
+                            <span class="text-2xl mr-2" aria-hidden="true"></span> I²C
                         </h3>
                         <p class="text-slate-700 mb-3">
                             Bus série synchrone maître/esclave. N'utilise que deux fils (SDA & SCL). Idéal pour les petits capteurs I/O.
@@ -218,7 +218,7 @@
                             </ul>
                         </div>
                         <p class="text-xs text-slate-600">
-                            <strong>💻 Code Arduino :</strong> <code>Wire.begin(); Wire.write(data);</code>
+                            <strong> Code Arduino :</strong> <code>Wire.begin(); Wire.write(data);</code>
                         </p>
                         <div class="bg-white p-3 rounded-lg text-center text-xs text-slate-500">
                             [Diagramme I2C]
@@ -227,7 +227,7 @@
                     
                     <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-6 rounded-xl border-l-4 border-amber-600 shadow-sm card-hover">
                         <h3 class="text-xl font-bold text-amber-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true">🚀</span> SPI
+                            <span class="text-2xl mr-2" aria-hidden="true"></span> SPI
                         </h3>
                         <p class="text-slate-700 mb-3">
                             Bus série synchrone maître/esclave. Plus rapide que I²C, utilise quatre fils. Préféré pour les mémoires flash et les écrans rapides.
@@ -241,7 +241,7 @@
                             </ul>
                         </div>
                         <p class="text-xs text-slate-600">
-                            <strong>💻 Code Arduino :</strong> <code>SPI.begin(); SPI.transfer(data);</code>
+                            <strong> Code Arduino :</strong> <code>SPI.begin(); SPI.transfer(data);</code>
                         </p>
                         <div class="bg-white p-3 rounded-lg text-center text-xs text-slate-500">
                             [Diagramme SPI]
@@ -250,7 +250,7 @@
                     
                     <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-xl border-l-4 border-slate-500 shadow-sm card-hover">
                         <h3 class="text-xl font-bold text-slate-800 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true">🗣️</span> UART
+                            <span class="text-2xl mr-2" aria-hidden="true"></span> UART
                         </h3>
                         <p class="text-slate-700 mb-3">
                             Bus série asynchrone (sans horloge). Utilisé principalement pour le debugging et la communication avec des modules (comme le GPS ou le GSM).
@@ -264,7 +264,7 @@
                             </ul>
                         </div>
                         <p class="text-xs text-slate-600">
-                            <strong>💻 Code Arduino :</strong> <code>Serial.begin(9600); Serial.println("Hello");</code>
+                            <strong> Code Arduino :</strong> <code>Serial.begin(9600); Serial.println("Hello");</code>
                         </p>
                     </div>
                 </div>
@@ -283,13 +283,13 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div class="bg-gradient-to-br from-red-50 to-red-100 p-8 rounded-xl border-l-4 border-red-600 shadow-sm card-hover">
                         <h3 class="text-2xl font-bold text-red-900 mb-4 flex items-center">
-                            <span class="text-4xl mr-3" aria-hidden="true">☁️</span> MQTT
+                            <span class="text-4xl mr-3" aria-hidden="true"></span> MQTT
                         </h3>
                         <p class="text-slate-700 mb-4 leading-relaxed">
                             Protocole de messagerie léger basé sur un modèle <strong>Publier/S'abonner (Pub/Sub)</strong>. Idéal pour les communications asynchrones entre dispositifs et le Cloud.
                         </p>
                         <div class="bg-white p-4 rounded-lg mb-4">
-                            <p class="text-xs text-slate-600 mb-2"><strong>📡 Cas d'usage réel :</strong></p>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Cas d'usage réel :</strong></p>
                             <p class="text-xs text-slate-700 mb-2">
                                 Un capteur de température ESP32 publie ses données sur le topic <code>sensors/temperature</code>. Un serveur cloud s'abonne à ce topic et reçoit automatiquement les données. Plusieurs abonnés peuvent recevoir les mêmes données.
                             </p>
@@ -311,13 +311,13 @@ client.subscribe("commands/led");</code></pre>
                     
                     <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
                         <h3 class="text-2xl font-bold text-green-900 mb-4 flex items-center">
-                            <span class="text-4xl mr-3" aria-hidden="true">🍃</span> CoAP
+                            <span class="text-4xl mr-3" aria-hidden="true"></span> CoAP
                         </h3>
                         <p class="text-slate-700 mb-4 leading-relaxed">
                             Protocole de transfert de données basé sur le modèle <strong>Requête/Réponse</strong> (similaire à HTTP, mais optimisé pour l'embarqué). Utilise UDP pour minimiser la taille des paquets.
                         </p>
                         <div class="bg-white p-4 rounded-lg mb-4">
-                            <p class="text-xs text-slate-600 mb-2"><strong>📡 Cas d'usage réel :</strong></p>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Cas d'usage réel :</strong></p>
                             <p class="text-xs text-slate-700 mb-2">
                                 Un capteur CoAP expose une ressource <code>coap://device/temperature</code>. Un autre appareil peut faire une requête GET pour lire la température, ou PUT pour configurer un seuil. Similaire à REST, mais avec seulement 4-10 bytes d'en-tête au lieu de 50+ pour HTTP.
                             </p>
@@ -350,7 +350,7 @@ GET coap://192.168.1.100/temperature
                 </p>
                 
                 <div class="bg-emerald-50 p-5 rounded-lg border-l-4 border-emerald-600 mb-8">
-                    <h4 class="font-bold text-emerald-900 mb-2">🌍 Applications LPWAN au Sénégal</h4>
+                    <h4 class="font-bold text-emerald-900 mb-2"> Applications LPWAN au Sénégal</h4>
                     <p class="text-slate-700 text-sm mb-3">
                         Les réseaux LPWAN sont idéaux pour l'agriculture intelligente, la surveillance environnementale, et la gestion de l'eau. Un capteur LoRaWAN peut transmettre des données sur plusieurs kilomètres avec une batterie qui dure 5-10 ans !
                     </p>
