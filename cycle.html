@@ -184,7 +184,7 @@
             </p>
             <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg max-w-3xl mx-auto">
                 <p class="text-slate-700 text-sm">
-                    <strong>🎯 Objectifs pédagogiques :</strong> Comprendre le cycle Fetch-Decode-Execute, analyser l'impact des sauts et interruptions sur les performances, et maîtriser les techniques d'optimisation pour garantir le déterminisme temporel dans les systèmes embarqués IoT.
+                    <strong> Objectifs pédagogiques :</strong> Comprendre le cycle Fetch-Decode-Execute, analyser l'impact des sauts et interruptions sur les performances, et maîtriser les techniques d'optimisation pour garantir le déterminisme temporel dans les systèmes embarqués IoT.
                 </p>
             </div>
         </header>
@@ -199,7 +199,7 @@
                 </p>
                 
                 <div class="bg-slate-50 p-5 rounded-lg border-l-4 border-slate-500 mb-8">
-                    <h4 class="font-bold text-slate-800 mb-2">📊 Exemple concret : Mesure du temps d'exécution</h4>
+                    <h4 class="font-bold text-slate-800 mb-2"> Exemple concret : Mesure du temps d'exécution</h4>
                     <p class="text-slate-700 text-sm mb-3">
                         Sur un STM32 (Cortex-M4 à 84 MHz), une instruction simple comme <code>MOV R0, #5</code> prend 1 cycle d'horloge, soit environ <strong>11.9 nanosecondes</strong> (1/84MHz). Pour une boucle de 1000 itérations, cela représente environ <strong>12 microsecondes</strong> - un temps prévisible et mesurable.
                     </p>
@@ -213,7 +213,7 @@ uint32_t cycles = end - start;</code></pre>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                     <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
                         <h3 class="text-xl font-bold text-blue-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true">📥</span> 1. Fetch (Recherche)
+                            <span class="text-2xl mr-2" aria-hidden="true"></span> 1. Fetch (Recherche)
                         </h3>
                         <p class="text-slate-700 mb-3">
                             Le CPU récupère l'instruction à l'adresse indiquée par le Program Counter (PC) dans la mémoire (Flash ou RAM).
@@ -225,7 +225,7 @@ uint32_t cycles = end - start;</code></pre>
                     
                     <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-6 rounded-xl border-l-4 border-amber-600 shadow-sm card-hover">
                         <h3 class="text-xl font-bold text-amber-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true">⚙️</span> 2. Decode (Décodage)
+                            <span class="text-2xl mr-2" aria-hidden="true"></span> 2. Decode (Décodage)
                         </h3>
                         <p class="text-slate-700 mb-3">
                             L'unité de contrôle (CU) interprète l'instruction (ADD, MOV, JUMP, etc.) et détermine les données et les adresses nécessaires.
@@ -237,7 +237,7 @@ uint32_t cycles = end - start;</code></pre>
                     
                     <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-6 rounded-xl border-l-4 border-emerald-600 shadow-sm card-hover">
                         <h3 class="text-xl font-bold text-emerald-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true">⚡</span> 3. Execute (Exécution)
+                            <span class="text-2xl mr-2" aria-hidden="true"></span> 3. Execute (Exécution)
                         </h3>
                         <p class="text-slate-700 mb-3">
                             L'unité arithmétique et logique (ALU) effectue l'opération, écrit le résultat dans un registre ou en mémoire, et le PC est mis à jour.
@@ -262,7 +262,7 @@ uint32_t cycles = end - start;</code></pre>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
                     <div class="bg-gradient-to-br from-red-50 to-red-100 p-8 rounded-xl border-l-4 border-red-600 shadow-sm card-hover">
                         <h3 class="text-2xl font-bold text-red-900 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true">💥</span> Les Sauts et le Pipeline
+                            <span class="text-3xl mr-3" aria-hidden="true"></span> Les Sauts et le Pipeline
                         </h3>
                         <p class="text-slate-700 mb-4 leading-relaxed">
                             Lorsqu'un saut se produit, toutes les instructions qui avaient été pré-chargées dans le pipeline (étapes Fetch et Decode) deviennent invalides et doivent être purgées. C'est ce qu'on appelle une <strong>Stalle</strong> ou une <strong>Bulle de Pipeline</strong>, ce qui gaspille des cycles d'horloge.
@@ -276,7 +276,7 @@ uint32_t cycles = end - start;</code></pre>
                     
                     <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
                         <h3 class="text-2xl font-bold text-blue-900 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true">🔔</span> Gestion des Interruptions (ISR)
+                            <span class="text-3xl mr-3" aria-hidden="true"></span> Gestion des Interruptions (ISR)
                         </h3>
                         <p class="text-slate-700 mb-4 leading-relaxed">
                             Une interruption (ex: réception d'un paquet WiFi) suspend l'exécution du programme principal pour passer à l'<strong>Interrupt Service Routine (ISR)</strong>. Le temps entre la demande d'interruption et le début de l'exécution de l'ISR est la <strong>latence d'interruption</strong>.
