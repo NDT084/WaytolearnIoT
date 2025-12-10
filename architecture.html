@@ -188,7 +188,7 @@
             </p>
             <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg max-w-3xl mx-auto">
                 <p class="text-slate-700 text-sm">
-                    <strong>🎯 Objectifs pédagogiques :</strong> À la fin de ce chapitre, vous serez capable de (1) expliquer la différence entre RISC et CISC, (2) comprendre le fonctionnement d'un pipeline d'exécution, (3) analyser le code assembleur pour optimiser les performances, et (4) choisir l'architecture appropriée selon les contraintes énergétiques de votre projet IoT.
+                    <strong> Objectifs pédagogiques :</strong> À la fin de ce chapitre, vous serez capable de (1) expliquer la différence entre RISC et CISC, (2) comprendre le fonctionnement d'un pipeline d'exécution, (3) analyser le code assembleur pour optimiser les performances, et (4) choisir l'architecture appropriée selon les contraintes énergétiques de votre projet IoT.
                 </p>
             </div>
         </header>
@@ -201,7 +201,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
                     <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
                         <h3 class="text-2xl font-bold text-blue-900 mb-4 flex items-center">
-                            <span class="text-4xl mr-3" aria-hidden="true">💾</span> ARM Cortex-M
+                            <span class="text-4xl mr-3" aria-hidden="true"></span> ARM Cortex-M
                         </h3>
                         <p class="text-slate-700 mb-6 leading-relaxed">
                             L'architecture la plus répandue dans les microcontrôleurs (MCUs). Son design est optimisé pour les contraintes de coût, de taille et, surtout, de faible consommation énergétique. Essentiel pour les capteurs et les dispositifs fonctionnant sur batterie.
@@ -232,7 +232,7 @@
                     
                     <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl border-l-4 border-amber-600 shadow-sm card-hover">
                         <h3 class="text-2xl font-bold text-amber-900 mb-4 flex items-center">
-                            <span class="text-4xl mr-3" aria-hidden="true">📖</span> RISC-V (Open Standard)
+                            <span class="text-4xl mr-3" aria-hidden="true"></span> RISC-V (Open Standard)
                         </h3>
                         <p class="text-slate-700 mb-6 leading-relaxed">
                             Un jeu d'instructions (ISA) ouvert et libre. Il offre une modularité unique, permettant aux concepteurs d'ajouter uniquement les extensions nécessaires. Cela le rend extrêmement adaptable à des applications IoT très spécifiques, en maximisant l'efficacité énergétique.
@@ -266,7 +266,7 @@
                 </p>
                 
                 <div class="bg-emerald-50 p-5 rounded-lg border-l-4 border-emerald-600 mb-6">
-                    <h4 class="font-bold text-emerald-900 mb-2">📖 Concept clé : Le Pipeline</h4>
+                    <h4 class="font-bold text-emerald-900 mb-2">Concept clé : Le Pipeline</h4>
                     <p class="text-slate-700 text-sm mb-3">
                         Imaginez une chaîne de montage : pendant qu'une instruction est en phase d'exécution, la suivante est déjà en phase de décodage, et celle d'après est en phase de récupération. Cela permet d'exécuter plusieurs instructions en parallèle, augmentant le débit (throughput) même si chaque instruction individuelle prend plusieurs cycles.
                     </p>
@@ -277,7 +277,7 @@
                 
                 <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-xl border-l-4 border-slate-500 mt-6">
                     <h3 class="font-bold text-slate-800 mb-3 text-lg flex items-center">
-                        <span class="text-2xl mr-2" aria-hidden="true">💡</span> Le Saviez-vous ? Le jeu d'instructions Thumb
+                        <span class="text-2xl mr-2" aria-hidden="true"></span> Le Saviez-vous ? Le jeu d'instructions Thumb
                     </h3>
                     <p class="text-slate-700">
                         Les cœurs ARM utilisent souvent le jeu d'instructions <strong>Thumb</strong> (16 bits) en plus de l'ARM standard (32 bits). Thumb réduit la taille du code (économie de mémoire Flash) et améliore la densité du code, deux facteurs critiques pour les petits systèmes embarqués.
@@ -298,7 +298,7 @@
                             Comprendre comment une ligne de C se traduit en instructions est la clé de l'optimisation. Nous allons analyser le code pour minimiser les cycles d'horloge.
                         </p>
                         <div class="bg-slate-50 p-3 rounded mb-4">
-                            <p class="text-xs text-slate-600 mb-2"><strong>💻 Comment compiler et analyser :</strong></p>
+                            <p class="text-xs text-slate-600 mb-2"><strong> Comment compiler et analyser :</strong></p>
                             <pre class="bg-slate-800 text-white p-2 rounded text-xs overflow-x-auto"><code>arm-none-eabi-gcc -S -O2 code.c
 // Génère code.s (assembleur)
 arm-none-eabi-objdump -d code.o
