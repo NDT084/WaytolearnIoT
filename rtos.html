@@ -180,7 +180,7 @@
             </p>
             <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg max-w-3xl mx-auto">
                 <p class="text-slate-700 text-sm">
-                    <strong>🎯 Objectifs pédagogiques :</strong> Comprendre pourquoi un RTOS est nécessaire en IoT, maîtriser les concepts de tâches, priorités et synchronisation, implémenter FreeRTOS sur ESP32/STM32, et garantir le déterminisme temporel dans vos projets embarqués.
+                    <strong>Objectifs pédagogiques :</strong> Comprendre pourquoi un RTOS est nécessaire en IoT, maîtriser les concepts de tâches, priorités et synchronisation, implémenter FreeRTOS sur ESP32/STM32, et garantir le déterminisme temporel dans vos projets embarqués.
                 </p>
             </div>
         </header>
@@ -195,7 +195,7 @@
                 </p>
                 
                 <div class="bg-red-50 p-5 rounded-lg border-l-4 border-red-600 mb-6">
-                    <h4 class="font-bold text-red-900 mb-2">❌ Problème sans RTOS (Super Loop)</h4>
+                    <h4 class="font-bold text-red-900 mb-2"> Problème sans RTOS (Super Loop)</h4>
                     <pre class="bg-slate-800 text-white p-3 rounded text-xs overflow-x-auto"><code>void loop() {
     readSensor();      // Prend 50ms
     delay(1000);       // Attend 1 seconde
@@ -210,7 +210,7 @@
                 </div>
                 
                 <div class="bg-emerald-50 p-5 rounded-lg border-l-4 border-emerald-600">
-                    <h4 class="font-bold text-emerald-900 mb-2">✅ Solution avec RTOS (Tâches concurrentes)</h4>
+                    <h4 class="font-bold text-emerald-900 mb-2"> Solution avec RTOS (Tâches concurrentes)</h4>
                     <pre class="bg-slate-800 text-white p-3 rounded text-xs overflow-x-auto"><code>void taskSensor(void *pvParameters) {
     while(1) {
         readSensor();
@@ -241,7 +241,7 @@ void taskCommunication(void *pvParameters) {
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
                     <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
                         <h3 class="text-xl font-bold text-blue-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true">📋</span> Tâches (Tasks)
+                            <span class="text-2xl mr-2" aria-hidden="true"></span> Tâches (Tasks)
                         </h3>
                         <p class="text-slate-700 mb-3">
                             Une tâche est une fonction qui s'exécute de manière concurrente avec d'autres tâches. Chaque tâche a sa propre pile (Stack) et peut avoir une priorité.
@@ -261,7 +261,7 @@ void taskCommunication(void *pvParameters) {
                     
                     <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-6 rounded-xl border-l-4 border-amber-600 shadow-sm card-hover">
                         <h3 class="text-xl font-bold text-amber-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true">⚡</span> Priorités
+                            <span class="text-2xl mr-2" aria-hidden="true"></span> Priorités
                         </h3>
                         <p class="text-slate-700 mb-3">
                             Les tâches avec une priorité plus élevée s'exécutent avant les tâches de priorité inférieure. Le scheduler (ordonnanceur) choisit toujours la tâche la plus prioritaire prête à s'exécuter.
@@ -275,7 +275,7 @@ void taskCommunication(void *pvParameters) {
                     
                     <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-6 rounded-xl border-l-4 border-emerald-600 shadow-sm card-hover">
                         <h3 class="text-xl font-bold text-emerald-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true">🔄</span> Context Switching
+                            <span class="text-2xl mr-2" aria-hidden="true"></span> Context Switching
                         </h3>
                         <p class="text-slate-700 mb-3">
                             Le changement de contexte sauvegarde l'état d'une tâche (registres, pile) et restaure l'état d'une autre. Sur Cortex-M, cela prend typiquement 1-5 microsecondes.
@@ -302,13 +302,13 @@ void taskCommunication(void *pvParameters) {
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
                     <div class="bg-gradient-to-br from-red-50 to-red-100 p-8 rounded-xl border-l-4 border-red-600 shadow-sm card-hover">
                         <h3 class="text-2xl font-bold text-red-900 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true">🔒</span> Mutex (Mutual Exclusion)
+                            <span class="text-3xl mr-3" aria-hidden="true"></span> Mutex (Mutual Exclusion)
                         </h3>
                         <p class="text-slate-700 mb-4 leading-relaxed">
                             Un mutex garantit qu'une seule tâche peut accéder à une ressource à la fois. Si une tâche prend le mutex, les autres doivent attendre.
                         </p>
                         <div class="bg-white p-4 rounded-lg">
-                            <p class="text-xs text-slate-600 mb-2"><strong>💻 Exemple pratique :</strong></p>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Exemple pratique :</strong></p>
                             <pre class="bg-slate-800 text-white p-3 rounded text-xs overflow-x-auto"><code>SemaphoreHandle_t mutex = xSemaphoreCreateMutex();
 
 void task1() {
@@ -325,13 +325,13 @@ void task1() {
                     
                     <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
                         <h3 class="text-2xl font-bold text-blue-900 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true">📬</span> Queues (Files d'attente)
+                            <span class="text-3xl mr-3" aria-hidden="true"></span> Queues (Files d'attente)
                         </h3>
                         <p class="text-slate-700 mb-4 leading-relaxed">
                             Une queue permet à une tâche d'envoyer des données à une autre tâche de manière thread-safe. C'est idéal pour la communication inter-tâches.
                         </p>
                         <div class="bg-white p-4 rounded-lg">
-                            <p class="text-xs text-slate-600 mb-2"><strong>💻 Exemple pratique :</strong></p>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Exemple pratique :</strong></p>
                             <pre class="bg-slate-800 text-white p-3 rounded text-xs overflow-x-auto"><code>QueueHandle_t queue = xQueueCreate(10, sizeof(int));
 
 // Tâche productrice
@@ -363,7 +363,7 @@ void taskDisplay() {
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                     <div class="bg-white p-6 rounded-xl shadow-md card-hover">
                         <h3 class="text-2xl font-bold text-emerald-800 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true">🆓</span> FreeRTOS
+                            <span class="text-3xl mr-3" aria-hidden="true"></span> FreeRTOS
                         </h3>
                         <p class="text-slate-700 mb-4">
                             Le RTOS le plus populaire dans l'industrie IoT. Simple, léger, et largement supporté.
@@ -391,7 +391,7 @@ void taskDisplay() {
                     
                     <div class="bg-white p-6 rounded-xl shadow-md card-hover">
                         <h3 class="text-2xl font-bold text-emerald-800 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true">⚡</span> Zephyr RTOS
+                            <span class="text-3xl mr-3" aria-hidden="true"></span> Zephyr RTOS
                     </h3>
                     <p class="text-slate-700 mb-4">
                             RTOS moderne développé par la Linux Foundation, optimisé pour les systèmes contraints et la sécurité.
@@ -412,7 +412,7 @@ void taskDisplay() {
                         </ul>
                         <div class="bg-slate-50 p-3 rounded">
                             <p class="text-xs text-slate-600">
-                                <strong>📚 Ressource :</strong> <a href="https://www.zephyrproject.org" target="_blank" class="text-emerald-600 hover:underline">www.zephyrproject.org</a> - Projet open-source de la Linux Foundation
+                                <strong> Ressource :</strong> <a href="https://www.zephyrproject.org" target="_blank" class="text-emerald-600 hover:underline">www.zephyrproject.org</a> - Projet open-source de la Linux Foundation
                             </p>
                         </div>
                     </div>
@@ -430,7 +430,7 @@ void taskDisplay() {
                 </p>
                 
                 <div class="bg-slate-50 p-6 rounded-xl border-l-4 border-slate-500 mb-6">
-                    <h4 class="font-bold text-slate-800 mb-3">📋 Architecture du système</h4>
+                    <h4 class="font-bold text-slate-800 mb-3">Architecture du système</h4>
                     <ul class="space-y-2 text-slate-700 text-sm">
                         <li><strong>Tâche 1 (Priorité 3) :</strong> Lecture capteurs toutes les 5 secondes → Envoie données dans une queue</li>
                         <li><strong>Tâche 2 (Priorité 2) :</strong> Communication WiFi → Récupère données de la queue et les envoie au cloud via MQTT</li>
@@ -441,7 +441,7 @@ void taskDisplay() {
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-blue-50 p-6 rounded-xl">
-                        <h4 class="font-bold text-blue-900 mb-3">💻 Code FreeRTOS (simplifié)</h4>
+                        <h4 class="font-bold text-blue-900 mb-3"> Code FreeRTOS (simplifié)</h4>
                         <pre class="bg-slate-800 text-white p-4 rounded-lg text-xs overflow-x-auto"><code>// Queue pour les données
 QueueHandle_t sensorQueue;
 
@@ -481,7 +481,7 @@ void setup() {
                     </div>
                     
                     <div class="bg-amber-50 p-6 rounded-xl">
-                        <h4 class="font-bold text-amber-900 mb-3">📊 Analyse des performances</h4>
+                        <h4 class="font-bold text-amber-900 mb-3"> Analyse des performances</h4>
                         <ul class="space-y-3 text-slate-700 text-sm">
                             <li>
                                 <strong>Déterminisme :</strong> La tâche capteur s'exécute exactement toutes les 5 secondes, indépendamment de la communication WiFi.
@@ -508,7 +508,7 @@ void setup() {
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white p-6 rounded-xl shadow-md">
-                        <h4 class="font-bold text-slate-800 mb-3">✅ À FAIRE</h4>
+                        <h4 class="font-bold text-slate-800 mb-3"> À FAIRE</h4>
                         <ul class="space-y-2 text-slate-700 text-sm">
                             <li>• Dimensionner le stack de chaque tâche correctement (utilisez les outils de profilage)</li>
                             <li>• Utiliser des queues pour la communication inter-tâches (éviter les variables globales)</li>
@@ -519,7 +519,7 @@ void setup() {
                     </div>
                     
                     <div class="bg-white p-6 rounded-xl shadow-md">
-                        <h4 class="font-bold text-slate-800 mb-3">❌ À ÉVITER</h4>
+                        <h4 class="font-bold text-slate-800 mb-3">À ÉVITER</h4>
                         <ul class="space-y-2 text-slate-700 text-sm">
                             <li>• Utiliser <code>delay()</code> dans une ISR (utilisez <code>vTaskDelay()</code> dans les tâches)</li>
                             <li>• Accéder à des ressources partagées sans mutex</li>
