@@ -298,101 +298,112 @@ body{
 
 
     <!-- Slider IoT (juste après la nav) -->
-<section class="relative overflow-hidden bg-slate-950 text-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <div class="grid gap-8 md:grid-cols-2 items-center">
-      
-      <!-- Texte -->
-      <div>
-        <h1 class="text-3xl md:text-4xl font-extrabold mb-4">
-          Explorer l’IoT et les systèmes embarqués
-        </h1>
-        <p class="text-slate-300 mb-6">
-          Découvre les bases des microcontrôleurs, de l’architecture CPU et de la gestion mémoire à travers des ressources claires et orientées projets.
-        </p>
-        <a href="architecture.html"
-           class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-lg shadow-sm transition">
-          Commencer par l’architecture CPU
-        </a>
-      </div>
-
-      <!-- Slider images -->
-      <div class="relative">
-        <div class="aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-lg">
-          <div id="iot-slider" class="w-full h-full relative">
-            <!-- Slide 1 -->
-            <img src="image_1.jpg"
-                 alt="Carte IoT avec capteurs et microcontrôleur"
-                 class="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-700">
-            <!-- Slide 2 -->
-            <img src="image_2.jpg"
-                 alt="Illustration de ville connectée IoT"
-                 class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700">
-            <!-- Slide 3 -->
-            <img src="image_3.jpg"
-                 alt="Tableau de bord de monitoring IoT"
-                 class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700">
-          </div>
+    <!-- Hero IoT + Slider + Explication -->
+    <section class="relative overflow-hidden bg-slate-950 text-slate-100">
+        <!-- Gradient + effet mesh -->
+        <div class="pointer-events-none absolute inset-0 opacity-60">
+            <div class="absolute -top-32 -left-32 h-64 w-64 rounded-full bg-emerald-500 blur-3xl"></div>
+            <div class="absolute -bottom-32 -right-32 h-72 w-72 rounded-full bg-blue-500 blur-3xl"></div>
         </div>
 
-        <!-- Petits indicateurs -->
-        <div class="flex justify-center mt-3 space-x-2">
-          <button class="h-2 w-2 rounded-full bg-emerald-500" data-slide="0"></button>
-          <button class="h-2 w-2 rounded-full bg-slate-500" data-slide="1"></button>
-          <button class="h-2 w-2 rounded-full bg-slate-500" data-slide="2"></button>
-        </div>
-      </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+            <div class="grid gap-10 lg:grid-cols-2 items-center">
+                <!-- Colonne gauche : texte + badges -->
+                <div>
+                    <div class="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-3 py-1 mb-5 text-xs font-medium text-emerald-200 backdrop-blur">
+                        <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>IoT & Systèmes embarqués • L1 → L3+</span>
+                    </div>
 
-    </div>
-  </div>
-</section>
+                    <h1 class="text-3xl md:text-4xl font-extrabold mb-4">
+                        L’IoT et les systèmes embarqués, c’est ce qui fait « vivre » les objets connectés.
+                    </h1>
 
-
-
-    <!-- Hero Section -->
-    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <section class="py-16 md:py-24">
-            <div class="text-center mb-16">
-                <h1 class="text-5xl md:text-6xl font-extrabold text-slate-900 mb-6 leading-tight">
-                    Maîtrisez les Systèmes <span class="text-emerald-600">Embarqués IoT</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-4">
-                    Votre parcours guidé pour comprendre comment le matériel, le logiciel et la communication s'entremêlent pour créer des dispositifs connectés performants.
-                </p>
-                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg max-w-3xl mx-auto mb-8">
-                    <p class="text-slate-700 text-sm">
-                        <strong> Niveau :</strong> Deuxième année (L2) - Ce cours couvre les fondamentaux des systèmes embarqués IoT : architectures CPU, gestion mémoire, protocoles de communication et systèmes temps réel. Chaque concept est expliqué avec des exemples pratiques adaptés aux microcontrôleurs modernes (STM32, ESP32, Arduino).
+                    <p class="text-slate-300 mb-4">
+                        L’Internet des Objets (IoT) regroupe tous les dispositifs capables de
+                        <span class="text-emerald-300">sentir</span> leur environnement (capteurs),
+                        <span class="text-emerald-300">réfléchir</span> grâce à un microcontrôleur
+                        et <span class="text-emerald-300">communiquer</span> avec d’autres machines
+                        ou avec le cloud. C’est ce qui permet la maison connectée, les usines
+                        intelligentes, l’agriculture de précision ou la santé à distance.
                     </p>
-                </div>
-                <a href="architecture.html" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
-                    Commencer l'apprentissage →
-                </a>
-            </div>
 
-            <!-- Feature Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border border-blue-200 card-hover">
-                    
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Protocoles de Communication</h3>
-                    <p class="text-slate-700">MQTT, CoAP, LoRaWAN. Maîtrisez les protocoles essentiels pour connecter vos dispositifs IoT.</p>
-                    <a href="communication.html" class="inline-block mt-4 text-blue-600 font-semibold hover:text-blue-700">En savoir plus →</a>
+                    <p class="text-slate-300 mb-4">
+                        Au cœur de ces objets se trouvent les <span class="text-emerald-300">systèmes embarqués</span> :
+                        de petits ordinateurs spécialisés (STM32, ESP32, Arduino…) intégrés dans un
+                        objet réel. Ils sont optimisés pour consommer très peu d’énergie, rester fiables
+                        24h/24 et respecter parfois des contraintes temps réel strictes
+                        (freinage ABS, contrôle moteur, capteurs industriels, etc.).
+                    </p>
+
+                    <p class="text-slate-300 mb-4">
+                        Un système IoT complet, c’est une chaîne de bout en bout :
+                        capteurs et microcontrôleurs sur le terrain, protocoles légers
+                        (MQTT, CoAP, LoRaWAN) pour transporter les données sur des réseaux
+                        limités, puis plateformes cloud ou serveurs locaux pour stocker,
+                        analyser et visualiser ces informations en temps réel.
+                    </p>
+
+                    <p class="text-slate-300 mb-6">
+                        Sur Waytolearn<span class="text-emerald-300">IoT</span>, tu apprends à maîtriser
+                        ce qui se passe « sous le capot » : architectures CPU RISC, gestion
+                        mémoire, RTOS (FreeRTOS, Zephyr), communication et bonnes pratiques
+                        de programmation embarquée. De la première LED clignotante aux projets
+                        IoT complets et déployables sur le terrain.
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-medium text-emerald-200 border border-emerald-400/40">
+              L1 • Découverte
+            </span>
+                            <span class="inline-flex items-center rounded-full bg-blue-500/15 px-3 py-1 text-xs font-medium text-blue-200 border border-blue-400/40">
+              L2 • Approfondissement
+            </span>
+                            <span class="inline-flex items-center rounded-full bg-amber-500/15 px-3 py-1 text-xs font-medium text-amber-200 border border-amber-400/40">
+              L3+ • Projets avancés
+            </span>
+                        </div>
+
+                        <a href="#main-content"
+                           class="inline-flex items-center gap-2 ml-0 md:ml-3 mt-2 md:mt-0 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 rounded-lg shadow-sm transition">
+                            Commencer le parcours
+                            <span>↓</span>
+                        </a>
+                    </div>
                 </div>
-                
-                <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl border border-amber-200 card-hover">
-                    
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Systèmes Temps Réel</h3>
-                    <p class="text-slate-700">FreeRTOS, Zephyr. Apprenez à gérer le temps réel pour des applications critiques.</p>
-                    <a href="rtos.html" class="inline-block mt-4 text-amber-600 font-semibold hover:text-amber-700">En savoir plus →</a>
-                </div>
-                
-                <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-8 rounded-xl border border-emerald-200 card-hover">
-                    
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Efficacité Énergétique</h3>
-                    <p class="text-slate-700">Optimisez la consommation d'énergie avec des architectures RISC et des cycles d'instruction optimisés.</p>
-                    <a href="architecture.html" class="inline-block mt-4 text-emerald-600 font-semibold hover:text-emerald-700">En savoir plus →</a>
+
+                <!-- Colonne droite : slider dans carte glass -->
+                <div class="relative">
+                    <div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4 md:p-5 shadow-2xl">
+                        <div class="aspect-[4/3] w-full overflow-hidden rounded-xl shadow-lg">
+                            <div id="iot-slider" class="w-full h-full relative">
+                                <img src="image_1.jpg"
+                                     alt="Carte IoT avec capteurs et microcontrôleur"
+                                     class="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-700">
+                                <img src="image_2.jpg"
+                                     alt="Illustration de ville connectée IoT"
+                                     class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700">
+                                <img src="image_3.jpg"
+                                     alt="Tableau de bord de monitoring IoT"
+                                     class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700">
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center mt-3 space-x-2">
+                            <button class="h-2 w-2 rounded-full bg-emerald-500" data-slide="0"></button>
+                            <button class="h-2 w-2 rounded-full bg-slate-400" data-slide="1"></button>
+                            <button class="h-2 w-2 rounded-full bg-slate-400" data-slide="2"></button>
+                        </div>
+                    </div>
+
+                    <div class="pointer-events-none absolute -bottom-6 -right-6 h-20 w-20 rounded-2xl border border-emerald-500/40 bg-emerald-500/10"></div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+
+
 
         <!-- Architecture Section -->
         <section class="py-16 bg-slate-50 rounded-2xl mb-16">
