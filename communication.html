@@ -2,471 +2,547 @@
 <html lang="fr">
 <head>
   <link rel="icon" type="image/png" href="logo1.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Protocoles de communication dans l'IoT : bus internes (I2C, SPI, UART) et protocoles de réseau (MQTT, CoAP, LoRaWAN, 6LoWPAN) pour l'efficacité énergétique.">
-    <meta name="keywords" content="IoT, communication, protocoles, I2C, SPI, UART, MQTT, CoAP, LoRaWAN, 6LoWPAN, systèmes embarqués">
-    <meta name="author" content="WaytolearnIoT">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#10b981">
-    <link rel="canonical" href="https://waytolearniot.com/communication.html">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://waytolearniot.com/communication.html">
-    <meta property="og:title" content="Protocoles de Communication IoT | WaytolearnIoT">
-    <meta property="og:description" content="Découvrez les protocoles de communication dans l'IoT : bus internes et réseaux pour systèmes embarqués.">
-    <meta property="og:locale" content="fr_FR">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Protocoles de Communication IoT | WaytolearnIoT">
-    <meta name="twitter:description" content="Découvrez les protocoles de communication dans l'IoT : bus internes et réseaux pour systèmes embarqués.">
-    
-    <!-- Resource Hints -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-    
-    <title>Protocoles de Communication IoT | WaytolearnIoT</title>
-    
-    <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "EducationalArticle",
-        "headline": "Protocoles de Communication IoT",
-        "description": "Protocoles de communication dans l'IoT : bus internes (I2C, SPI, UART) et protocoles de réseau (MQTT, CoAP, LoRaWAN, 6LoWPAN)",
-        "author": {
-            "@type": "Organization",
-            "name": "WaytolearnIoT"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "WaytolearnIoT"
-        },
-        "inLanguage": "fr-FR",
-        "educationalLevel": "Intermediate"
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Protocoles de communication dans l'IoT : bus internes (I2C, SPI, UART) et protocoles de réseau (MQTT, CoAP, LoRaWAN, 6LoWPAN) pour l'efficacité énergétique.">
+  <meta name="keywords" content="IoT, communication, protocoles, I2C, SPI, UART, MQTT, CoAP, LoRaWAN, 6LoWPAN, systèmes embarqués">
+  <meta name="author" content="WaytolearnIoT">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#10b981">
+  <link rel="canonical" href="https://waytolearniot.com/communication.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://waytolearniot.com/communication.html">
+  <meta property="og:title" content="Protocoles de Communication IoT | WaytolearnIoT">
+  <meta property="og:description" content="Découvrez les protocoles de communication dans l'IoT : bus internes et réseaux pour systèmes embarqués.">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Protocoles de Communication IoT | WaytolearnIoT">
+  <meta name="twitter:description" content="Découvrez les protocoles de communication dans l'IoT : bus internes et réseaux pour systèmes embarqués.">
+
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
+  <title>Protocoles de Communication IoT | WaytolearnIoT</title>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalArticle",
+    "headline": "Protocoles de Communication IoT",
+    "description": "Protocoles de communication dans l'IoT : bus internes (I2C, SPI, UART) et protocoles de réseau (MQTT, CoAP, LoRaWAN, 6LoWPAN)",
+    "author": {
+      "@type": "Organization",
+      "name": "WaytolearnIoT"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "WaytolearnIoT"
+    },
+    "inLanguage": "fr-FR",
+    "educationalLevel": "Intermediate"
+  }
+  </script>
+
+  <style>
+    :root{
+      --bg:#020617;
+      --muted:#94a3b8;
+      --accent:#10b981;
+      --text:#e5e7eb;
+      --border:#1f2937;
     }
-    </script>
-    
-    <style>
-        :root{--bg:#ffffff;--muted:#94a3b8;--accent:#10b981;--text:#1e293b;--border:#e2e8f0}
-        *{margin:0;padding:0;box-sizing:border-box}
-        html{scroll-behavior:smooth}
-        body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-        .nav-link.active{border-bottom:3px solid var(--accent);color:var(--accent);font-weight:700;margin-bottom:-3px}
-        .skip-link{position:absolute;left:-9999px;z-index:999}
-        .skip-link:focus{left:6px;top:6px;background:var(--accent);color:#fff;padding:8px 16px;text-decoration:none;border-radius:4px}
-        
-        /* Hamburger Menu Styles - Visible uniquement sur mobile */
-        #nav-toggle{background:transparent;border:0;cursor:pointer;padding:8px;width:40px;height:40px;display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;position:relative;z-index:100}
-        @media (max-width:767px){#nav-toggle{display:flex}}
-        .hamburger-line{width:24px;height:3px;background:#1e293b;border-radius:2px;transition:all 0.3s ease;transform-origin:center}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1){transform:rotate(45deg) translate(7px,7px)}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2){opacity:0;transform:translateX(-10px)}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
-        
-        /* Menu mobile vertical */
-        #nav-menu{max-height:0;overflow:hidden;transition:max-height 0.3s ease,opacity 0.3s ease}
-        #nav-menu:not(.hidden){max-height:500px}
-        @media (min-width:768px){#nav-menu{max-height:none!important}}
-        
-        .card-hover{transition:all 0.3s ease;transform:translateY(0)}
-        .card-hover:hover{transform:translateY(-4px);box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04)}
-        @media (max-width:768px){.text-6xl{font-size:2.25rem}}
-        @media (max-width:480px){.text-6xl{font-size:1.75rem}}
-    </style>
-    
-   <script>
-        // Configuration Tailwind
-        tailwind.config={theme:{extend:{colors:{slate:'#1e293b',emerald:'#10b981',amber:'#f59e0b',blue:'#3b82f6'}}}}
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    .nav-link.active{
+      border-bottom:3px solid var(--accent);
+      color:var(--accent);
+      font-weight:700;
+      margin-bottom:-3px;
+    }
+    .skip-link{position:absolute;left:-9999px;z-index:999}
+    .skip-link:focus{
+      left:6px;top:6px;
+      background:var(--accent);color:#fff;
+      padding:8px 16px;
+      text-decoration:none;
+      border-radius:4px;
+    }
+
+    /* Hamburger Menu */
+    #nav-toggle{
+      background:transparent;border:0;cursor:pointer;
+      padding:8px;width:40px;height:40px;
+      display:none;flex-direction:column;
+      justify-content:center;align-items:center;
+      gap:5px;position:relative;z-index:100;
+    }
+    @media (max-width:767px){#nav-toggle{display:flex}}
+    .hamburger-line{
+      width:24px;height:3px;
+      background:#e5e7eb;border-radius:2px;
+      transition:all 0.3s ease;
+      transform-origin:center;
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1){
+      transform:rotate(45deg) translate(7px,7px)
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2){
+      opacity:0;transform:translateX(-10px)
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3){
+      transform:rotate(-45deg) translate(7px,-7px)
+    }
+
+    /* Menu mobile */
+    #nav-menu{
+      max-height:0;overflow:hidden;
+      transition:max-height 0.3s ease,opacity 0.3s ease;
+    }
+    #nav-menu:not(.hidden){max-height:500px}
+    @media (min-width:768px){#nav-menu{max-height:none!important}}
+
+    .card-hover{
+      transition:all 0.3s ease;
+      transform:translateY(0);
+      background:#020617;
+      border:1px solid var(--border);
+    }
+    .card-hover:hover{
+      transform:translateY(-4px);
+      box-shadow:0 20px 25px -5px rgba(15,23,42,0.45),
+                 0 10px 10px -5px rgba(15,23,42,0.35);
+    }
+
+    @media (max-width:768px){
+      .text-6xl{font-size:2.25rem}
+    }
+    @media (max-width:480px){
+      .text-6xl{font-size:1.75rem}
+    }
+  </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-slate-800">
-    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
-    
- <!-- Navigation -->
-<!-- Navigation -->
-<nav class="sticky top-0 z-50 bg-slate-50/95 backdrop-blur-sm border-b border-slate-200 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-20">
-      
-      <a href="index.html" class="text-2xl font-bold text-slate-900 hover:text-emerald-600">
-        Waytolearn<span class="text-emerald-600">IoT</span>
-      </a>
+<body class="text-slate-100">
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
-      <button id="nav-toggle" aria-expanded="false" aria-label="Ouvrir le menu">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
 
-      <div id="nav-menu"
-           class="md:flex md:space-x-2 hidden md:opacity-100 absolute md:static left-0 top-20 w-full md:w-auto
-                  bg-white md:bg-transparent shadow-md md:shadow-none border-t md:border-0 px-2">
+        <a href="index.html" class="text-2xl font-bold text-slate-50 hover:text-emerald-400">
+          Waytolearn<span class="text-emerald-400">IoT</span>
+        </a>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="index.html">Accueil</a>
+        <button id="nav-toggle" aria-expanded="false" aria-label="Ouvrir le menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="architecture.html">Architecture CPU</a>
+        <div id="nav-menu"
+             class="md:flex md:space-x-2 hidden md:opacity-100 absolute md:static left-0 top-20 w-full md:w-auto
+                    bg-slate-950 md:bg-transparent shadow-md md:shadow-none border-t border-slate-800 md:border-0 px-2">
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="cycle.html">Cycle Instruction</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="index.html">Accueil</a>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="memory.html">Gestion Mémoire</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="architecture.html">Architecture CPU</a>
 
-        <a class="nav-link active px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="communication.html">Communication</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="cycle.html">Cycle Instruction</a>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="rtos.html">RTOS</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="memory.html">Gestion Mémoire</a>
 
-        <div class="relative group">
-          <a href="ressources.html"
-             class="nav-link px-6 py-4 md:py-3 block
-                    hover:bg-slate-100 hover:text-emerald-600
-                    transition-colors duration-200">
-            Ressources
-          </a>
-          <div class="hidden md:block absolute left-0 top-full mt-1 w-64 bg-white border border-slate-200 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50">
-            <a href="ressources.html#portails-officiels"
-               class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-              Portails officiels & standards
+          <a class="nav-link active px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="communication.html">Communication</a>
+
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="rtos.html">RTOS</a>
+
+          <div class="relative group">
+            <a href="ressources.html"
+               class="nav-link px-6 py-4 md:py-3 block
+                      hover:bg-slate-900 hover:text-emerald-400
+                      transition-colors duration-200">
+              Ressources
             </a>
-            <a href="ressources.html#tutoriels"
-               class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-              Sites de tutoriels
-            </a>
-            <a href="ressources.html#projets-arduino"
-               class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-              Projets Arduino
-            </a>
+            <div class="hidden md:block absolute left-0 top-full mt-1 w-64 bg-slate-900 border border-slate-700 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50">
+              <a href="ressources.html#portails-officiels"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Portails officiels & standards
+              </a>
+              <a href="ressources.html#tutoriels"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Sites de tutoriels
+              </a>
+              <a href="ressources.html#projets-arduino"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Projets Arduino
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Header -->
+    <header class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-slate-50 mb-4">
+        Protocoles de Communication IoT
+      </h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto mb-4">
+        Du bus interne aux réseaux WAN : la base de la connectivité dans les systèmes embarqués.
+      </p>
+      <div class="bg-blue-500/10 border-l-4 border-blue-400 p-4 rounded-lg max-w-3xl mx-auto">
+        <p class="text-blue-100 text-sm">
+          <strong>Objectifs pédagogiques :</strong> Comprendre I²C, SPI, UART, maîtriser MQTT et CoAP, choisir le bon protocole selon bande passante, consommation et portée, et implémenter des communications fiables en IoT.
+        </p>
+      </div>
+    </header>
+
+    <!-- Section 1: Bus Périphériques -->
+    <section class="mb-16">
+      <div class="card-hover p-8 md:p-10 rounded-2xl">
+        <h2 class="text-3xl font-bold text-emerald-300 mb-6 pb-3 border-b-2 border-emerald-500/60">
+          1. Les Bus Périphériques (Communication Interne)
+        </h2>
+
+        <p class="text-lg text-slate-200 mb-6 leading-relaxed">
+          La communication entre MCU et périphériques (capteurs, mémoires, écrans) se fait via des bus optimisés pour la vitesse et/ou l’économie de broches.
+        </p>
+
+        <div class="bg-slate-900/70 p-5 rounded-lg border-l-4 border-slate-500 mb-8">
+          <h4 class="font-bold text-slate-100 mb-2">Pourquoi plusieurs bus ?</h4>
+          <p class="text-slate-100 text-sm">
+            <strong>I²C</strong> économise les broches, <strong>SPI</strong> maximise le débit, <strong>UART</strong> brille par sa simplicité (debug, modules série). Sur un ESP32, les trois coexistent facilement.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- I2C -->
+          <div class="card-hover bg-gradient-to-br from-blue-900/60 to-blue-800/60 p-6 rounded-xl border-l-4 border-blue-400">
+            <h3 class="text-xl font-bold text-blue-100 mb-3 flex items-center">
+              <span class="text-2xl mr-2" aria-hidden="true"></span> I²C
+            </h3>
+            <p class="text-slate-100 mb-3">
+              Bus série synchrone maître/esclave à 2 fils (SDA, SCL). Adapté aux capteurs lents et périphériques simples.
+            </p>
+            <div class="bg-slate-950/70 p-3 rounded-lg mb-3">
+              <p class="text-xs text-slate-100 mb-2"><strong>Caractéristiques :</strong></p>
+              <ul class="text-xs text-slate-100 space-y-1">
+                <li>• Vitesse : ~100 kHz à 3.4 MHz.</li>
+                <li>• Distance courte (quelques mètres max).</li>
+                <li>• Exemples : BMP280, MPU6050, EEPROM.</li>
+              </ul>
+            </div>
+            <p class="text-xs text-slate-100 mb-2">
+              <strong>Arduino :</strong> <code>Wire.begin(); Wire.write(data);</code>
+            </p>
+            <div class="bg-slate-950/70 p-3 rounded-lg text-center text-xs text-slate-300">
+              [Diagramme I2C]
+            </div>
+          </div>
+
+          <!-- SPI -->
+          <div class="card-hover bg-gradient-to-br from-amber-900/60 to-amber-800/60 p-6 rounded-xl border-l-4 border-amber-400">
+            <h3 class="text-xl font-bold text-amber-100 mb-3 flex items-center">
+              <span class="text-2xl mr-2" aria-hidden="true"></span> SPI
+            </h3>
+            <p class="text-slate-100 mb-3">
+              Bus série synchrone rapide, 4 fils (MOSI, MISO, SCK, CS). Parfait pour écrans et mémoires haut débit.
+            </p>
+            <div class="bg-slate-950/70 p-3 rounded-lg mb-3">
+              <p class="text-xs text-slate-100 mb-2"><strong>Caractéristiques :</strong></p>
+              <ul class="text-xs text-slate-100 space-y-1">
+                <li>• Vitesse : jusqu’à plusieurs dizaines de MHz.</li>
+                <li>• Plus de fils, mais débit supérieur à I²C.</li>
+                <li>• Exemples : OLED, TFT, SD, Flash externe.</li>
+              </ul>
+            </div>
+            <p class="text-xs text-slate-100 mb-2">
+              <strong>Arduino :</strong> <code>SPI.begin(); SPI.transfer(data);</code>
+            </p>
+            <div class="bg-slate-950/70 p-3 rounded-lg text-center text-xs text-slate-300">
+              [Diagramme SPI]
+            </div>
+          </div>
+
+          <!-- UART -->
+          <div class="card-hover bg-gradient-to-br from-slate-900/60 to-slate-800/60 p-6 rounded-xl border-l-4 border-slate-500">
+            <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center">
+              <span class="text-2xl mr-2" aria-hidden="true"></span> UART
+            </h3>
+            <p class="text-slate-100 mb-3">
+              Bus série asynchrone sans horloge, très utilisé pour debug et modules série (GPS, GSM, Bluetooth).
+            </p>
+            <div class="bg-slate-950/70 p-3 rounded-lg mb-3">
+              <p class="text-xs text-slate-100 mb-2"><strong>Caractéristiques :</strong></p>
+              <ul class="text-xs text-slate-100 space-y-1">
+                <li>• Vitesses typiques : 9600–115200 bauds.</li>
+                <li>• 2 fils : TX, RX.</li>
+                <li>• Exemples : Serial Monitor, modules GPS/GSM/Bluetooth.</li>
+              </ul>
+            </div>
+            <p class="text-xs text-slate-100">
+              <strong>Arduino :</strong> <code>Serial.begin(9600); Serial.println("Hello");</code>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Protocoles Applicatifs -->
+    <section class="mb-16">
+      <div class="card-hover p-8 md:p-10 rounded-2xl">
+        <h2 class="text-3xl font-bold text-emerald-300 mb-6 pb-3 border-b-2 border-emerald-500/60">
+          2. Protocoles Applicatifs pour l'Internet des Objets
+        </h2>
+
+        <p class="text-lg text-slate-200 mb-8 leading-relaxed">
+          Du côté réseau et Cloud, les protocoles applicatifs doivent rester légers, tolérer les pertes et supporter des connexions intermittentes.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- MQTT -->
+          <div class="card-hover bg-gradient-to-br from-red-900/60 to-red-800/60 p-8 rounded-xl border-l-4 border-red-400">
+            <h3 class="text-2xl font-bold text-red-100 mb-4 flex items-center">
+              <span class="text-4xl mr-3" aria-hidden="true"></span> MQTT
+            </h3>
+            <p class="text-slate-100 mb-4 leading-relaxed">
+              Protocole Pub/Sub léger, idéal pour relier des milliers de capteurs à un broker central ou au Cloud.
+            </p>
+            <div class="bg-slate-950/70 p-4 rounded-lg mb-4">
+              <p class="text-xs text-slate-100 mb-2"><strong>Cas d’usage :</strong></p>
+              <p class="text-xs text-slate-100 mb-2">
+                Un ESP32 publie sur <code>sensors/temperature</code>. Le serveur s’abonne au même topic et reçoit les mesures en temps réel, tout comme d’autres clients (dashboard, mobile, etc.).
+              </p>
+              <pre class="bg-slate-950 text-white p-2 rounded text-xs overflow-x-auto"><code>// ESP32 + MQTT
+client.publish("sensors/temp", "25.3");
+client.subscribe("commands/led");</code></pre>
+            </div>
+            <ul class="space-y-3 text-slate-100 text-sm">
+              <li class="flex items-start">
+                <span class="text-red-300 mr-3 font-bold">•</span>
+                <span><strong>QoS :</strong> niveaux 0, 1, 2 pour ajuster la fiabilité.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-red-300 mr-3 font-bold">•</span>
+                <span><strong>Overhead faible :</strong> en-tête minimal, adapté aux liens bas débit.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- CoAP -->
+          <div class="card-hover bg-gradient-to-br from-green-900/60 to-green-800/60 p-8 rounded-xl border-l-4 border-green-400">
+            <h3 class="text-2xl font-bold text-green-100 mb-4 flex items-center">
+              <span class="text-4xl mr-3" aria-hidden="true"></span> CoAP
+            </h3>
+            <p class="text-slate-100 mb-4 leading-relaxed">
+              Protocole type REST (GET, PUT, POST, DELETE) mais ultra compact, basé sur UDP et pensé pour l’embarqué.
+            </p>
+            <div class="bg-slate-950/70 p-4 rounded-lg mb-4">
+              <p class="text-xs text-slate-100 mb-2"><strong>Cas d’usage :</strong></p>
+              <p class="text-xs text-slate-100 mb-2">
+                Un capteur expose <code>coap://device/temperature</code>. Un client envoie un GET pour lire la valeur ou un PUT pour changer un seuil.
+              </p>
+              <pre class="bg-slate-950 text-white p-2 rounded text-xs overflow-x-auto"><code>// Requête CoAP (conceptuel)
+GET coap://192.168.1.100/temperature
+// Réponse : 25.3°C (paquet très léger)</code></pre>
+            </div>
+            <ul class="space-y-3 text-slate-100 text-sm">
+              <li class="flex items-start">
+                <span class="text-green-300 mr-3 font-bold">•</span>
+                <span><strong>Rôle :</strong> gestion de ressources et interactions directes entre nœuds.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-green-300 mr-3 font-bold">•</span>
+                <span><strong>Compatibilité :</strong> s’intègre bien avec 6LoWPAN pour l’IPv6 basse conso.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: LPWAN -->
+    <section class="mb-16">
+      <div class="card-hover bg-gradient-to-br from-emerald-900/70 to-emerald-800/60 p-8 md:p-10 rounded-2xl border-l-4 border-emerald-500">
+        <h2 class="text-3xl font-bold text-emerald-100 mb-6">
+          3. Les Réseaux Longue Portée (LPWAN)
+        </h2>
+
+        <p class="text-lg text-slate-100 mb-6 leading-relaxed">
+          Pour des capteurs autonomes plusieurs années, avec peu de données et de longues distances, les LPWAN sont privilégiés.
+        </p>
+
+        <div class="bg-emerald-900/70 p-5 rounded-lg border-l-4 border-emerald-400 mb-8">
+          <h4 class="font-bold text-emerald-100 mb-2">Exemples d’applications LPWAN</h4>
+          <p class="text-slate-100 text-sm mb-3">
+            Capteurs agricoles, stations météo, compteurs intelligents ou suivi environnemental profitent de la portée de plusieurs kilomètres et d’une consommation très basse.
+          </p>
+          <ul class="text-sm text-slate-100 space-y-1">
+            <li>• <strong>Agriculture :</strong> humidité du sol, pluviométrie, météo locale.</li>
+            <li>• <strong>Ville :</strong> compteurs d’eau, parking, éclairage.</li>
+            <li>• <strong>Environnement :</strong> qualité de l’air, suivi faune/flore.</li>
+          </ul>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <div class="card-hover bg-slate-950/70 p-6 rounded-xl">
+            <h4 class="text-xl font-bold text-emerald-200 mb-3">LoRaWAN</h4>
+            <p class="text-slate-100 mb-4">
+              Réseau longue portée, faible débit, topologie étoile (nœuds → gateways → serveur réseau).
+            </p>
+            <div class="bg-slate-900/80 p-4 rounded-lg text-center text-sm text-slate-300">
+              [Architecture LoRaWAN]
+            </div>
+          </div>
+
+          <div class="card-hover bg-slate-950/70 p-6 rounded-xl">
+            <h4 class="text-xl font-bold text-emerald-200 mb-3">6LoWPAN / Zigbee</h4>
+            <p class="text-slate-100">
+              Protocoles maillés courte portée, souvent utilisés en domotique pour relier de nombreux nœuds basse consommation.
+            </p>
           </div>
         </div>
 
-      </div>
-
-    </div>
-  </div>
-</nav>
-
-
-
-    <!-- Main Content -->
-    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Header -->
-        <header class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-                Protocoles de Communication IoT
-            </h1>
-            <p class="text-xl text-slate-600 max-w-3xl mx-auto mb-4">
-                Du bus interne aux réseaux WAN : la fondation de la connectivité dans les systèmes embarqués.
-            </p>
-            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg max-w-3xl mx-auto">
-                <p class="text-slate-700 text-sm">
-                    <strong>Objectifs pédagogiques :</strong> Comprendre les bus internes (I2C, SPI, UART), maîtriser les protocoles IoT (MQTT, CoAP), choisir le bon protocole selon les contraintes (bande passante, consommation, portée), et implémenter des communications fiables dans vos projets IoT.
-                </p>
-            </div>
-        </header>
-
-        <!-- Section 1: Bus Périphériques -->
-        <section class="mb-16">
-            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">1. Les Bus Périphériques (Communication Interne)</h2>
-                
-                <p class="text-lg text-slate-700 mb-6 leading-relaxed">
-                    La communication interne entre le microcontrôleur et ses périphériques (capteurs, mémoires externes, écrans) est gérée par des bus optimisés pour la vitesse et le faible nombre de broches.
-                </p>
-                
-                <div class="bg-slate-50 p-5 rounded-lg border-l-4 border-slate-500 mb-8">
-                    <h4 class="font-bold text-slate-800 mb-2">Pourquoi plusieurs bus ?</h4>
-                    <p class="text-slate-700 text-sm">
-                        Chaque bus a ses avantages : <strong>I2C</strong> pour économiser les broches (2 fils), <strong>SPI</strong> pour la vitesse (écrans, mémoires), <strong>UART</strong> pour la simplicité (debug, modules). Sur un ESP32, vous pouvez utiliser les 3 simultanément !
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
-                        <h3 class="text-xl font-bold text-blue-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true"></span> I²C
-                        </h3>
-                        <p class="text-slate-700 mb-3">
-                            Bus série synchrone maître/esclave. N'utilise que deux fils (SDA & SCL). Idéal pour les petits capteurs I/O.
-                        </p>
-                        <div class="bg-white p-3 rounded-lg mb-3">
-                            <p class="text-xs text-slate-600 mb-2"><strong>Caractéristiques :</strong></p>
-                            <ul class="text-xs text-slate-700 space-y-1">
-                                <li>• Vitesse : 100 kHz (standard) à 3.4 MHz (fast mode)</li>
-                                <li>• Distance : ~1 mètre (court)</li>
-                                <li>• Exemples : Capteurs (BMP280, MPU6050), EEPROM</li>
-                            </ul>
-                        </div>
-                        <p class="text-xs text-slate-600">
-                            <strong> Code Arduino :</strong> <code>Wire.begin(); Wire.write(data);</code>
-                        </p>
-                        <div class="bg-white p-3 rounded-lg text-center text-xs text-slate-500">
-                            [Diagramme I2C]
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-6 rounded-xl border-l-4 border-amber-600 shadow-sm card-hover">
-                        <h3 class="text-xl font-bold text-amber-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true"></span> SPI
-                        </h3>
-                        <p class="text-slate-700 mb-3">
-                            Bus série synchrone maître/esclave. Plus rapide que I²C, utilise quatre fils. Préféré pour les mémoires flash et les écrans rapides.
-                        </p>
-                        <div class="bg-white p-3 rounded-lg mb-3">
-                            <p class="text-xs text-slate-600 mb-2"><strong>Caractéristiques :</strong></p>
-                            <ul class="text-xs text-slate-700 space-y-1">
-                                <li>• Vitesse : Jusqu'à 50+ MHz (très rapide)</li>
-                                <li>• Fils : MOSI, MISO, SCK, CS (4 fils minimum)</li>
-                                <li>• Exemples : Écrans OLED, cartes SD, Flash externes</li>
-                            </ul>
-                        </div>
-                        <p class="text-xs text-slate-600">
-                            <strong> Code Arduino :</strong> <code>SPI.begin(); SPI.transfer(data);</code>
-                        </p>
-                        <div class="bg-white p-3 rounded-lg text-center text-xs text-slate-500">
-                            [Diagramme SPI]
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-xl border-l-4 border-slate-500 shadow-sm card-hover">
-                        <h3 class="text-xl font-bold text-slate-800 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true"></span> UART
-                        </h3>
-                        <p class="text-slate-700 mb-3">
-                            Bus série asynchrone (sans horloge). Utilisé principalement pour le debugging et la communication avec des modules (comme le GPS ou le GSM).
-                        </p>
-                        <div class="bg-white p-3 rounded-lg mb-3">
-                            <p class="text-xs text-slate-600 mb-2"><strong>Caractéristiques :</strong></p>
-                            <ul class="text-xs text-slate-700 space-y-1">
-                                <li>• Vitesse : 9600 à 115200 bauds (configurable)</li>
-                                <li>• Fils : TX (transmission), RX (réception), 2 fils</li>
-                                <li>• Exemples : Serial Monitor, modules GPS, GSM, Bluetooth</li>
-                            </ul>
-                        </div>
-                        <p class="text-xs text-slate-600">
-                            <strong> Code Arduino :</strong> <code>Serial.begin(9600); Serial.println("Hello");</code>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 2: Protocoles Applicatifs -->
-        <section class="mb-16">
-            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">2. Protocoles Applicatifs pour l'Internet des Objets</h2>
-                
-                <p class="text-lg text-slate-700 mb-8 leading-relaxed">
-                    Au-delà de la couche physique, les protocoles applicatifs sont essentiels pour le cloud. Ils doivent être légers (faible surcharge d'en-tête) et optimisés pour les connexions intermittentes et la faible bande passante.
-                </p>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="bg-gradient-to-br from-red-50 to-red-100 p-8 rounded-xl border-l-4 border-red-600 shadow-sm card-hover">
-                        <h3 class="text-2xl font-bold text-red-900 mb-4 flex items-center">
-                            <span class="text-4xl mr-3" aria-hidden="true"></span> MQTT
-                        </h3>
-                        <p class="text-slate-700 mb-4 leading-relaxed">
-                            Protocole de messagerie léger basé sur un modèle <strong>Publier/S'abonner (Pub/Sub)</strong>. Idéal pour les communications asynchrones entre dispositifs et le Cloud.
-                        </p>
-                        <div class="bg-white p-4 rounded-lg mb-4">
-                            <p class="text-xs text-slate-600 mb-2"><strong>Cas d'usage réel :</strong></p>
-                            <p class="text-xs text-slate-700 mb-2">
-                                Un capteur de température ESP32 publie ses données sur le topic <code>sensors/temperature</code>. Un serveur cloud s'abonne à ce topic et reçoit automatiquement les données. Plusieurs abonnés peuvent recevoir les mêmes données.
-                            </p>
-                            <pre class="bg-slate-800 text-white p-2 rounded text-xs overflow-x-auto"><code>// Exemple ESP32 + MQTT
-client.publish("sensors/temp", "25.3");
-client.subscribe("commands/led");</code></pre>
-                        </div>
-                        <ul class="space-y-3 text-slate-700">
-                            <li class="flex items-start">
-                                <span class="text-red-600 mr-3 font-bold">•</span>
-                                <span><strong>QoS :</strong> Gère la qualité de service (0, 1, 2) pour garantir la livraison.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-red-600 mr-3 font-bold">•</span>
-                                <span><strong>Faible Surcharge :</strong> Seulement 2 octets d'en-tête minimal.</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
-                        <h3 class="text-2xl font-bold text-green-900 mb-4 flex items-center">
-                            <span class="text-4xl mr-3" aria-hidden="true"></span> CoAP
-                        </h3>
-                        <p class="text-slate-700 mb-4 leading-relaxed">
-                            Protocole de transfert de données basé sur le modèle <strong>Requête/Réponse</strong> (similaire à HTTP, mais optimisé pour l'embarqué). Utilise UDP pour minimiser la taille des paquets.
-                        </p>
-                        <div class="bg-white p-4 rounded-lg mb-4">
-                            <p class="text-xs text-slate-600 mb-2"><strong>Cas d'usage réel :</strong></p>
-                            <p class="text-xs text-slate-700 mb-2">
-                                Un capteur CoAP expose une ressource <code>coap://device/temperature</code>. Un autre appareil peut faire une requête GET pour lire la température, ou PUT pour configurer un seuil. Similaire à REST, mais avec seulement 4-10 bytes d'en-tête au lieu de 50+ pour HTTP.
-                            </p>
-                            <pre class="bg-slate-800 text-white p-2 rounded text-xs overflow-x-auto"><code>// Exemple requête CoAP
-GET coap://192.168.1.100/temperature
-// Réponse : 25.3°C (paquet minimal)</code></pre>
-                        </div>
-                        <ul class="space-y-3 text-slate-700">
-                            <li class="flex items-start">
-                                <span class="text-green-600 mr-3 font-bold">•</span>
-                                <span><strong>Transfert :</strong> Souvent utilisé pour la gestion des ressources et les interactions directes entre appareils.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-green-600 mr-3 font-bold">•</span>
-                                <span><strong>6LoWPAN :</strong> Fonctionne bien avec ce protocole pour les réseaux maillés IPv6 basse consommation.</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: LPWAN -->
-        <section class="mb-16">
-            <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-8 md:p-10 rounded-2xl shadow-md border-l-4 border-emerald-600">
-                <h2 class="text-3xl font-bold text-emerald-900 mb-6">3. Les Réseaux Longue Portée (LPWAN)</h2>
-                
-                <p class="text-lg text-slate-700 mb-6 leading-relaxed">
-                    Pour les applications IoT nécessitant une longue portée et une très faible consommation (plusieurs années d'autonomie), les réseaux LPWAN sont la norme.
-                </p>
-                
-                <div class="bg-emerald-50 p-5 rounded-lg border-l-4 border-emerald-600 mb-8">
-                    <h4 class="font-bold text-emerald-900 mb-2"> Applications LPWAN au Sénégal</h4>
-                    <p class="text-slate-700 text-sm mb-3">
-                        Les réseaux LPWAN sont idéaux pour l'agriculture intelligente, la surveillance environnementale, et la gestion de l'eau. Un capteur LoRaWAN peut transmettre des données sur plusieurs kilomètres avec une batterie qui dure 5-10 ans !
-                    </p>
-                    <ul class="text-sm text-slate-700 space-y-1">
-                        <li>• <strong>Agriculture :</strong> Capteurs d'humidité du sol, stations météo</li>
-                        <li>• <strong>Ville intelligente :</strong> Compteurs d'eau, éclairage public</li>
-                        <li>• <strong>Environnement :</strong> Surveillance de la qualité de l'air, suivi de la faune</li>
-                    </ul>
-                </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover">
-                        <h4 class="text-xl font-bold text-emerald-700 mb-3">LoRaWAN</h4>
-                        <p class="text-slate-700 mb-4">
-                            Très longue portée (plusieurs km) et faible bande passante. Utilise des modulations <em>spread spectrum</em> pour la robustesse.
-                        </p>
-                        <div class="bg-slate-50 p-4 rounded-lg text-center text-sm text-slate-500">
-                            [Architecture LoRaWAN]
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover">
-                        <h4 class="text-xl font-bold text-emerald-700 mb-3">6LoWPAN / Zigbee</h4>
-                        <p class="text-slate-700">
-                            Protocoles maillés basés sur IPv6 et courts-courriers (quelques mètres). Essentiels pour la domotique et les réseaux denses.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="text-center">
-                    <a href="rtos.html" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
-                        Continuer vers les RTOS →
-                    </a>
-                </div>
-            </div>
-        </section>
-          <!-- Section Projets Arduino (2ᵉ année) -->
-    <section class="mb-20">
-        <div class="bg-white shadow border border-slate-200 rounded-2xl p-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-emerald-600 mb-4">
-                Projets Arduino pour 2ᵉ année
-            </h2>
-            <p class="text-slate-600 mb-6">
-                Quelques projets Arduino concrets adaptés à un niveau deuxième année, avec code et explications complets.
-            </p>
-
-            <div class="space-y-4">
-
-                <!-- Projet 1 : Radar ultrason -->
-                <a href="https://projecthub.arduino.cc/nimishac/ultrasonic-radar-with-arduino-19baa3"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition">
-                    <h3 class="text-sm font-semibold text-slate-800">
-                        Radar à ultrasons avec Arduino
-                    </h3>
-                    <p class="text-xs text-slate-600 mt-1">
-                        Utilisation d’un capteur ultrason HC-SR04 et d’un servo pour visualiser les obstacles façon « radar ». Projet bien documenté avec schéma et code.
-                    </p>
-                </a>
-
-                <!-- Projet 2 : Serrure RFID -->
-                <a href="https://github.com/JeetChauhan17/RFID-project"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition">
-                    <h3 class="text-sm font-semibold text-slate-800">
-                        Système de verrou RFID avec Arduino
-                    </h3>
-                    <p class="text-xs text-slate-600 mt-1">
-                        Contrôle d’accès par carte RFID, affichage OLED et servo pour verrouiller/déverrouiller une porte, avec code prêt à l’emploi sur GitHub.
-                    </p>
-                </a>
-
-                <!-- Projet 3 : Robot suiveur de ligne -->
-                <a href="https://github.com/SheikhSaif2305/LineFollowingRobotCSE204"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition">
-                    <h3 class="text-sm font-semibold text-slate-800">
-                        Robot suiveur de ligne avec Arduino
-                    </h3>
-                    <p class="text-xs text-slate-600 mt-1">
-                        Robot mobile basé sur Arduino, capteurs infrarouges pour suivre une ligne et logique de contrôle déjà codée (PID simple).
-                    </p>
-                </a>
-
-            </div>
+        <div class="text-center">
+          <a href="rtos.html"
+             class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
+            Continuer vers les RTOS →
+          </a>
         </div>
+      </div>
     </section>
 
-    </main>
+    <!-- Section Projets Arduino -->
+    <section class="mb-20">
+      <div class="card-hover rounded-2xl p-8 border border-slate-800">
+        <h2 class="text-2xl md:text-3xl font-bold text-emerald-200 mb-4">
+          Projets Arduino pour 2ᵉ année
+        </h2>
+        <p class="text-slate-300 mb-6">
+          Quelques projets concrets avec code et explications, adaptés à un niveau deuxième année.
+        </p>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-white mt-20 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h3 class="text-2xl font-bold mb-4">Waytolearn<span class="text-emerald-400">IoT</span></h3>
-                <p class="text-slate-400 mb-6">Plateforme éducative pour Systèmes Embarqués</p>
-                <p class="text-sm text-slate-500">&copy; 2025 WaytolearnIoT. Tous droits réservés.</p>
-            </div>
+        <div class="space-y-4">
+          <!-- Projet 1 -->
+          <a href="https://projecthub.arduino.cc/nimishac/ultrasonic-radar-with-arduino-19baa3"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition">
+            <h3 class="text-sm font-semibold text-slate-100">
+              Radar à ultrasons avec Arduino
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Capteur HC-SR04 + servo pour visualiser les obstacles façon radar, avec schémas et code détaillé.
+            </p>
+          </a>
+
+          <!-- Projet 2 -->
+          <a href="https://github.com/JeetChauhan17/RFID-project"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition">
+            <h3 class="text-sm font-semibold text-slate-100">
+              Système de verrou RFID avec Arduino
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Contrôle d’accès par carte RFID, affichage OLED et servo pour verrouiller/déverrouiller une porte, code prêt à l’emploi.
+            </p>
+          </a>
+
+          <!-- Projet 3 -->
+          <a href="https://github.com/SheikhSaif2305/LineFollowingRobotCSE204"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition">
+            <h3 class="text-sm font-semibold text-slate-100">
+              Robot suiveur de ligne avec Arduino
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Robot mobile avec capteurs IR pour suivre une ligne, logique de contrôle déjà codée (PID simple).
+            </p>
+          </a>
         </div>
-    </footer>
-    
-    <script src="main.js" defer></script>
-<!-- Bouton retour en haut -->
-<!-- Bouton retour en haut -->
-<button id="back-to-top"
-        aria-label="Revenir en haut de la page"
-        class="fixed bottom-6 right-6 z-50 hidden
-               h-10 w-10 rounded-full bg-emerald-600 text-white
-               flex items-center justify-center
-               shadow-lg hover:bg-emerald-700
-               transition-opacity duration-200">
-  ↑
-</button>
+      </div>
+    </section>
+  </main>
 
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-800 text-slate-300 mt-20 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="text-center md:text-left">
+          <h3 class="text-2xl font-bold mb-2 text-slate-50">
+            Waytolearn<span class="text-emerald-400">IoT</span>
+          </h3>
+          <p class="text-slate-400 text-sm">
+            Plateforme éducative pour Systèmes Embarqués & IoT.
+          </p>
+        </div>
+
+        <ul class="flex flex-wrap items-center justify-center gap-y-2 gap-x-6 text-sm">
+          <li><a href="index.html" class="hover:text-emerald-400">Accueil</a></li>
+          <li><a href="architecture.html" class="hover:text-emerald-400">Architecture CPU</a></li>
+          <li><a href="cycle.html" class="hover:text-emerald-400">Cycle Instruction</a></li>
+          <li><a href="memory.html" class="hover:text-emerald-400">Gestion Mémoire</a></li>
+          <li><a href="communication.html" class="hover:text-emerald-400">Communication</a></li>
+          <li><a href="rtos.html" class="hover:text-emerald-400">RTOS</a></li>
+          <li><a href="ressources.html" class="hover:text-emerald-400">Ressources</a></li>
+        </ul>
+      </div>
+
+      <p class="mt-6 pt-4 border-t border-slate-800 text-center text-xs text-slate-500">
+        &copy; 2025 WaytolearnIoT. Tous droits réservés.
+      </p>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+
+  <!-- Bouton retour en haut -->
+  <button id="back-to-top"
+          aria-label="Revenir en haut de la page"
+          class="fixed bottom-6 right-6 z-50 hidden
+                 h-10 w-10 rounded-full bg-emerald-600 text-white
+                 flex items-center justify-center
+                 shadow-lg hover:bg-emerald-700
+                 transition-opacity duration-200">
+    ↑
+  </button>
 </body>
 </html>
