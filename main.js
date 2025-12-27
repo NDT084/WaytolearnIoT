@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initIotSlider();
   initBackToTop();
   initScrollReveal();
+  initActiveSectionHighlight();
 });
 
 /* ========== MENU HAMBURGER ========== */
@@ -117,19 +118,19 @@ function initBackToTop() {
   });
 }
 
-/* ========== RÉVÉLATION AU SCROLL (ANIMATIONS DOUCES) ========== */
+/* ========== RÉVÉLATION AU SCROLL (ANIMATIONS) ========== */
 /*
-  À ajouter dans ton CSS global :
+À ajouter dans ton CSS global (par ex. dans <style> ou un .css séparé) :
 
-  .reveal-on-scroll{
-    opacity:0;
-    transform:translateY(20px);
-    transition:opacity 0.5s ease, transform 0.5s ease;
-  }
-  .reveal-on-scroll.in-view{
-    opacity:1;
-    transform:translateY(0);
-  }
+.reveal-on-scroll{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal-on-scroll.in-view{
+  opacity:1;
+  transform:translateY(0);
+}
 */
 function initScrollReveal() {
   const elements = document.querySelectorAll('.reveal-on-scroll');
@@ -149,4 +150,35 @@ function initScrollReveal() {
   });
 
   elements.forEach(el => observer.observe(el));
+}
+
+/* ========== SURBRILLANCE SECTION ACTIVE (ANCRES) ========== */
+/* 
+Optionnel : si tu ajoutes des id sur des sections
+et des liens <a href="#id"> dans la nav, ce code mettra
+en surbrillance le lien correspondant à la section visible.
+*/
+function initActiveSectionHighlight() {
+  const sections = document.querySelectorAll('main section[id]');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  if (!sections.length || !navLinks.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (href === `#${id}`) {
+          link.classList.add('active');
+        } else if (href.startsWith('#')) {
+          link.classList.remove('active');
+        }
+      });
+    });
+  }, {
+    threshold: 0.3
+  });
+
+  sections.forEach(section => observer.observe(section));
 }
