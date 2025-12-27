@@ -1,202 +1,253 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link rel="icon" type="image/png" href="logo1.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Systèmes d'exploitation temps réel (RTOS) pour IoT : FreeRTOS, Zephyr, gestion des tâches, synchronisation et déterminisme temporel dans les systèmes embarqués.">
-    <meta name="keywords" content="IoT, RTOS, FreeRTOS, Zephyr, temps réel, systèmes embarqués, tâches, synchronisation, sémaphores">
-    <meta name="author" content="WaytolearnIoT">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#10b981">
-    <link rel="canonical" href="https://waytolearniot.com/rtos.html">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://waytolearniot.com/rtos.html">
-    <meta property="og:title" content="RTOS : Systèmes Temps Réel | WaytolearnIoT">
-    <meta property="og:description" content="Apprenez les systèmes d'exploitation temps réel pour IoT : FreeRTOS, gestion des tâches et synchronisation.">
-    <meta property="og:locale" content="fr_FR">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="RTOS : Systèmes Temps Réel | WaytolearnIoT">
-    <meta name="twitter:description" content="Apprenez les systèmes d'exploitation temps réel pour IoT.">
-    
-    <!-- Resource Hints -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-    
-    <title>RTOS : Systèmes Temps Réel | WaytolearnIoT</title>
-    
-    <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "EducationalArticle",
-        "headline": "RTOS : Systèmes d'exploitation Temps Réel",
-        "description": "Systèmes d'exploitation temps réel (RTOS) pour IoT : FreeRTOS, Zephyr, gestion des tâches, synchronisation",
-        "author": {
-            "@type": "Organization",
-            "name": "WaytolearnIoT"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "WaytolearnIoT"
-        },
-        "inLanguage": "fr-FR",
-        "educationalLevel": "Intermediate"
+  <link rel="icon" type="image/png" href="logo1.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Systèmes d'exploitation temps réel (RTOS) pour IoT : FreeRTOS, Zephyr, gestion des tâches, synchronisation et déterminisme temporel dans les systèmes embarqués.">
+  <meta name="keywords" content="IoT, RTOS, FreeRTOS, Zephyr, temps réel, systèmes embarqués, tâches, synchronisation, sémaphores">
+  <meta name="author" content="WaytolearnIoT">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#10b981">
+  <link rel="canonical" href="https://waytolearniot.com/rtos.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://waytolearniot.com/rtos.html">
+  <meta property="og:title" content="RTOS : Systèmes Temps Réel | WaytolearnIoT">
+  <meta property="og:description" content="Apprenez les systèmes d'exploitation temps réel pour IoT : FreeRTOS, gestion des tâches et synchronisation.">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RTOS : Systèmes Temps Réel | WaytolearnIoT">
+  <meta name="twitter:description" content="Apprenez les systèmes d'exploitation temps réel pour IoT.">
+
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
+  <title>RTOS : Systèmes Temps Réel | WaytolearnIoT</title>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalArticle",
+    "headline": "RTOS : Systèmes d'exploitation Temps Réel",
+    "description": "Systèmes d'exploitation temps réel (RTOS) pour IoT : FreeRTOS, Zephyr, gestion des tâches, synchronisation",
+    "author": {
+      "@type": "Organization",
+      "name": "WaytolearnIoT"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "WaytolearnIoT"
+    },
+    "inLanguage": "fr-FR",
+    "educationalLevel": "Intermediate"
+  }
+  </script>
+
+  <style>
+    :root{
+      --bg:#020617;
+      --muted:#94a3b8;
+      --accent:#10b981;
+      --text:#e5e7eb;
+      --border:#1f2937;
     }
-    </script>
-    
-    <style>
-        :root{--bg:#ffffff;--muted:#94a3b8;--accent:#10b981;--text:#1e293b;--border:#e2e8f0}
-        *{margin:0;padding:0;box-sizing:border-box}
-        html{scroll-behavior:smooth}
-        body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-        .nav-link.active{border-bottom:3px solid var(--accent);color:var(--accent);font-weight:700;margin-bottom:-3px}
-        .skip-link{position:absolute;left:-9999px;z-index:999}
-        .skip-link:focus{left:6px;top:6px;background:var(--accent);color:#fff;padding:8px 16px;text-decoration:none;border-radius:4px}
-        
-        /* Hamburger Menu Styles - Visible uniquement sur mobile */
-        #nav-toggle{background:transparent;border:0;cursor:pointer;padding:8px;width:40px;height:40px;display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;position:relative;z-index:100}
-        @media (max-width:767px){#nav-toggle{display:flex}}
-        .hamburger-line{width:24px;height:3px;background:#1e293b;border-radius:2px;transition:all 0.3s ease;transform-origin:center}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1){transform:rotate(45deg) translate(7px,7px)}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2){opacity:0;transform:translateX(-10px)}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
-        
-        /* Menu mobile vertical */
-        #nav-menu{max-height:0;overflow:hidden;transition:max-height 0.3s ease,opacity 0.3s ease}
-        #nav-menu:not(.hidden){max-height:500px}
-        @media (min-width:768px){#nav-menu{max-height:none!important}}
-        
-        .card-hover{transition:all 0.3s ease;transform:translateY(0)}
-        .card-hover:hover{transform:translateY(-4px);box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04)}
-        @media (max-width:768px){.text-6xl{font-size:2.25rem}}
-        @media (max-width:480px){.text-6xl{font-size:1.75rem}}
-    </style>
-    
-      <script>
-        // Configuration Tailwind
-        tailwind.config={theme:{extend:{colors:{slate:'#1e293b',emerald:'#10b981',amber:'#f59e0b',blue:'#3b82f6'}}}}
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    .nav-link.active{
+      border-bottom:3px solid var(--accent);
+      color:var(--accent);
+      font-weight:700;
+      margin-bottom:-3px;
+    }
+    .skip-link{position:absolute;left:-9999px;z-index:999}
+    .skip-link:focus{
+      left:6px;top:6px;
+      background:var(--accent);color:#fff;
+      padding:8px 16px;
+      text-decoration:none;
+      border-radius:4px;
+    }
+
+    /* Hamburger Menu */
+    #nav-toggle{
+      background:transparent;border:0;cursor:pointer;
+      padding:8px;width:40px;height:40px;
+      display:none;flex-direction:column;
+      justify-content:center;align-items:center;
+      gap:5px;position:relative;z-index:100;
+    }
+    @media (max-width:767px){#nav-toggle{display:flex}}
+    .hamburger-line{
+      width:24px;height:3px;
+      background:#e5e7eb;border-radius:2px;
+      transition:all 0.3s ease;
+      transform-origin:center;
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1){
+      transform:rotate(45deg) translate(7px,7px)
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2){
+      opacity:0;transform:translateX(-10px)
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3){
+      transform:rotate(-45deg) translate(7px,-7px)
+    }
+
+    /* Menu mobile */
+    #nav-menu{
+      max-height:0;overflow:hidden;
+      transition:max-height 0.3s ease,opacity 0.3s ease;
+    }
+    #nav-menu:not(.hidden){max-height:500px}
+    @media (min-width:768px){#nav-menu{max-height:none!important}}
+
+    .card-hover{
+      transition:all 0.3s ease;
+      transform:translateY(0);
+      background:#020617;
+      border:1px solid var(--border);
+    }
+    .card-hover:hover{
+      transform:translateY(-4px);
+      box-shadow:0 20px 25px -5px rgba(15,23,42,0.45),
+                 0 10px 10px -5px rgba(15,23,42,0.35);
+    }
+
+    @media (max-width:768px){
+      .text-6xl{font-size:2.25rem}
+    }
+    @media (max-width:480px){
+      .text-6xl{font-size:1.75rem}
+    }
+  </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-slate-800">
-    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
-    
-   <!-- Navigation -->
-<nav class="sticky top-0 z-50 bg-slate-50/95 backdrop-blur-sm border-b border-slate-200 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-20">
-      
-      <a href="index.html" class="text-2xl font-bold text-slate-900 hover:text-emerald-600">
-        Waytolearn<span class="text-emerald-600">IoT</span>
-      </a>
+<body class="text-slate-100">
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
-      <button id="nav-toggle" aria-expanded="false" aria-label="Ouvrir le menu">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
 
-      <div id="nav-menu"
-           class="md:flex md:space-x-2 hidden md:opacity-100 absolute md:static left-0 top-20 w-full md:w-auto
-                  bg-white md:bg-transparent shadow-md md:shadow-none border-t md:border-0 px-2">
+        <a href="index.html" class="text-2xl font-bold text-slate-50 hover:text-emerald-400">
+          Waytolearn<span class="text-emerald-400">IoT</span>
+        </a>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="index.html">Accueil</a>
+        <button id="nav-toggle" aria-expanded="false" aria-label="Ouvrir le menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="architecture.html">Architecture CPU</a>
+        <div id="nav-menu"
+             class="md:flex md:space-x-2 hidden md:opacity-100 absolute md:static left-0 top-20 w-full md:w-auto
+                    bg-slate-950 md:bg-transparent shadow-md md:shadow-none border-t border-slate-800 md:border-0 px-2">
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="cycle.html">Cycle Instruction</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="index.html">Accueil</a>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="memory.html">Gestion Mémoire</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="architecture.html">Architecture CPU</a>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="communication.html">Communication</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="cycle.html">Cycle Instruction</a>
 
-        <a class="nav-link active px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="rtos.html">RTOS</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="memory.html">Gestion Mémoire</a>
 
-        <div class="relative group">
-          <a href="ressources.html"
-             class="nav-link px-6 py-4 md:py-3 block
-                    hover:bg-slate-100 hover:text-emerald-600
-                    transition-colors duration-200">
-            Ressources
-          </a>
-          <div class="hidden md:block absolute left-0 top-full mt-1 w-64 bg-white border border-slate-200 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50">
-            <a href="ressources.html#portails-officiels"
-               class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-              Portails officiels & standards
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="communication.html">Communication</a>
+
+          <a class="nav-link active px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="rtos.html">RTOS</a>
+
+          <div class="relative group">
+            <a href="ressources.html"
+               class="nav-link px-6 py-4 md:py-3 block
+                      hover:bg-slate-900 hover:text-emerald-400
+                      transition-colors duration-200">
+              Ressources
             </a>
-            <a href="ressources.html#tutoriels"
-               class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-              Sites de tutoriels
-            </a>
-            <a href="ressources.html#projets-arduino"
-               class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-              Projets Arduino
-            </a>
+            <div class="hidden md:block absolute left-0 top-full mt-1 w-64 bg-slate-900 border border-slate-700 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50">
+              <a href="ressources.html#portails-officiels"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Portails officiels & standards
+              </a>
+              <a href="ressources.html#tutoriels"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Sites de tutoriels
+              </a>
+              <a href="ressources.html#projets-arduino"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Projets Arduino
+              </a>
+            </div>
           </div>
+
         </div>
 
       </div>
-
     </div>
-  </div>
-</nav>
+  </nav>
 
+  <!-- Main Content -->
+  <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Header -->
+    <header class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-slate-50 mb-4">
+        RTOS : Systèmes d'exploitation Temps Réel
+      </h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto mb-4">
+        Maîtrisez les systèmes d'exploitation temps réel pour garantir le déterminisme et la prévisibilité dans vos applications IoT.
+      </p>
+      <div class="bg-blue-500/10 border-l-4 border-blue-400 p-4 rounded-lg max-w-3xl mx-auto">
+        <p class="text-blue-100 text-sm">
+          <strong>Objectifs pédagogiques :</strong> Comprendre pourquoi un RTOS est nécessaire en IoT, maîtriser tâches, priorités et synchronisation, implémenter FreeRTOS sur ESP32/STM32, et garantir le déterminisme temporel.
+        </p>
+      </div>
+    </header>
 
+    <!-- Section 1: Pourquoi un RTOS ? -->
+    <section class="mb-16">
+      <div class="card-hover p-8 md:p-10 rounded-2xl">
+        <h2 class="text-3xl font-bold text-emerald-300 mb-6 pb-3 border-b-2 border-emerald-500/60">
+          1. Pourquoi un RTOS en IoT ?
+        </h2>
 
+        <p class="text-lg text-slate-200 mb-6 leading-relaxed">
+          Un système IoT doit souvent lire des capteurs, communiquer, afficher des données et réagir aux interruptions en parallèle, ce qui dépasse vite une simple boucle <code>while(1)</code>.
+        </p>
 
-    <!-- Main Content -->
-    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Header -->
-        <header class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-                RTOS : Systèmes d'exploitation Temps Réel
-            </h1>
-            <p class="text-xl text-slate-600 max-w-3xl mx-auto mb-4">
-                Maîtrisez les systèmes d'exploitation temps réel pour garantir le déterminisme et la prévisibilité dans vos applications IoT.
-            </p>
-            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg max-w-3xl mx-auto">
-                <p class="text-slate-700 text-sm">
-                    <strong>Objectifs pédagogiques :</strong> Comprendre pourquoi un RTOS est nécessaire en IoT, maîtriser les concepts de tâches, priorités et synchronisation, implémenter FreeRTOS sur ESP32/STM32, et garantir le déterminisme temporel dans vos projets embarqués.
-                </p>
-            </div>
-        </header>
-
-        <!-- Section 1: Pourquoi un RTOS ? -->
-        <section class="mb-16">
-            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">1. Pourquoi un RTOS en IoT ?</h2>
-                
-                <p class="text-lg text-slate-700 mb-6 leading-relaxed">
-                    Dans un système embarqué IoT, vous devez souvent gérer plusieurs activités simultanément : lire un capteur toutes les secondes, envoyer des données via WiFi, gérer un écran, et répondre aux interruptions. Sans RTOS, vous seriez obligé d'utiliser une boucle <code>while(1)</code> avec des délais, ce qui est inefficace et non déterministe.
-                </p>
-                
-                <div class="bg-red-50 p-5 rounded-lg border-l-4 border-red-600 mb-6">
-                    <h4 class="font-bold text-red-900 mb-2"> Problème sans RTOS (Super Loop)</h4>
-                    <pre class="bg-slate-800 text-white p-3 rounded text-xs overflow-x-auto"><code>void loop() {
+        <div class="bg-red-900/40 p-5 rounded-lg border-l-4 border-red-500 mb-6">
+          <h4 class="font-bold text-red-100 mb-2">Problème sans RTOS (Super Loop)</h4>
+          <pre class="bg-slate-950 text-white p-3 rounded text-xs overflow-x-auto"><code>void loop() {
     readSensor();      // Prend 50ms
     delay(1000);       // Attend 1 seconde
     sendData();        // Prend 200ms
@@ -204,14 +255,14 @@
     // ⚠️ Problème : Si une interruption arrive 
     // pendant delay(), elle est ignorée !
 }</code></pre>
-                    <p class="text-sm text-red-800 mt-2">
-                        <strong>Limitation :</strong> Le système ne peut pas répondre rapidement aux événements critiques. Si un capteur détecte une anomalie pendant un <code>delay()</code>, la réponse sera retardée.
-                    </p>
-                </div>
-                
-                <div class="bg-emerald-50 p-5 rounded-lg border-l-4 border-emerald-600">
-                    <h4 class="font-bold text-emerald-900 mb-2"> Solution avec RTOS (Tâches concurrentes)</h4>
-                    <pre class="bg-slate-800 text-white p-3 rounded text-xs overflow-x-auto"><code>void taskSensor(void *pvParameters) {
+          <p class="text-sm text-red-100 mt-2">
+            <strong>Limitation :</strong> Réponse lente aux événements critiques, structure difficile à maintenir et à faire évoluer.
+          </p>
+        </div>
+
+        <div class="bg-emerald-900/40 p-5 rounded-lg border-l-4 border-emerald-500">
+          <h4 class="font-bold text-emerald-100 mb-2">Solution avec RTOS (Tâches concurrentes)</h4>
+          <pre class="bg-slate-950 text-white p-3 rounded text-xs overflow-x-auto"><code>void taskSensor(void *pvParameters) {
     while(1) {
         readSensor();
         vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -224,92 +275,100 @@ void taskCommunication(void *pvParameters) {
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
-// Les deux tâches s'exécutent en parallèle !
-// Le RTOS gère le partage du CPU automatiquement.</code></pre>
-                    <p class="text-sm text-emerald-800 mt-2">
-                        <strong>Avantage :</strong> Chaque tâche s'exécute indépendamment. Le RTOS peut interrompre une tâche pour exécuter une autre plus prioritaire, garantissant une réponse rapide aux événements critiques.
-                    </p>
-                </div>
-            </div>
-        </section>
+// Les deux tâches s'exécutent en parallèle,
+// l'ordonnanceur partage le CPU.</code></pre>
+          <p class="text-sm text-emerald-100 mt-2">
+            <strong>Avantage :</strong> Meilleure réactivité, code plus modulaire et comportement plus prévisible.
+          </p>
+        </div>
+      </div>
+    </section>
 
-        <!-- Section 2: Concepts Fondamentaux -->
-        <section class="mb-16">
-            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">2. Concepts Fondamentaux du RTOS</h2>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
-                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
-                        <h3 class="text-xl font-bold text-blue-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true"></span> Tâches (Tasks)
-                        </h3>
-                        <p class="text-slate-700 mb-3">
-                            Une tâche est une fonction qui s'exécute de manière concurrente avec d'autres tâches. Chaque tâche a sa propre pile (Stack) et peut avoir une priorité.
-                        </p>
-                        <div class="bg-white p-3 rounded-lg">
-                            <p class="text-xs text-slate-600 mb-2"><strong>Exemple FreeRTOS :</strong></p>
-                            <pre class="bg-slate-800 text-white p-2 rounded text-xs overflow-x-auto"><code>xTaskCreate(
+    <!-- Section 2: Concepts Fondamentaux -->
+    <section class="mb-16">
+      <div class="card-hover p-8 md:p-10 rounded-2xl">
+        <h2 class="text-3xl font-bold text-emerald-300 mb-6 pb-3 border-b-2 border-emerald-500/60">
+          2. Concepts Fondamentaux du RTOS
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+          <!-- Tâches -->
+          <div class="card-hover bg-gradient-to-br from-blue-900/60 to-blue-800/60 p-6 rounded-xl border-l-4 border-blue-400">
+            <h3 class="text-xl font-bold text-blue-100 mb-3 flex items-center">
+              <span class="text-2xl mr-2" aria-hidden="true"></span> Tâches (Tasks)
+            </h3>
+            <p class="text-slate-100 mb-3">
+              Une tâche est une fonction planifiée par le RTOS, avec sa propre pile et éventuellement sa priorité.
+            </p>
+            <div class="bg-slate-950/70 p-3 rounded-lg">
+              <p class="text-xs text-slate-100 mb-2"><strong>Exemple FreeRTOS :</strong></p>
+              <pre class="bg-slate-950 text-white p-2 rounded text-xs overflow-x-auto"><code>xTaskCreate(
     taskFunction,    // Fonction
     "TaskName",      // Nom
-    1024,           // Stack size
-    NULL,           // Paramètres
-    2,              // Priorité
-    NULL            // Handle
+    1024,            // Stack size
+    NULL,            // Paramètres
+    2,               // Priorité
+    NULL             // Handle
 );</code></pre>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-6 rounded-xl border-l-4 border-amber-600 shadow-sm card-hover">
-                        <h3 class="text-xl font-bold text-amber-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true"></span> Priorités
-                        </h3>
-                        <p class="text-slate-700 mb-3">
-                            Les tâches avec une priorité plus élevée s'exécutent avant les tâches de priorité inférieure. Le scheduler (ordonnanceur) choisit toujours la tâche la plus prioritaire prête à s'exécuter.
-                        </p>
-                        <div class="bg-white p-3 rounded-lg">
-                            <p class="text-xs text-slate-600">
-                                <strong>Exemple :</strong> Priorité 3 (capteur critique) > Priorité 2 (communication) > Priorité 1 (affichage). Si le capteur détecte une urgence, il prend immédiatement le contrôle du CPU.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-6 rounded-xl border-l-4 border-emerald-600 shadow-sm card-hover">
-                        <h3 class="text-xl font-bold text-emerald-900 mb-3 flex items-center">
-                            <span class="text-2xl mr-2" aria-hidden="true"></span> Context Switching
-                        </h3>
-                        <p class="text-slate-700 mb-3">
-                            Le changement de contexte sauvegarde l'état d'une tâche (registres, pile) et restaure l'état d'une autre. Sur Cortex-M, cela prend typiquement 1-5 microsecondes.
-                        </p>
-                        <div class="bg-white p-3 rounded-lg">
-                            <p class="text-xs text-slate-600">
-                                <strong>Performance :</strong> Sur un ESP32 à 240 MHz, un context switch prend environ <strong>2-3 µs</strong>, ce qui est négligeable pour la plupart des applications IoT.
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </section>
+          </div>
 
-        <!-- Section 3: Synchronisation -->
-        <section class="mb-16">
-            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">3. Synchronisation : Sémaphores, Mutex et Queues</h2>
-                
-                <p class="text-lg text-slate-700 mb-6 leading-relaxed">
-                    Quand plusieurs tâches partagent des ressources (mémoire, périphériques), il faut éviter les <strong>race conditions</strong> (conditions de course). Les mécanismes de synchronisation garantissent l'accès exclusif aux ressources partagées.
-                </p>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
-                    <div class="bg-gradient-to-br from-red-50 to-red-100 p-8 rounded-xl border-l-4 border-red-600 shadow-sm card-hover">
-                        <h3 class="text-2xl font-bold text-red-900 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true"></span> Mutex (Mutual Exclusion)
-                        </h3>
-                        <p class="text-slate-700 mb-4 leading-relaxed">
-                            Un mutex garantit qu'une seule tâche peut accéder à une ressource à la fois. Si une tâche prend le mutex, les autres doivent attendre.
-                        </p>
-                        <div class="bg-white p-4 rounded-lg">
-                            <p class="text-xs text-slate-600 mb-2"><strong>Exemple pratique :</strong></p>
-                            <pre class="bg-slate-800 text-white p-3 rounded text-xs overflow-x-auto"><code>SemaphoreHandle_t mutex = xSemaphoreCreateMutex();
+          <!-- Priorités -->
+          <div class="card-hover bg-gradient-to-br from-amber-900/60 to-amber-800/60 p-6 rounded-xl border-l-4 border-amber-400">
+            <h3 class="text-xl font-bold text-amber-100 mb-3 flex items-center">
+              <span class="text-2xl mr-2" aria-hidden="true"></span> Priorités
+            </h3>
+            <p class="text-slate-100 mb-3">
+              L’ordonnanceur exécute toujours la tâche prête la plus prioritaire, ce qui permet de respecter des contraintes temps réel.
+            </p>
+            <div class="bg-slate-950/70 p-3 rounded-lg">
+              <p class="text-xs text-slate-100">
+                <strong>Exemple :</strong> Une tâche capteur critique (prio 3) peut préempter une tâche de communication (prio 2) ou d’affichage (prio 1).
+              </p>
+            </div>
+          </div>
+
+          <!-- Context switching -->
+          <div class="card-hover bg-gradient-to-br from-emerald-900/60 to-emerald-800/60 p-6 rounded-xl border-l-4 border-emerald-400">
+            <h3 class="text-xl font-bold text-emerald-100 mb-3 flex items-center">
+              <span class="text-2xl mr-2" aria-hidden="true"></span> Context Switching
+            </h3>
+            <p class="text-slate-100 mb-3">
+              Le changement de contexte sauvegarde l’état d’une tâche et restaure celui d’une autre en quelques microsecondes sur MCU moderne.
+            </p>
+            <div class="bg-slate-950/70 p-3 rounded-lg">
+              <p class="text-xs text-slate-100">
+                <strong>Impact :</strong> Le coût reste faible par rapport aux périodes d’échantillonnage habituelles en IoT.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Synchronisation -->
+    <section class="mb-16">
+      <div class="card-hover p-8 md:p-10 rounded-2xl">
+        <h2 class="text-3xl font-bold text-emerald-300 mb-6 pb-3 border-b-2 border-emerald-500/60">
+          3. Synchronisation : Sémaphores, Mutex et Queues
+        </h2>
+
+        <p class="text-lg text-slate-200 mb-6 leading-relaxed">
+          Les mécanismes de synchronisation évitent les races et les corruptions de données lorsque plusieurs tâches partagent une même ressource.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+          <!-- Mutex -->
+          <div class="card-hover bg-gradient-to-br from-red-900/60 to-red-800/60 p-8 rounded-xl border-l-4 border-red-400">
+            <h3 class="text-2xl font-bold text-red-100 mb-4 flex items-center">
+              <span class="text-3xl mr-3" aria-hidden="true"></span> Mutex (Mutual Exclusion)
+            </h3>
+            <p class="text-slate-100 mb-4 leading-relaxed">
+              Un mutex garantit qu’une seule tâche à la fois entre dans une section critique (SPI, variable partagée, etc.).
+            </p>
+            <div class="bg-slate-950/70 p-4 rounded-lg">
+              <p class="text-xs text-slate-100 mb-2"><strong>Exemple pratique :</strong></p>
+              <pre class="bg-slate-950 text-white p-3 rounded text-xs overflow-x-auto"><code>SemaphoreHandle_t mutex = xSemaphoreCreateMutex();
 
 void task1() {
     xSemaphoreTake(mutex, portMAX_DELAY);
@@ -317,22 +376,23 @@ void task1() {
     sharedVariable++;
     xSemaphoreGive(mutex);
 }</code></pre>
-                            <p class="text-xs text-slate-600 mt-2">
-                                <strong>Cas d'usage :</strong> Protéger l'accès à une variable partagée, un périphérique SPI, ou une structure de données.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
-                        <h3 class="text-2xl font-bold text-blue-900 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true"></span> Queues (Files d'attente)
-                        </h3>
-                        <p class="text-slate-700 mb-4 leading-relaxed">
-                            Une queue permet à une tâche d'envoyer des données à une autre tâche de manière thread-safe. C'est idéal pour la communication inter-tâches.
-                        </p>
-                        <div class="bg-white p-4 rounded-lg">
-                            <p class="text-xs text-slate-600 mb-2"><strong>Exemple pratique :</strong></p>
-                            <pre class="bg-slate-800 text-white p-3 rounded text-xs overflow-x-auto"><code>QueueHandle_t queue = xQueueCreate(10, sizeof(int));
+              <p class="text-xs text-slate-100 mt-2">
+                <strong>Usage :</strong> Protection d’accès à une ressource partagée entre plusieurs tâches.
+              </p>
+            </div>
+          </div>
+
+          <!-- Queues -->
+          <div class="card-hover bg-gradient-to-br from-blue-900/60 to-blue-800/60 p-8 rounded-xl border-l-4 border-blue-400">
+            <h3 class="text-2xl font-bold text-blue-100 mb-4 flex items-center">
+              <span class="text-3xl mr-3" aria-hidden="true"></span> Queues (Files d'attente)
+            </h3>
+            <p class="text-slate-100 mb-4 leading-relaxed">
+              Les queues permettent à des tâches de s’échanger des messages ou structures de manière sûre.
+            </p>
+            <div class="bg-slate-950/70 p-4 rounded-lg">
+              <p class="text-xs text-slate-100 mb-2"><strong>Exemple pratique :</strong></p>
+              <pre class="bg-slate-950 text-white p-3 rounded text-xs overflow-x-auto"><code>QueueHandle_t queue = xQueueCreate(10, sizeof(int));
 
 // Tâche productrice
 void taskSensor() {
@@ -346,103 +406,103 @@ void taskDisplay() {
     xQueueReceive(queue, &data, portMAX_DELAY);
     display(data);
 }</code></pre>
-                            <p class="text-xs text-slate-600 mt-2">
-                                <strong>Cas d'usage :</strong> Un capteur envoie des données à une tâche d'affichage, ou une tâche WiFi reçoit des commandes d'une tâche de contrôle.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+              <p class="text-xs text-slate-100 mt-2">
+                <strong>Usage :</strong> Chaîner capteurs, communication réseau et affichage sans variables globales.
+              </p>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- Section 4: FreeRTOS vs Zephyr -->
-        <section class="mb-16">
-            <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-8 md:p-10 rounded-2xl shadow-md border-l-4 border-emerald-600">
-                <h2 class="text-3xl font-bold text-emerald-900 mb-6">4. FreeRTOS vs Zephyr : Comparaison pour l'IoT</h2>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover">
-                        <h3 class="text-2xl font-bold text-emerald-800 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true"></span> FreeRTOS
-                        </h3>
-                        <p class="text-slate-700 mb-4">
-                            Le RTOS le plus populaire dans l'industrie IoT. Simple, léger, et largement supporté.
-                        </p>
-                        <ul class="space-y-2 text-slate-700 mb-4">
-                            <li class="flex items-start">
-                                <span class="text-emerald-600 mr-2">✓</span>
-                                <span><strong>Avantages :</strong> Très léger (~6-9 KB RAM), documentation excellente, communauté énorme, supporte ESP32, STM32, Arduino</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-emerald-600 mr-2">✓</span>
-                                <span><strong>Idéal pour :</strong> Projets éducatifs, prototypes rapides, systèmes avec contraintes mémoire strictes</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-emerald-600 mr-2">✓</span>
-                                <span><strong>Exemple :</strong> Utilisé dans la majorité des projets ESP32 et STM32 en IoT</span>
-                            </li>
-                        </ul>
-                        <div class="bg-slate-50 p-3 rounded">
-                            <p class="text-xs text-slate-600">
-                                <strong>Ressource :</strong> <a href="https://www.freertos.org" target="_blank" class="text-emerald-600 hover:underline">www.freertos.org</a> - Documentation complète et exemples gratuits
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover">
-                        <h3 class="text-2xl font-bold text-emerald-800 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true"></span> Zephyr RTOS
-                    </h3>
-                    <p class="text-slate-700 mb-4">
-                            RTOS moderne développé par la Linux Foundation, optimisé pour les systèmes contraints et la sécurité.
-                        </p>
-                        <ul class="space-y-2 text-slate-700 mb-4">
-                            <li class="flex items-start">
-                                <span class="text-emerald-600 mr-2">✓</span>
-                                <span><strong>Avantages :</strong> Architecture modulaire, support natif de nombreux MCUs, sécurité intégrée, support Bluetooth/WiFi</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-emerald-600 mr-2">✓</span>
-                                <span><strong>Idéal pour :</strong> Projets industriels, systèmes nécessitant une certification, applications avec exigences de sécurité</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-emerald-600 mr-2">✓</span>
-                                <span><strong>Exemple :</strong> Utilisé dans les produits commerciaux nécessitant une certification (médical, automobile)</span>
-                            </li>
-                        </ul>
-                        <div class="bg-slate-50 p-3 rounded">
-                            <p class="text-xs text-slate-600">
-                                <strong> Ressource :</strong> <a href="https://www.zephyrproject.org" target="_blank" class="text-emerald-600 hover:underline">www.zephyrproject.org</a> - Projet open-source de la Linux Foundation
-                            </p>
-                        </div>
-                    </div>
-                </div>
+    <!-- Section 4: FreeRTOS vs Zephyr -->
+    <section class="mb-16">
+      <div class="card-hover bg-gradient-to-br from-emerald-900/70 to-emerald-800/60 p-8 md:p-10 rounded-2xl border-l-4 border-emerald-500">
+        <h2 class="text-3xl font-bold text-emerald-100 mb-6">
+          4. FreeRTOS vs Zephyr : Comparaison pour l'IoT
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <!-- FreeRTOS -->
+          <div class="card-hover bg-slate-950/70 p-6 rounded-xl">
+            <h3 class="text-2xl font-bold text-emerald-200 mb-4 flex items-center">
+              <span class="text-3xl mr-3" aria-hidden="true"></span> FreeRTOS
+            </h3>
+            <p class="text-slate-100 mb-4">
+              RTOS très répandu, minimaliste, soutenu par AWS, avec un noyau léger adapté aux microcontrôleurs contraints. [web:65][web:68]
+            </p>
+            <ul class="space-y-2 text-slate-100 mb-4 text-sm">
+              <li class="flex items-start">
+                <span class="text-emerald-300 mr-2">✓</span>
+                <span><strong>Avantages :</strong> Faible empreinte, API simple, énorme base d’exemples (ESP32, STM32, etc.). [web:68]</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-emerald-300 mr-2">✓</span>
+                <span><strong>Idéal pour :</strong> Projets éducatifs, prototypes, produits simples à moyenne complexité. [web:65]</span>
+              </li>
+            </ul>
+            <div class="bg-slate-900/80 p-3 rounded">
+              <p class="text-xs text-slate-200">
+                <strong>Ressource :</strong>
+                <a href="https://www.freertos.org" target="_blank" class="text-emerald-300 hover:underline">www.freertos.org</a>
+              </p>
             </div>
-        </section>
+          </div>
 
-        <!-- Section 5: Exemple Pratique -->
-        <section class="mb-16">
-            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">5. Exemple Pratique : Station Météo IoT avec FreeRTOS</h2>
-                
-                <p class="text-lg text-slate-700 mb-6 leading-relaxed">
-                    Voici un exemple concret d'application IoT utilisant FreeRTOS sur ESP32 : une station météo qui lit des capteurs, envoie des données via WiFi, et gère un écran OLED.
-                </p>
-                
-                <div class="bg-slate-50 p-6 rounded-xl border-l-4 border-slate-500 mb-6">
-                    <h4 class="font-bold text-slate-800 mb-3">Architecture du système</h4>
-                    <ul class="space-y-2 text-slate-700 text-sm">
-                        <li><strong>Tâche 1 (Priorité 3) :</strong> Lecture capteurs toutes les 5 secondes → Envoie données dans une queue</li>
-                        <li><strong>Tâche 2 (Priorité 2) :</strong> Communication WiFi → Récupère données de la queue et les envoie au cloud via MQTT</li>
-                        <li><strong>Tâche 3 (Priorité 1) :</strong> Affichage OLED → Affiche les dernières valeurs lues</li>
-                        <li><strong>ISR :</strong> Gestion du bouton d'urgence → Notifie la tâche de communication</li>
-                    </ul>
-                </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-blue-50 p-6 rounded-xl">
-                        <h4 class="font-bold text-blue-900 mb-3"> Code FreeRTOS (simplifié)</h4>
-                        <pre class="bg-slate-800 text-white p-4 rounded-lg text-xs overflow-x-auto"><code>// Queue pour les données
+          <!-- Zephyr -->
+          <div class="card-hover bg-slate-950/70 p-6 rounded-xl">
+            <h3 class="text-2xl font-bold text-emerald-200 mb-4 flex items-center">
+              <span class="text-3xl mr-3" aria-hidden="true"></span> Zephyr RTOS
+            </h3>
+            <p class="text-slate-100 mb-4">
+              RTOS modulaire soutenu par la Linux Foundation, avec un écosystème riche, réseau intégré et forte orientation sécurité. [web:65][web:68]
+            </p>
+            <ul class="space-y-2 text-slate-100 mb-4 text-sm">
+              <li class="flex items-start">
+                <span class="text-emerald-300 mr-2">✓</span>
+                <span><strong>Avantages :</strong> Stack réseau avancée, drivers nombreux, intégration Bluetooth/WiFi et sécurité renforcée. [web:68]</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-emerald-300 mr-2">✓</span>
+                <span><strong>Idéal pour :</strong> Projets industriels, produits certifiables et architectures complexes. [web:65]</span>
+              </li>
+            </ul>
+            <div class="bg-slate-900/80 p-3 rounded">
+              <p class="text-xs text-slate-200">
+                <strong>Ressource :</strong>
+                <a href="https://www.zephyrproject.org" target="_blank" class="text-emerald-300 hover:underline">www.zephyrproject.org</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Exemple Pratique -->
+    <section class="mb-16">
+      <div class="card-hover p-8 md:p-10 rounded-2xl">
+        <h2 class="text-3xl font-bold text-emerald-300 mb-6 pb-3 border-b-2 border-emerald-500/60">
+          5. Exemple Pratique : Station Météo IoT avec FreeRTOS
+        </h2>
+
+        <p class="text-lg text-slate-200 mb-6 leading-relaxed">
+          Exemple d’architecture FreeRTOS sur ESP32 : tâches capteurs, WiFi/MQTT et affichage OLED fonctionnent de manière découplée.
+        </p>
+
+        <div class="bg-slate-900/70 p-6 rounded-xl border-l-4 border-slate-500 mb-6">
+          <h4 class="font-bold text-slate-100 mb-3">Architecture du système</h4>
+          <ul class="space-y-2 text-slate-100 text-sm">
+            <li><strong>Tâche 1 (Prio 3) :</strong> Lit les capteurs toutes les 5 s et pousse dans une queue.</li>
+            <li><strong>Tâche 2 (Prio 2) :</strong> Envoie les données via WiFi/MQTT.</li>
+            <li><strong>Tâche 3 (Prio 1) :</strong> Met à jour l’OLED avec les dernières valeurs.</li>
+            <li><strong>ISR :</strong> Bouton d’urgence qui réveille une tâche de traitement.</li>
+          </ul>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-slate-950/80 p-6 rounded-xl">
+            <h4 class="font-bold text-blue-100 mb-3">Code FreeRTOS (simplifié)</h4>
+            <pre class="bg-slate-950 text-white p-4 rounded-lg text-xs overflow-x-auto"><code>// Queue pour les données
 QueueHandle_t sensorQueue;
 
 void taskSensor(void *pvParameters) {
@@ -460,111 +520,119 @@ void taskSensor(void *pvParameters) {
 void taskWiFi(void *pvParameters) {
     SensorData data;
     while(1) {
-        if(xQueueReceive(sensorQueue, 
-           &data, portMAX_DELAY)) {
+        if(xQueueReceive(sensorQueue, &data, portMAX_DELAY)) {
             mqttPublish("temp", data.temp);
-            mqttPublish("humidity", 
-                       data.humidity);
+            mqttPublish("humidity", data.humidity);
         }
     }
 }
 
 void setup() {
-    sensorQueue = xQueueCreate(10, 
-                    sizeof(SensorData));
-    xTaskCreate(taskSensor, "Sensor", 
-                2048, NULL, 3, NULL);
-    xTaskCreate(taskWiFi, "WiFi", 
-                4096, NULL, 2, NULL);
+    sensorQueue = xQueueCreate(10, sizeof(SensorData));
+    xTaskCreate(taskSensor, "Sensor", 2048, NULL, 3, NULL);
+    xTaskCreate(taskWiFi, "WiFi", 4096, NULL, 2, NULL);
     vTaskStartScheduler();
 }</code></pre>
-                    </div>
-                    
-                    <div class="bg-amber-50 p-6 rounded-xl">
-                        <h4 class="font-bold text-amber-900 mb-3"> Analyse des performances</h4>
-                        <ul class="space-y-3 text-slate-700 text-sm">
-                            <li>
-                                <strong>Déterminisme :</strong> La tâche capteur s'exécute exactement toutes les 5 secondes, indépendamment de la communication WiFi.
-                            </li>
-                            <li>
-                                <strong>Réactivité :</strong> Si le WiFi est lent (200ms), la tâche d'affichage continue de s'exécuter sans être bloquée.
-                            </li>
-                            <li>
-                                <strong>Consommation :</strong> Le RTOS met automatiquement le CPU en mode veille quand aucune tâche n'est prête, économisant l'énergie.
-                            </li>
-                            <li>
-                                <strong>Stack usage :</strong> Chaque tâche a son propre stack (2048 bytes pour capteur, 4096 pour WiFi). Surveillez l'utilisation avec <code>uxTaskGetStackHighWaterMark()</code>.
-                            </li>
-                    </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+          </div>
 
-        <!-- Section 6: Bonnes Pratiques -->
-        <section class="mb-16">
-            <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-8 md:p-10 rounded-2xl shadow-md border-l-4 border-slate-600">
-                <h2 class="text-3xl font-bold text-slate-900 mb-6">6. Bonnes Pratiques pour les RTOS en IoT</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-md">
-                        <h4 class="font-bold text-slate-800 mb-3"> À FAIRE</h4>
-                        <ul class="space-y-2 text-slate-700 text-sm">
-                            <li>• Dimensionner le stack de chaque tâche correctement (utilisez les outils de profilage)</li>
-                            <li>• Utiliser des queues pour la communication inter-tâches (éviter les variables globales)</li>
-                            <li>• Garder les ISR très courtes (déclencher une tâche depuis l'ISR si nécessaire)</li>
-                            <li>• Utiliser des mutex pour protéger les ressources partagées</li>
-                            <li>• Configurer les timeouts appropriés pour éviter les blocages</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-white p-6 rounded-xl shadow-md">
-                        <h4 class="font-bold text-slate-800 mb-3">À ÉVITER</h4>
-                        <ul class="space-y-2 text-slate-700 text-sm">
-                            <li>• Utiliser <code>delay()</code> dans une ISR (utilisez <code>vTaskDelay()</code> dans les tâches)</li>
-                            <li>• Accéder à des ressources partagées sans mutex</li>
-                            <li>• Créer trop de tâches (5-10 tâches max pour la plupart des projets)</li>
-                            <li>• Oublier de libérer les mutex/sémaphores (risque de deadlock)</li>
-                            <li>• Utiliser des priorités identiques partout (perd l'avantage du RTOS)</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-md mt-6">
-                    <h4 class="font-bold text-slate-800 mb-3">🔧 Outils de Debug pour FreeRTOS</h4>
-                    <ul class="space-y-2 text-slate-700 text-sm">
-                        <li><strong>FreeRTOS+Trace :</strong> Visualisez l'exécution des tâches en temps réel</li>
-                        <li><strong>uxTaskGetStackHighWaterMark() :</strong> Mesurez l'utilisation réelle du stack</li>
-                        <li><strong>vTaskList() :</strong> Affichez l'état de toutes les tâches (nécessite beaucoup de RAM)</li>
-                        <li><strong>GDB avec FreeRTOS :</strong> Déboguez les tâches individuellement</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-white mt-20 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h3 class="text-2xl font-bold mb-4">Waytolearn<span class="text-emerald-400">IoT</span></h3>
-                <p class="text-slate-400 mb-6">Plateforme éducative pour Systèmes Embarqués</p>
-                <p class="text-sm text-slate-500">&copy; 2025 WaytolearnIoT. Tous droits réservés.</p>
-            </div>
+          <div class="bg-amber-900/40 p-6 rounded-xl">
+            <h4 class="font-bold text-amber-100 mb-3">Analyse des performances</h4>
+            <ul class="space-y-3 text-slate-100 text-sm">
+              <li><strong>Déterminisme :</strong> La période de 5 s est contrôlée via le tick RTOS, pas des delays bloquants.</li>
+              <li><strong>Réactivité :</strong> La communication lente ne bloque ni lecture capteur ni affichage.</li>
+              <li><strong>Consommation :</strong> Le RTOS peut endormir le CPU quand aucune tâche n’est prête.</li>
+              <li><strong>Stack :</strong> Chaque tâche a un stack dédié, à dimensionner et surveiller avec <code>uxTaskGetStackHighWaterMark()</code>.</li>
+            </ul>
+          </div>
         </div>
-    </footer>
-    
-    <script src="main.js" defer></script>
-<!-- Bouton retour en haut -->
-<button id="back-to-top"
-        aria-label="Revenir en haut de la page"
-        class="fixed bottom-6 right-6 z-50 hidden
-               h-10 w-10 rounded-full bg-emerald-600 text-white
-               flex items-center justify-center
-               shadow-lg hover:bg-emerald-700
-               transition-opacity duration-200">
-  ↑
-</button>
+      </div>
+    </section>
 
+    <!-- Section 6: Bonnes Pratiques -->
+    <section class="mb-16">
+      <div class="card-hover bg-gradient-to-br from-slate-900/70 to-slate-800/70 p-8 md:p-10 rounded-2xl border-l-4 border-slate-500">
+        <h2 class="text-3xl font-bold text-slate-50 mb-6">
+          6. Bonnes Pratiques pour les RTOS en IoT
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-slate-950/80 p-6 rounded-xl">
+            <h4 class="font-bold text-slate-100 mb-3">À FAIRE</h4>
+            <ul class="space-y-2 text-slate-100 text-sm">
+              <li>• Dimensionner correctement les stacks de tâches.</li>
+              <li>• Utiliser des queues pour la communication inter-tâches.</li>
+              <li>• Garder les ISR très courtes.</li>
+              <li>• Protéger les ressources partagées avec des mutex.</li>
+              <li>• Ajouter des timeouts pour éviter les blocages.</li>
+            </ul>
+          </div>
+
+          <div class="bg-slate-950/80 p-6 rounded-xl">
+            <h4 class="font-bold text-slate-100 mb-3">À ÉVITER</h4>
+            <ul class="space-y-2 text-slate-100 text-sm">
+              <li>• Appeler <code>delay()</code> dans les tâches au lieu de <code>vTaskDelay()</code>.</li>
+              <li>• Accéder à des ressources partagées sans synchronisation.</li>
+              <li>• Créer une explosion de tâches (préférer regrouper les fonctions proches).</li>
+              <li>• Oublier de libérer mutex/sémaphores.</li>
+              <li>• Donner la même priorité à toutes les tâches.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bg-slate-950/80 p-6 rounded-xl mt-6">
+          <h4 class="font-bold text-slate-100 mb-3">Outils de Debug pour FreeRTOS</h4>
+          <ul class="space-y-2 text-slate-100 text-sm">
+            <li><strong>FreeRTOS+Trace :</strong> Visualisation des tâches en temps réel. [web:68]</li>
+            <li><strong>uxTaskGetStackHighWaterMark() :</strong> Mesure du stack restant.</li>
+            <li><strong>vTaskList() :</strong> Vue globale des tâches (si RAM suffisante).</li>
+            <li><strong>GDB :</strong> Debug pas à pas avec support RTOS sur certains IDE. [web:65]</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-800 text-slate-300 mt-20 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="text-center md:text-left">
+          <h3 class="text-2xl font-bold mb-2 text-slate-50">
+            Waytolearn<span class="text-emerald-400">IoT</span>
+          </h3>
+          <p class="text-slate-400 text-sm">
+            Plateforme éducative pour Systèmes Embarqués & IoT.
+          </p>
+        </div>
+
+        <ul class="flex flex-wrap items-center justify-center gap-y-2 gap-x-6 text-sm">
+          <li><a href="index.html" class="hover:text-emerald-400">Accueil</a></li>
+          <li><a href="architecture.html" class="hover:text-emerald-400">Architecture CPU</a></li>
+          <li><a href="cycle.html" class="hover:text-emerald-400">Cycle Instruction</a></li>
+          <li><a href="memory.html" class="hover:text-emerald-400">Gestion Mémoire</a></li>
+          <li><a href="communication.html" class="hover:text-emerald-400">Communication</a></li>
+          <li><a href="rtos.html" class="hover:text-emerald-400">RTOS</a></li>
+          <li><a href="ressources.html" class="hover:text-emerald-400">Ressources</a></li>
+        </ul>
+      </div>
+
+      <p class="mt-6 pt-4 border-t border-slate-800 text-center text-xs text-slate-500">
+        &copy; 2025 WaytolearnIoT. Tous droits réservés.
+      </p>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+
+  <!-- Bouton retour en haut -->
+  <button id="back-to-top"
+          aria-label="Revenir en haut de la page"
+          class="fixed bottom-6 right-6 z-50 hidden
+                 h-10 w-10 rounded-full bg-emerald-600 text-white
+                 flex items-center justify-center
+                 shadow-lg hover:bg-emerald-700
+                 transition-opacity duration-200">
+    ↑
+  </button>
 </body>
 </html>
