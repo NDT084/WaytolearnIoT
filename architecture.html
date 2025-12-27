@@ -1,414 +1,494 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link rel="icon" type="image/png" href="logo1.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Architecture CPU des systèmes embarqués IoT : ARM Cortex-M, RISC-V, jeux d'instructions (ISA) et pipeline d'exécution.">
-    <meta name="keywords" content="IoT, architecture CPU, ARM Cortex-M, RISC-V, ISA, pipeline, microcontrôleurs">
-    <meta name="author" content="WaytolearnIoT">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#10b981">
-    <link rel="canonical" href="https://waytolearniot.com/architecture.html">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://waytolearniot.com/architecture.html">
-    <meta property="og:title" content="Architecture CPU | WaytolearnIoT">
-    <meta property="og:description" content="Comprendre l'architecture RISC (ARM & RISC-V) pour optimiser les performances énergétiques.">
-    <meta property="og:locale" content="fr_FR">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Architecture CPU | WaytolearnIoT">
-    <meta name="twitter:description" content="Comprendre l'architecture RISC pour optimiser les performances énergétiques.">
-    
-    <!-- Resource Hints -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-    
-    <title>Architecture CPU | WaytolearnIoT</title>
-    
-    <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "EducationalArticle",
-        "headline": "Architecture CPU : Le Cœur de l'IoT",
-        "description": "Architecture CPU des systèmes embarqués IoT : ARM Cortex-M, RISC-V, jeux d'instructions (ISA) et pipeline d'exécution",
-        "author": {
-            "@type": "Organization",
-            "name": "WaytolearnIoT"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "WaytolearnIoT"
-        },
-        "inLanguage": "fr-FR",
-        "educationalLevel": "Intermediate"
+  <link rel="icon" type="image/png" href="logo1.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Architecture CPU des systèmes embarqués IoT : ARM Cortex-M, RISC-V, jeux d'instructions (ISA) et pipeline d'exécution.">
+  <meta name="keywords" content="IoT, architecture CPU, ARM Cortex-M, RISC-V, ISA, pipeline, microcontrôleurs">
+  <meta name="author" content="WaytolearnIoT">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#10b981">
+  <link rel="canonical" href="https://waytolearniot.com/architecture.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://waytolearniot.com/architecture.html">
+  <meta property="og:title" content="Architecture CPU | WaytolearnIoT">
+  <meta property="og:description" content="Comprendre l'architecture RISC (ARM & RISC-V) pour optimiser les performances énergétiques.">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Architecture CPU | WaytolearnIoT">
+  <meta name="twitter:description" content="Comprendre l'architecture RISC pour optimiser les performances énergétiques.">
+
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
+  <title>Architecture CPU | WaytolearnIoT</title>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalArticle",
+    "headline": "Architecture CPU : Le Cœur de l'IoT",
+    "description": "Architecture CPU des systèmes embarqués IoT : ARM Cortex-M, RISC-V, jeux d'instructions (ISA) et pipeline d'exécution",
+    "author": {
+      "@type": "Organization",
+      "name": "WaytolearnIoT"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "WaytolearnIoT"
+    },
+    "inLanguage": "fr-FR",
+    "educationalLevel": "Intermediate"
+  }
+  </script>
+
+  <style>
+    :root{
+      --bg:#020617;
+      --muted:#94a3b8;
+      --accent:#10b981;
+      --text:#e5e7eb;
+      --border:#1f2937;
     }
-    </script>
-    
-    <style>
-        :root{--bg:#ffffff;--muted:#94a3b8;--accent:#10b981;--text:#1e293b;--border:#e2e8f0}
-        *{margin:0;padding:0;box-sizing:border-box}
-        html{scroll-behavior:smooth}
-        body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-        .nav-link.active{border-bottom:3px solid var(--accent);color:var(--accent);font-weight:700;margin-bottom:-3px}
-        .skip-link{position:absolute;left:-9999px;z-index:999}
-        .skip-link:focus{left:6px;top:6px;background:var(--accent);color:#fff;padding:8px 16px;text-decoration:none;border-radius:4px}
-        
-        /* Hamburger Menu Styles - Visible uniquement sur mobile */
-        #nav-toggle{background:transparent;border:0;cursor:pointer;padding:8px;width:40px;height:40px;display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;position:relative;z-index:100}
-        @media (max-width:767px){#nav-toggle{display:flex}}
-        .hamburger-line{width:24px;height:3px;background:#1e293b;border-radius:2px;transition:all 0.3s ease;transform-origin:center}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1){transform:rotate(45deg) translate(7px,7px)}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2){opacity:0;transform:translateX(-10px)}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
-        
-        /* Menu mobile vertical */
-        #nav-menu{max-height:0;overflow:hidden;transition:max-height 0.3s ease,opacity 0.3s ease}
-        #nav-menu:not(.hidden){max-height:500px}
-        @media (min-width:768px){#nav-menu{max-height:none!important}}
-        
-        .card-hover{transition:all 0.3s ease;transform:translateY(0)}
-        .card-hover:hover{transform:translateY(-4px);box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04)}
-        @media (max-width:768px){.text-6xl{font-size:2.25rem}}
-        @media (max-width:480px){.text-6xl{font-size:1.75rem}}
-    </style>
-    
-     <script>
-        // Configuration Tailwind
-        tailwind.config={theme:{extend:{colors:{slate:'#1e293b',emerald:'#10b981',amber:'#f59e0b',blue:'#3b82f6'}}}}
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    .nav-link.active{
+      border-bottom:3px solid var(--accent);
+      color:var(--accent);
+      font-weight:700;
+      margin-bottom:-3px;
+    }
+    .skip-link{position:absolute;left:-9999px;z-index:999}
+    .skip-link:focus{
+      left:6px;top:6px;
+      background:var(--accent);color:#fff;
+      padding:8px 16px;
+      text-decoration:none;
+      border-radius:4px;
+    }
+
+    /* Hamburger */
+    #nav-toggle{
+      background:transparent;border:0;cursor:pointer;
+      padding:8px;width:40px;height:40px;
+      display:none;flex-direction:column;
+      justify-content:center;align-items:center;
+      gap:5px;position:relative;z-index:100;
+    }
+    @media (max-width:767px){#nav-toggle{display:flex}}
+    .hamburger-line{
+      width:24px;height:3px;
+      background:#e5e7eb;border-radius:2px;
+      transition:all 0.3s ease;
+      transform-origin:center;
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1){
+      transform:rotate(45deg) translate(7px,7px)
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2){
+      opacity:0;transform:translateX(-10px)
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3){
+      transform:rotate(-45deg) translate(7px,-7px)
+    }
+
+    #nav-menu{
+      max-height:0;overflow:hidden;
+      transition:max-height 0.3s ease,opacity 0.3s ease;
+    }
+    #nav-menu:not(.hidden){max-height:500px}
+    @media (min-width:768px){#nav-menu{max-height:none!important}}
+
+    .card-hover{
+      transition:all 0.3s ease;
+      transform:translateY(0);
+      background:#020617;
+      border:1px solid var(--border);
+    }
+    .card-hover:hover{
+      transform:translateY(-4px);
+      box-shadow:0 20px 25px -5px rgba(15,23,42,0.45),
+                 0 10px 10px -5px rgba(15,23,42,0.35);
+    }
+
+    @media (max-width:768px){
+      .text-6xl{font-size:2.25rem}
+    }
+    @media (max-width:480px){
+      .text-6xl{font-size:1.75rem}
+    }
+  </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-slate-800">
-    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
-    
-<!-- Navigation -->
-<nav class="sticky top-0 z-50 bg-slate-50/95 backdrop-blur-sm border-b border-slate-200 shadow-sm">
+<body class="text-slate-100">
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-20">
-      
-      <!-- Logo -->
-      <a href="index.html" class="text-2xl font-bold text-slate-900 hover:text-emerald-600">
-        Waytolearn<span class="text-emerald-600">IoT</span>
-      </a>
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
 
-      <!-- Hamburger -->
-      <button id="nav-toggle" aria-expanded="false" aria-label="Ouvrir le menu">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
+        <!-- Logo -->
+        <a href="index.html" class="text-2xl font-bold text-slate-50 hover:text-emerald-400">
+          Waytolearn<span class="text-emerald-400">IoT</span>
+        </a>
 
-<!-- Menu -->
-<div id="nav-menu"
-     class="md:flex md:space-x-2 hidden md:opacity-100 absolute md:static left-0 top-20 w-full md:w-auto
-            bg-white md:bg-transparent shadow-md md:shadow-none border-t md:border-0 px-2">
+        <!-- Hamburger -->
+        <button id="nav-toggle" aria-expanded="false" aria-label="Ouvrir le menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
 
- <a class="nav-link px-6 py-4 md:py-3 block
-          hover:bg-slate-100 hover:text-emerald-600
-          transition-colors duration-200"
-   href="index.html">Accueil</a>
+        <!-- Menu -->
+        <div id="nav-menu"
+             class="md:flex md:space-x-2 hidden md:opacity-100 absolute md:static left-0 top-20 w-full md:w-auto
+                    bg-slate-950 md:bg-transparent shadow-md md:shadow-none border-t border-slate-800 md:border-0 px-2">
 
-<a class="nav-link active px-6 py-4 md:py-3 block
-          hover:bg-slate-100 hover:text-emerald-600
-          transition-colors duration-200"
-   href="architecture.html">Architecture CPU</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="index.html">Accueil</a>
 
+          <a class="nav-link active px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="architecture.html">Architecture CPU</a>
 
-  <a class="nav-link px-6 py-4 md:py-3 block
-            hover:bg-slate-100 hover:text-emerald-600
-            transition-colors duration-200"
-     href="cycle.html">Cycle Instruction</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="cycle.html">Cycle Instruction</a>
 
-  <a class="nav-link px-6 py-4 md:py-3 block
-            hover:bg-slate-100 hover:text-emerald-600
-            transition-colors duration-200"
-     href="memory.html">Gestion Mémoire</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="memory.html">Gestion Mémoire</a>
 
-  <a class="nav-link px-6 py-4 md:py-3 block
-            hover:bg-slate-100 hover:text-emerald-600
-            transition-colors duration-200"
-     href="communication.html">Communication</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="communication.html">Communication</a>
 
-  <a class="nav-link px-6 py-4 md:py-3 block
-            hover:bg-slate-100 hover:text-emerald-600
-            transition-colors duration-200"
-     href="rtos.html">RTOS</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="rtos.html">RTOS</a>
 
-  <!-- Ressources avec sous-menu -->
-  <div class="relative group">
-    <a href="ressources.html"
-       class="nav-link px-6 py-4 md:py-3 block
-              hover:bg-slate-100 hover:text-emerald-600
-              transition-colors duration-200">
-      Ressources
-    </a>
+          <!-- Ressources -->
+          <div class="relative group">
+            <a href="ressources.html"
+               class="nav-link px-6 py-4 md:py-3 block
+                      hover:bg-slate-900 hover:text-emerald-400
+                      transition-colors duration-200">
+              Ressources
+            </a>
 
-    <!-- Sous-menu (desktop uniquement) -->
-    <div class="hidden md:block absolute left-0 top-full mt-1 w-64 bg-white border border-slate-200 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50">
-      <a href="ressources.html#portails-officiels"
-         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-        Portails officiels & standards
-      </a>
-      <a href="ressources.html#tutoriels"
-         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-        Sites de tutoriels
-      </a>
-      <a href="ressources.html#projets-arduino"
-         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-        Projets Arduino
-      </a>
+            <div class="hidden md:block absolute left-0 top-full mt-1 w-64 bg-slate-900 border border-slate-700 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50">
+              <a href="ressources.html#portails-officiels"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Portails officiels & standards
+              </a>
+              <a href="ressources.html#tutoriels"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Sites de tutoriels
+              </a>
+              <a href="ressources.html#projets-arduino"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Projets Arduino
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
-  </div>
+  </nav>
 
-</div>
+  <!-- Main Content -->
+  <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Header -->
+    <header class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-slate-50 mb-4">
+        Architecture CPU : Le Cœur de l'IoT
+      </h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto mb-4">
+        Comprendre l'architecture RISC (ARM & RISC-V) pour optimiser les performances énergétiques.
+      </p>
+      <div class="bg-blue-500/10 border-l-4 border-blue-400 p-4 rounded-lg max-w-3xl mx-auto">
+        <p class="text-blue-100 text-sm">
+          <strong>Objectifs pédagogiques :</strong> Différence RISC/CISC, pipeline d'exécution, analyse assembleur pour optimiser les performances, et choix d’architecture selon les contraintes énergétiques.
+        </p>
+      </div>
+    </header>
 
+    <!-- Section 1: ARM vs RISC-V -->
+    <section class="mb-16">
+      <div class="card-hover p-8 md:p-10 rounded-2xl">
+        <h2 class="text-3xl font-bold text-emerald-300 mb-6 pb-3 border-b-2 border-emerald-500/60">
+          1. L'ère du RISC : ARM Cortex-M vs. RISC-V
+        </h2>
 
-    </div>
-  </div>
-</nav>
-
-
-
-    <!-- Main Content -->
-    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Header -->
-        <header class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-                Architecture CPU : Le Cœur de l'IoT
-            </h1>
-            <p class="text-xl text-slate-600 max-w-3xl mx-auto mb-4">
-                Comprendre l'architecture RISC (ARM & RISC-V) pour optimiser les performances énergétiques.
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+          <!-- ARM -->
+          <div class="card-hover bg-gradient-to-br from-blue-900/60 to-blue-800/60 p-8 rounded-xl border-l-4 border-blue-400">
+            <h3 class="text-2xl font-bold text-blue-100 mb-4 flex items-center">
+              <span class="text-4xl mr-3" aria-hidden="true"></span> ARM Cortex-M
+            </h3>
+            <p class="text-slate-100 mb-6 leading-relaxed">
+              Architecture ultra répandue dans les microcontrôleurs, optimisée pour le coût, la taille et surtout la faible consommation énergétique, idéale pour capteurs et systèmes sur batterie.
             </p>
-            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg max-w-3xl mx-auto">
-                <p class="text-slate-700 text-sm">
-                    <strong> Objectifs pédagogiques :</strong> À la fin de ce chapitre, vous serez capable de (1) expliquer la différence entre RISC et CISC, (2) comprendre le fonctionnement d'un pipeline d'exécution, (3) analyser le code assembleur pour optimiser les performances, et (4) choisir l'architecture appropriée selon les contraintes énergétiques de votre projet IoT.
-                </p>
+            <div class="bg-slate-950/70 p-3 rounded-lg mb-4">
+              <p class="text-xs text-slate-200 mb-2"><strong>Exemples :</strong></p>
+              <ul class="text-xs text-slate-200 space-y-1">
+                <li>• <strong>STM32F4</strong> : Cortex-M4 à 168 MHz.</li>
+                <li>• <strong>ESP32</strong> : WiFi/Bluetooth intégré, très utilisé en IoT.</li>
+                <li>• <strong>Arduino Nano 33 BLE</strong> : Cortex-M4 pour l’apprentissage.</li>
+              </ul>
             </div>
-        </header>
+            <ul class="space-y-3 text-slate-100">
+              <li class="flex items-start">
+                <span class="text-blue-300 mr-3 font-bold">•</span>
+                <span><strong>ISA :</strong> Jeu d'instructions réduit (RISC).</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-blue-300 mr-3 font-bold">•</span>
+                <span><strong>Pipeline :</strong> 3 à 5 étages pour la prédictibilité temps réel.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-blue-300 mr-3 font-bold">•</span>
+                <span><strong>IoT :</strong> Mode Deep Sleep et gestion fine des interruptions.</span>
+              </li>
+            </ul>
+          </div>
 
-        <!-- Section 1: ARM vs RISC-V -->
-        <section class="mb-16">
-            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">1. L'ère du RISC : ARM Cortex-M vs. RISC-V</h2>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
-                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover">
-                        <h3 class="text-2xl font-bold text-blue-900 mb-4 flex items-center">
-                            <span class="text-4xl mr-3" aria-hidden="true"></span> ARM Cortex-M
-                        </h3>
-                        <p class="text-slate-700 mb-6 leading-relaxed">
-                            L'architecture la plus répandue dans les microcontrôleurs (MCUs). Son design est optimisé pour les contraintes de coût, de taille et, surtout, de faible consommation énergétique. Essentiel pour les capteurs et les dispositifs fonctionnant sur batterie.
-                        </p>
-                        <div class="bg-white p-3 rounded-lg mb-4">
-                            <p class="text-xs text-slate-600 mb-2"><strong>Exemples concrets :</strong></p>
-                            <ul class="text-xs text-slate-700 space-y-1">
-                                <li>• <strong>STM32F4</strong> : Cortex-M4 à 168 MHz, utilisé dans les projets IoT industriels</li>
-                                <li>• <strong>ESP32</strong> : Dual-core Cortex-M, WiFi/Bluetooth intégré, très populaire</li>
-                                <li>• <strong>Arduino Nano 33 BLE</strong> : Cortex-M4, idéal pour l'apprentissage</li>
-                            </ul>
-                        </div>
-                        <ul class="space-y-3 text-slate-700">
-                            <li class="flex items-start">
-                                <span class="text-blue-600 mr-3 font-bold">•</span>
-                                <span><strong>ISA :</strong> Jeu d'instructions réduit et fixe (RISC).</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-blue-600 mr-3 font-bold">•</span>
-                                <span><strong>Pipeline :</strong> Souvent 3 à 5 étages (plus court que les PC) pour une prédictibilité en temps réel.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-blue-600 mr-3 font-bold">•</span>
-                                <span><strong>Caractéristiques IoT :</strong> Support natif du mode veille profonde (`Deep Sleep`) et gestion efficace des interruptions.</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl border-l-4 border-amber-600 shadow-sm card-hover">
-                        <h3 class="text-2xl font-bold text-amber-900 mb-4 flex items-center">
-                            <span class="text-4xl mr-3" aria-hidden="true"></span> RISC-V (Open Standard)
-                        </h3>
-                        <p class="text-slate-700 mb-6 leading-relaxed">
-                            Un jeu d'instructions (ISA) ouvert et libre. Il offre une modularité unique, permettant aux concepteurs d'ajouter uniquement les extensions nécessaires. Cela le rend extrêmement adaptable à des applications IoT très spécifiques, en maximisant l'efficacité énergétique.
-                        </p>
-                        <ul class="space-y-3 text-slate-700">
-                            <li class="flex items-start">
-                                <span class="text-amber-600 mr-3 font-bold">•</span>
-                                <span><strong>Modularité :</strong> L'ISA est basé sur des modules de base (I, M, A, F, D, C).</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-amber-600 mr-3 font-bold">•</span>
-                                <span><strong>Avantage IoT :</strong> Absence de licence et personnalisation pour créer des cœurs micro-spécifiques pour les tâches Edge Computing.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-amber-600 mr-3 font-bold">•</span>
-                                <span><strong>Adoption :</strong> De plus en plus présent dans les nouvelles générations de MCUs IoT.</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+          <!-- RISC-V -->
+          <div class="card-hover bg-gradient-to-br from-amber-900/60 to-amber-800/60 p-8 rounded-xl border-l-4 border-amber-400">
+            <h3 class="text-2xl font-bold text-amber-100 mb-4 flex items-center">
+              <span class="text-4xl mr-3" aria-hidden="true"></span> RISC-V (Open Standard)
+            </h3>
+            <p class="text-slate-100 mb-6 leading-relaxed">
+              ISA ouverte et libre, extrêmement modulaire, permettant d’ajouter uniquement les extensions nécessaires pour des applications IoT ciblées et très efficaces.
+            </p>
+            <ul class="space-y-3 text-slate-100">
+              <li class="flex items-start">
+                <span class="text-amber-300 mr-3 font-bold">•</span>
+                <span><strong>Modularité :</strong> Modules I, M, A, F, D, C selon les besoins.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-amber-300 mr-3 font-bold">•</span>
+                <span><strong>Avantage IoT :</strong> Pas de licence et personnalisation pour l’Edge Computing.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-amber-300 mr-3 font-bold">•</span>
+                <span><strong>Adoption :</strong> De plus en plus présent dans les nouveaux MCUs IoT.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- Section 2: Pipeline -->
-        <section class="mb-16">
-            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">2. L'Importance du Pipeline et du Registre</h2>
-                
-                <p class="text-lg text-slate-700 mb-6 leading-relaxed">
-                    Le <strong>Pipeline</strong> d'un microcontrôleur est essentiel : il permet d'exécuter plusieurs étapes d'instructions simultanément. Dans l'IoT, un pipeline court (3 à 5 étages) est préféré, car il minimise le risque de <strong>stalles</strong> (blocages) et rend le temps d'exécution des tâches prévisible, une nécessité pour le temps réel.
-                </p>
-                
-                <div class="bg-emerald-50 p-5 rounded-lg border-l-4 border-emerald-600 mb-6">
-                    <h4 class="font-bold text-emerald-900 mb-2">Concept clé : Le Pipeline</h4>
-                    <p class="text-slate-700 text-sm mb-3">
-                        Imaginez une chaîne de montage : pendant qu'une instruction est en phase d'exécution, la suivante est déjà en phase de décodage, et celle d'après est en phase de récupération. Cela permet d'exécuter plusieurs instructions en parallèle, augmentant le débit (throughput) même si chaque instruction individuelle prend plusieurs cycles.
-                    </p>
-                    <p class="text-slate-700 text-sm">
-                        <strong>Exemple :</strong> Un pipeline à 3 étages peut traiter 3 instructions simultanément. Si chaque instruction prend 3 cycles, le pipeline permet de terminer une instruction par cycle après le remplissage initial, au lieu d'attendre 3 cycles par instruction.
-                    </p>
-                </div>
-                
-                <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-xl border-l-4 border-slate-500 mt-6">
-                    <h3 class="font-bold text-slate-800 mb-3 text-lg flex items-center">
-                        <span class="text-2xl mr-2" aria-hidden="true"></span> Le Saviez-vous ? Le jeu d'instructions Thumb
-                    </h3>
-                    <p class="text-slate-700">
-                        Les cœurs ARM utilisent souvent le jeu d'instructions <strong>Thumb</strong> (16 bits) en plus de l'ARM standard (32 bits). Thumb réduit la taille du code (économie de mémoire Flash) et améliore la densité du code, deux facteurs critiques pour les petits systèmes embarqués.
-                    </p>
-                </div>
-            </div>
-        </section>
+    <!-- Section 2: Pipeline -->
+    <section class="mb-16">
+      <div class="card-hover p-8 md:p-10 rounded-2xl">
+        <h2 class="text-3xl font-bold text-emerald-300 mb-6 pb-3 border-b-2 border-emerald-500/60">
+          2. L'Importance du Pipeline et du Registre
+        </h2>
 
-        <!-- Section 3: Tutoriel Pratique -->
-        <section class="mb-16">
-            <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-8 md:p-10 rounded-2xl shadow-md border-l-4 border-emerald-600">
-                <h2 class="text-3xl font-bold text-emerald-900 mb-6">3. Tutoriel Pratique : Compter les Cycles</h2>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="bg-white p-6 rounded-xl shadow-md">
-                        <h3 class="text-2xl font-bold text-emerald-800 mb-4">Tuto : Analyse du Code en Assembleur (Cortex-M)</h3>
-                        <p class="text-slate-700 mb-4">
-                            Comprendre comment une ligne de C se traduit en instructions est la clé de l'optimisation. Nous allons analyser le code pour minimiser les cycles d'horloge.
-                        </p>
-                        <div class="bg-slate-50 p-3 rounded mb-4">
-                            <p class="text-xs text-slate-600 mb-2"><strong> Comment compiler et analyser :</strong></p>
-                            <pre class="bg-slate-800 text-white p-2 rounded text-xs overflow-x-auto"><code>arm-none-eabi-gcc -S -O2 code.c
+        <p class="text-lg text-slate-200 mb-6 leading-relaxed">
+          Le <strong>pipeline</strong> permet d’exécuter plusieurs étapes d’instructions en parallèle. En IoT, un pipeline court (3–5 étages) réduit les stalles et rend le temps d’exécution des tâches plus prévisible.
+        </p>
+
+        <div class="bg-emerald-900/60 p-5 rounded-lg border-l-4 border-emerald-400 mb-6">
+          <h4 class="font-bold text-emerald-100 mb-2">Concept clé : Le Pipeline</h4>
+          <p class="text-emerald-50 text-sm mb-3">
+            Comme une chaîne de montage : pendant qu’une instruction est exécutée, la suivante est décodée et la suivante est chargée. Cela augmente le débit même si chaque instruction prend plusieurs cycles.
+          </p>
+          <p class="text-emerald-50 text-sm">
+            <strong>Exemple :</strong> Avec 3 étages, on peut terminer 1 instruction par cycle une fois le pipeline rempli, au lieu de 3 cycles par instruction.
+          </p>
+        </div>
+
+        <div class="bg-slate-900/70 p-6 rounded-xl border-l-4 border-slate-500 mt-6">
+          <h3 class="font-bold text-slate-50 mb-3 text-lg flex items-center">
+            <span class="text-2xl mr-2" aria-hidden="true"></span> Le saviez-vous ? Jeu d'instructions Thumb
+          </h3>
+          <p class="text-slate-200">
+            Les cœurs ARM utilisent souvent <strong>Thumb</strong> (16 bits) en plus de l’ARM 32 bits. Thumb réduit la taille du code, ce qui économise de la Flash et améliore la densité, crucial sur microcontrôleurs.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Tutoriel Pratique -->
+    <section class="mb-16">
+      <div class="card-hover bg-gradient-to-br from-emerald-900/70 to-emerald-800/60 p-8 md:p-10 rounded-2xl border-l-4 border-emerald-500">
+        <h2 class="text-3xl font-bold text-emerald-100 mb-6">3. Tutoriel Pratique : Compter les Cycles</h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Tuto -->
+          <div class="card-hover bg-slate-950/70 p-6 rounded-xl">
+            <h3 class="text-2xl font-bold text-emerald-200 mb-4">
+              Tuto : Analyse du Code en Assembleur (Cortex-M)
+            </h3>
+            <p class="text-slate-200 mb-4">
+              Comprendre comment une ligne de C se traduit en instructions est la base de l’optimisation de cycles.
+            </p>
+            <div class="bg-slate-900 p-3 rounded mb-4">
+              <p class="text-xs text-slate-200 mb-2"><strong>Compilation & analyse :</strong></p>
+              <pre class="bg-slate-950 text-white p-2 rounded text-xs overflow-x-auto"><code>arm-none-eabi-gcc -S -O2 code.c
 // Génère code.s (assembleur)
 arm-none-eabi-objdump -d code.o
 // Affiche le code machine</code></pre>
-                        </div>
-                        <p class="font-semibold text-slate-800 mb-2">Code C :</p>
-                        <pre class="bg-slate-800 text-white p-4 rounded-lg text-sm overflow-x-auto mb-4"><code>int a = 5;
+            </div>
+            <p class="font-semibold text-slate-100 mb-2">Code C :</p>
+            <pre class="bg-slate-950 text-white p-4 rounded-lg text-sm overflow-x-auto mb-4"><code>int a = 5;
 int b = 10;
 int result = a + b;</code></pre>
-                        <p class="font-semibold text-slate-800 mb-2">Traduction (simplifiée) :</p>
-                        <pre class="bg-slate-800 text-white p-4 rounded-lg text-sm overflow-x-auto mb-4"><code>MOV R0, #5    ; 1 cycle
+            <p class="font-semibold text-slate-100 mb-2">Traduction (simplifiée) :</p>
+            <pre class="bg-slate-950 text-white p-4 rounded-lg text-sm overflow-x-auto mb-4"><code>MOV R0, #5    ; 1 cycle
 MOV R1, #10   ; 1 cycle
 ADD R2, R0, R1; 1 cycle</code></pre>
-                        <p class="text-sm text-slate-600">
-                            <strong>Performance :</strong> L'opération prend seulement <strong>3 cycles d'horloge</strong>.
-                        </p>
-                    </div>
-                    
-                    <div class="bg-white p-6 rounded-xl shadow-md">
-                        <h3 class="text-2xl font-bold text-emerald-800 mb-4">Exercice d'application : Optimisation ISA</h3>
-                        <div class="space-y-4">
-                            <p class="font-bold text-slate-900">Objectif : Calculer le nombre minimal de cycles.</p>
-                            <p class="text-slate-700">
-                                Un microcontrôleur RISC (3-étages pipeline) exécute la séquence suivante :
-                            </p>
-                            <ul class="list-disc list-inside text-slate-700 space-y-2 ml-4">
-                                <li>Instruction 1 (Load) : 3 cycles</li>
-                                <li>Instruction 2 (Add) : 1 cycle</li>
-                                <li>Instruction 3 (Store) : 3 cycles</li>
-                            </ul>
-                            <p class="font-bold text-red-700">Question : Quel est le temps total d'exécution si le pipeline est parfait (pas de stalle) ?</p>
-                            <details class="mt-4">
-                                <summary class="cursor-pointer text-emerald-700 font-medium hover:text-emerald-800">Afficher la solution</summary>
-                                <p class="text-sm mt-3 text-slate-800 bg-slate-50 p-3 rounded">
-                                    <strong>Réponse :</strong> Dans un pipeline parfait, les étapes se chevauchent. Le temps total est égal au temps d'exécution de la première instruction (3 cycles) plus 1 cycle pour chacune des instructions restantes (2 instructions).<br>
-                                    Temps = 3 + (3 - 1) = 5 cycles.
-                                </p>
-                            </details>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="text-center mt-8">
-                    <a href="cycle.html" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
-                        Continuer vers le Cycle d'Instruction →
-                    </a>
-                </div>
-            </div>
-        </section>
-
-            <!-- Section Documents à télécharger -->
-    <section class="mb-20">
-        <div class="bg-white shadow border border-slate-200 rounded-2xl p-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-emerald-600 mb-4">
-                Documents à télécharger
-            </h2>
-            <p class="text-slate-600 mb-6">
-                Tu peux télécharger ici quelques supports PDF liés à l’architecture des systèmes à microprocesseurs.
+            <p class="text-sm text-slate-200">
+              <strong>Performance :</strong> environ <strong>3 cycles d’horloge</strong> pour l’opération.
             </p>
+          </div>
 
-            <div class="space-y-3">
-                <a href="architecture des microprocesseurs 1.pdf"
-                   class="flex items-center justify-between px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition"
-                   download>
-                    <span class="text-sm font-medium text-slate-700">
-                        architecture des microprocesseurs 1 (PDF)
-                    </span>
-                    <span class="text-xs text-emerald-600 font-semibold">
-                        Télécharger
-                    </span>
-                </a>
-
-                <a href="0587-le-microprocesseur.pdf"
-                   class="flex items-center justify-between px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition"
-                   download>
-                    <span class="text-sm font-medium text-slate-700">
-                        0587-le-microprocesseur (PDF)
-                    </span>
-                    <span class="text-xs text-emerald-600 font-semibold">
-                        Télécharger
-                    </span>
-                </a>
+          <!-- Exercice -->
+          <div class="card-hover bg-slate-950/70 p-6 rounded-xl">
+            <h3 class="text-2xl font-bold text-emerald-200 mb-4">
+              Exercice : Estimer le temps d'exécution
+            </h3>
+            <div class="space-y-4 text-slate-200">
+              <p class="font-bold text-slate-50">Objectif : Calculer le nombre minimal de cycles.</p>
+              <p>
+                Un microcontrôleur RISC (pipeline 3 étages) exécute :
+              </p>
+              <ul class="list-disc list-inside space-y-2 ml-2 text-sm">
+                <li>Instruction 1 (Load) : 3 cycles</li>
+                <li>Instruction 2 (Add) : 1 cycle</li>
+                <li>Instruction 3 (Store) : 3 cycles</li>
+              </ul>
+              <p class="font-bold text-red-300">
+                Question : Temps total si le pipeline est parfait (pas de stalle) ?
+              </p>
+              <details class="mt-4">
+                <summary class="cursor-pointer text-emerald-200 font-medium hover:text-emerald-100">
+                  Afficher la solution
+                </summary>
+                <p class="text-sm mt-3 text-slate-100 bg-slate-900 p-3 rounded">
+                  <strong>Réponse :</strong> Temps = durée de la première instruction (3 cycles) + 1 cycle pour chacune des 2 autres (chevauchement).<br>
+                  Temps total = 3 + (3 - 1) = 5 cycles.
+                </p>
+              </details>
             </div>
+          </div>
         </div>
+
+        <div class="text-center mt-8">
+          <a href="cycle.html"
+             class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
+            Continuer vers le Cycle d'Instruction →
+          </a>
+        </div>
+      </div>
     </section>
 
-    </main>
+    <!-- Section Documents à télécharger -->
+    <section class="mb-20">
+      <div class="card-hover rounded-2xl p-8 border border-slate-800">
+        <h2 class="text-2xl md:text-3xl font-bold text-emerald-200 mb-4">
+          Documents à télécharger
+        </h2>
+        <p class="text-slate-300 mb-6">
+          Télécharge quelques supports PDF liés à l’architecture des systèmes à microprocesseurs.
+        </p>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-white mt-20 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h3 class="text-2xl font-bold mb-4">Waytolearn<span class="text-emerald-400">IoT</span></h3>
-                <p class="text-slate-400 mb-6">Plateforme éducative pour Systèmes Embarqués</p>
-                <p class="text-sm text-slate-500">&copy; 2025 WaytolearnIoT. Tous droits réservés.</p>
-            </div>
+        <div class="space-y-3">
+          <a href="architecture des microprocesseurs 1.pdf"
+             class="flex items-center justify-between px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition"
+             download>
+            <span class="text-sm font-medium text-slate-100">
+              architecture des microprocesseurs 1 (PDF)
+            </span>
+            <span class="text-xs text-emerald-300 font-semibold">
+              Télécharger
+            </span>
+          </a>
+
+          <a href="0587-le-microprocesseur.pdf"
+             class="flex items-center justify-between px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition"
+             download>
+            <span class="text-sm font-medium text-slate-100">
+              0587-le-microprocesseur (PDF)
+            </span>
+            <span class="text-xs text-emerald-300 font-semibold">
+              Télécharger
+            </span>
+          </a>
         </div>
-    </footer>
-    
-    <script src="main.js" defer></script>
-<!-- Bouton retour en haut -->
-<button id="back-to-top"
-        aria-label="Revenir en haut de la page"
-        class="fixed bottom-6 right-6 z-50 hidden
-               h-10 w-10 rounded-full bg-emerald-600 text-white
-               flex items-center justify-center
-               shadow-lg hover:bg-emerald-700
-               transition-opacity duration-200">
-  ↑
-</button>
+      </div>
+    </section>
 
+  </main>
+
+  <!-- Footer avec les liens du menu -->
+  <footer class="bg-slate-950 border-t border-slate-800 text-slate-300 mt-20 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="text-center md:text-left">
+          <h3 class="text-2xl font-bold mb-2 text-slate-50">
+            Waytolearn<span class="text-emerald-400">IoT</span>
+          </h3>
+          <p class="text-slate-400 text-sm">
+            Plateforme éducative pour Systèmes Embarqués & IoT.
+          </p>
+        </div>
+
+        <ul class="flex flex-wrap items-center justify-center gap-y-2 gap-x-6 text-sm">
+          <li><a href="index.html" class="hover:text-emerald-400">Accueil</a></li>
+          <li><a href="architecture.html" class="hover:text-emerald-400">Architecture CPU</a></li>
+          <li><a href="cycle.html" class="hover:text-emerald-400">Cycle Instruction</a></li>
+          <li><a href="memory.html" class="hover:text-emerald-400">Gestion Mémoire</a></li>
+          <li><a href="communication.html" class="hover:text-emerald-400">Communication</a></li>
+          <li><a href="rtos.html" class="hover:text-emerald-400">RTOS</a></li>
+          <li><a href="ressources.html" class="hover:text-emerald-400">Ressources</a></li>
+        </ul>
+      </div>
+
+      <p class="mt-6 pt-4 border-t border-slate-800 text-center text-xs text-slate-500">
+        &copy; 2025 WaytolearnIoT. Tous droits réservés.
+      </p>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+
+  <!-- Bouton retour en haut -->
+  <button id="back-to-top"
+          aria-label="Revenir en haut de la page"
+          class="fixed bottom-6 right-6 z-50 hidden
+                 h-10 w-10 rounded-full bg-emerald-600 text-white
+                 flex items-center justify-center
+                 shadow-lg hover:bg-emerald-700
+                 transition-opacity duration-200">
+    ↑
+  </button>
 </body>
 </html>
