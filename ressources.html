@@ -1,575 +1,641 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link rel="icon" type="image/png" href="logo1.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Ressources avancées et outils pour l'ingénierie des systèmes embarqués IoT, incluant les outils de debug, les compilateurs et les références sur les architectures.">
-    <meta name="keywords" content="IoT, ressources, outils, debug, compilateurs, RTOS, systèmes embarqués, références">
-    <meta name="author" content="WaytolearnIoT">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#10b981">
-    <link rel="canonical" href="https://waytolearniot.com/ressources.html">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://waytolearniot.com/ressources.html">
-    <meta property="og:title" content="Ressources Avancées | WaytolearnIoT">
-    <meta property="og:description" content="Pour aller plus loin : références, outils de debug et communautés incontournables.">
-    <meta property="og:locale" content="fr_FR">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Ressources Avancées | WaytolearnIoT">
-    <meta name="twitter:description" content="Pour aller plus loin : références, outils de debug et communautés incontournables.">
-    
-    <!-- Resource Hints -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-    
-    <title>Ressources Avancées | WaytolearnIoT</title>
-    
-    <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "EducationalArticle",
-        "headline": "Ressources et Outils Avancés",
-        "description": "Ressources avancées et outils pour l'ingénierie des systèmes embarqués IoT",
-        "author": {
-            "@type": "Organization",
-            "name": "WaytolearnIoT"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "WaytolearnIoT"
-        },
-        "inLanguage": "fr-FR",
-        "educationalLevel": "Advanced"
+  <link rel="icon" type="image/png" href="logo1.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Ressources avancées et outils pour l'ingénierie des systèmes embarqués IoT, incluant les outils de debug, les compilateurs et les références sur les architectures.">
+  <meta name="keywords" content="IoT, ressources, outils, debug, compilateurs, RTOS, systèmes embarqués, références">
+  <meta name="author" content="WaytolearnIoT">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#10b981">
+  <link rel="canonical" href="https://waytolearniot.com/ressources.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://waytolearniot.com/ressources.html">
+  <meta property="og:title" content="Ressources Avancées | WaytolearnIoT">
+  <meta property="og:description" content="Pour aller plus loin : références, outils de debug et communautés incontournables.">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ressources Avancées | WaytolearnIoT">
+  <meta name="twitter:description" content="Pour aller plus loin : références, outils de debug et communautés incontournables.">
+
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
+  <title>Ressources Avancées | WaytolearnIoT</title>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalArticle",
+    "headline": "Ressources et Outils Avancés",
+    "description": "Ressources avancées et outils pour l'ingénierie des systèmes embarqués IoT",
+    "author": {
+      "@type": "Organization",
+      "name": "WaytolearnIoT"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "WaytolearnIoT"
+    },
+    "inLanguage": "fr-FR",
+    "educationalLevel": "Advanced"
+  }
+  </script>
+
+  <style>
+    :root{
+      --bg:#020617;
+      --muted:#94a3b8;
+      --accent:#10b981;
+      --text:#e5e7eb;
+      --border:#1f2937;
     }
-    </script>
-    
-    <style>
-        :root{--bg:#ffffff;--muted:#94a3b8;--accent:#10b981;--text:#1e293b;--border:#e2e8f0}
-        *{margin:0;padding:0;box-sizing:border-box}
-        html{scroll-behavior:smooth}
-        body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-        .nav-link.active{border-bottom:3px solid var(--accent);color:var(--accent);font-weight:700;margin-bottom:-3px}
-        .skip-link{position:absolute;left:-9999px;z-index:999}
-        .skip-link:focus{left:6px;top:6px;background:var(--accent);color:#fff;padding:8px 16px;text-decoration:none;border-radius:4px}
-        
-        /* Hamburger Menu Styles - Visible uniquement sur mobile */
-        #nav-toggle{background:transparent;border:0;cursor:pointer;padding:8px;width:40px;height:40px;display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;position:relative;z-index:100}
-        @media (max-width:767px){#nav-toggle{display:flex}}
-        .hamburger-line{width:24px;height:3px;background:#1e293b;border-radius:2px;transition:all 0.3s ease;transform-origin:center}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1){transform:rotate(45deg) translate(7px,7px)}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2){opacity:0;transform:translateX(-10px)}
-        #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
-        
-        /* Menu mobile vertical */
-        #nav-menu{max-height:0;overflow:hidden;transition:max-height 0.3s ease,opacity 0.3s ease}
-        #nav-menu:not(.hidden){max-height:500px}
-        @media (min-width:768px){#nav-menu{max-height:none!important}}
-        
-        .card-hover{transition:all 0.3s ease;transform:translateY(0)}
-        .card-hover:hover{transform:translateY(-4px);box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04)}
-        @media (max-width:768px){.text-6xl{font-size:2.25rem}}
-        @media (max-width:480px){.text-6xl{font-size:1.75rem}}
-    </style>
-    
-     <script>
-        // Configuration Tailwind
-        tailwind.config={theme:{extend:{colors:{slate:'#1e293b',emerald:'#10b981',amber:'#f59e0b',blue:'#3b82f6'}}}}
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    .nav-link.active{
+      border-bottom:3px solid var(--accent);
+      color:var(--accent);
+      font-weight:700;
+      margin-bottom:-3px;
+    }
+    .skip-link{position:absolute;left:-9999px;z-index:999}
+    .skip-link:focus{
+      left:6px;top:6px;
+      background:var(--accent);color:#fff;
+      padding:8px 16px;
+      text-decoration:none;
+      border-radius:4px;
+    }
+
+    /* Hamburger menu */
+    #nav-toggle{
+      background:transparent;border:0;cursor:pointer;
+      padding:8px;width:40px;height:40px;
+      display:none;flex-direction:column;
+      justify-content:center;align-items:center;
+      gap:5px;position:relative;z-index:100;
+    }
+    @media (max-width:767px){#nav-toggle{display:flex}}
+    .hamburger-line{
+      width:24px;height:3px;
+      background:#e5e7eb;border-radius:2px;
+      transition:all 0.3s ease;
+      transform-origin:center;
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1){
+      transform:rotate(45deg) translate(7px,7px)
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2){
+      opacity:0;transform:translateX(-10px)
+    }
+    #nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3){
+      transform:rotate(-45deg) translate(7px,-7px)
+    }
+
+    /* Menu mobile */
+    #nav-menu{
+      max-height:0;overflow:hidden;
+      transition:max-height 0.3s ease,opacity 0.3s ease;
+    }
+    #nav-menu:not(.hidden){max-height:500px}
+    @media (min-width:768px){#nav-menu{max-height:none!important}}
+
+    .card-hover{
+      transition:all 0.3s ease;
+      transform:translateY(0);
+      background:#020617;
+      border:1px solid var(--border);
+    }
+    .card-hover:hover{
+      transform:translateY(-4px);
+      box-shadow:0 20px 25px -5px rgba(15,23,42,0.45),
+                 0 10px 10px -5px rgba(15,23,42,0.35);
+    }
+
+    @media (max-width:768px){
+      .text-6xl{font-size:2.25rem}
+    }
+    @media (max-width:480px){
+      .text-6xl{font-size:1.75rem}
+    }
+  </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-slate-800">
-    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
-    
-<nav class="sticky top-0 z-50 bg-slate-50/95 backdrop-blur-sm border-b border-slate-200 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-20">
-      
-      <!-- Logo -->
-      <a href="index.html" class="text-2xl font-bold text-slate-900 hover:text-emerald-600">
-        Waytolearn<span class="text-emerald-600">IoT</span>
-      </a>
+<body class="text-slate-100">
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
-      <!-- Hamburger -->
-      <button id="nav-toggle" aria-expanded="false" aria-label="Ouvrir le menu">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <a href="index.html" class="text-2xl font-bold text-slate-50 hover:text-emerald-400">
+          Waytolearn<span class="text-emerald-400">IoT</span>
+        </a>
 
-      <!-- Menu -->
-      <div id="nav-menu"
-           class="md:flex md:space-x-2 hidden md:opacity-100 absolute md:static left-0 top-20 w-full md:w-auto
-                  bg-white md:bg-transparent shadow-md md:shadow-none border-t md:border-0 px-2">
+        <!-- Hamburger -->
+        <button id="nav-toggle" aria-expanded="false" aria-label="Ouvrir le menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="index.html">Accueil</a>
+        <!-- Menu -->
+        <div id="nav-menu"
+             class="md:flex md:space-x-2 hidden md:opacity-100 absolute md:static left-0 top-20 w-full md:w-auto
+                    bg-slate-950 md:bg-transparent shadow-md md:shadow-none border-t border-slate-800 md:border-0 px-2">
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="architecture.html">Architecture CPU</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="index.html">Accueil</a>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="cycle.html">Cycle Instruction</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="architecture.html">Architecture CPU</a>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="memory.html">Gestion Mémoire</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="cycle.html">Cycle Instruction</a>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="communication.html">Communication</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="memory.html">Gestion Mémoire</a>
 
-        <a class="nav-link px-6 py-4 md:py-3 block
-                  hover:bg-slate-100 hover:text-emerald-600
-                  transition-colors duration-200"
-           href="rtos.html">RTOS</a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="communication.html">Communication</a>
 
-        <!-- Ressources avec sous-menu -->
-        <div class="relative group">
-          <a href="ressources.html"
-             class="nav-link active px-6 py-4 md:py-3 block
-                    hover:bg-slate-100
-                    transition-colors duration-200">
-            Ressources
-          </a>
+          <a class="nav-link px-6 py-4 md:py-3 block
+                    hover:bg-slate-900 hover:text-emerald-400
+                    transition-colors duration-200"
+             href="rtos.html">RTOS</a>
 
-          <!-- Sous-menu (desktop uniquement) -->
-          <div class="hidden md:block absolute left-0 top-full mt-1 w-64 bg-white border border-slate-200 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50">
-            <a href="ressources.html#portails-officiels"
-               class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-              Portails officiels & standards
+          <!-- Ressources avec sous-menu -->
+          <div class="relative group">
+            <a href="ressources.html"
+               class="nav-link active px-6 py-4 md:py-3 block
+                      hover:bg-slate-900
+                      transition-colors duration-200">
+              Ressources
             </a>
-            <a href="ressources.html#tutoriels"
-               class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-              Sites de tutoriels
-            </a>
-            <a href="ressources.html#projets-arduino"
-               class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-emerald-600">
-              Projets Arduino
-            </a>
+
+            <!-- Sous-menu desktop -->
+            <div class="hidden md:block absolute left-0 top-full mt-1 w-64 bg-slate-900 border border-slate-700 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50">
+              <a href="ressources.html#portails-officiels"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Portails officiels & standards
+              </a>
+              <a href="ressources.html#tutoriels"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Sites de tutoriels
+              </a>
+              <a href="ressources.html#projets-arduino"
+                 class="block px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-emerald-400">
+                Projets Arduino
+              </a>
+            </div>
           </div>
+
         </div>
 
       </div>
-
     </div>
-  </div>
-</nav>
+  </nav>
 
+  <!-- Main Content -->
+  <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Header -->
+    <header class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-slate-50 mb-4">
+        Ressources et Outils Avancés
+      </h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto">
+        Pour aller plus loin : références, outils de debug et communautés incontournables.
+      </p>
+    </header>
 
+    <!-- Section 1: Outils de Développement -->
+    <section class="mb-16">
+      <div class="card-hover p-8 md:p-10 rounded-2xl">
+        <h2 class="text-3xl font-bold text-emerald-300 mb-6 pb-3 border-b-2 border-emerald-500/60">
+          1. Outils de Développement et Débogage
+        </h2>
 
+        <p class="text-lg text-slate-200 mb-8 leading-relaxed">
+          Maîtriser la toolchain, le mapping mémoire et les outils de debug est essentiel pour optimiser des systèmes embarqués IoT complexes.
+        </p>
 
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+          <!-- Chaîne de compilation -->
+          <div class="card-hover bg-gradient-to-br from-blue-900/60 to-blue-800/60 p-6 rounded-xl border-l-4 border-blue-400 md:col-span-2">
+            <h3 class="text-2xl font-bold text-blue-100 mb-4 flex items-center">
+              <span class="text-3xl mr-3" aria-hidden="true"></span> Chaîne de Compilation et Mémoire
+            </h3>
+            <ul class="space-y-3 text-slate-100 text-sm">
+              <li class="flex items-start">
+                <span class="text-blue-300 mr-3 font-bold">•</span>
+                <span><strong>GNU ARM Embedded Toolchain (GCC) :</strong> compilateur de référence pour ARM Cortex‑M, avec optimisations adaptées à l’embarqué. [web:69]</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-blue-300 mr-3 font-bold">•</span>
+                <span><strong>Linker Script (.ld) :</strong> contrôle précis du placement de <code>.text</code>, <code>.data</code>, <code>.bss</code>, stack et heap entre Flash et RAM.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-blue-300 mr-3 font-bold">•</span>
+                <span><strong>RISC‑V Toolchain :</strong> GCC/LLVM supportent RISC‑V et ses profils extensibles, ce qui facilite les optimisations spécifiques. [web:72]</span>
+              </li>
+            </ul>
+          </div>
 
-
-    <!-- Main Content -->
-    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Header -->
-        <header class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-                Ressources et Outils Avancés
-            </h1>
-            <p class="text-xl text-slate-600 max-w-3xl mx-auto">
-                Pour aller plus loin : références, outils de debug et communautés incontournables.
-            </p>
-        </header>
-
-        <!-- Section 1: Outils de Développement -->
-        <section class="mb-16">
-            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-                <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">1. Outils de Développement et Débogage</h2>
-                
-                <p class="text-lg text-slate-700 mb-8 leading-relaxed">
-                    La maîtrise des outils est la clé du succès. Optimiser la taille du code, le placement en mémoire et analyser le comportement matériel en temps réel sont des compétences essentielles en IoT.
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-l-4 border-blue-600 shadow-sm card-hover md:col-span-2">
-                        <h3 class="text-2xl font-bold text-blue-900 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true"></span> Chaîne de Compilation et Mémoire
-                        </h3>
-                        <ul class="space-y-3 text-slate-700">
-                            <li class="flex items-start">
-                                <span class="text-blue-600 mr-3 font-bold">•</span>
-                                <span><strong>GNU ARM Embedded Toolchain (GCC):</strong> Le compilateur standard de l'industrie, indispensable pour générer un code machine optimisé pour les cœurs ARM Cortex-M.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-blue-600 mr-3 font-bold">•</span>
-                                <span><strong>Linker Script (.ld):</strong> Maîtriser ce fichier est la clé pour le placement précis des sections de code (`.text`), des variables (`.data`, `.bss`) et de la pile/tas (`stack/heap`) dans la Flash et la RAM.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-blue-600 mr-3 font-bold">•</span>
-                                <span><strong>RISC-V Compiler:</strong> GCC et LLVM supportent l'ISA RISC-V, permettant une personnalisation profonde des extensions via le profilage (`Profile-Guided Optimization`).</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-6 rounded-xl border-l-4 border-amber-600 shadow-sm card-hover">
-                        <h3 class="text-2xl font-bold text-amber-900 mb-4 flex items-center">
-                            <span class="text-3xl mr-3" aria-hidden="true"></span> Débogage et Analyse Énergétique
-                        </h3>
-                        <ul class="space-y-3 text-slate-700">
-                            <li class="flex items-start">
-                                <span class="text-amber-600 mr-3 font-bold">•</span>
-                                <span><strong>JTAG / SWD:</strong> Les interfaces standards pour la connexion des débogueurs externes (ex: ST-Link, J-Link).</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-amber-600 mr-3 font-bold">•</span>
-                                <span><strong>Analyseurs Logiques:</strong> Outils indispensables pour le debug bas niveau des bus série (I2C, SPI, UART).</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-amber-600 mr-3 font-bold">•</span>
-                                <span><strong>Traceurs d'énergie:</strong> Permettent de mesurer la consommation électrique en temps réel.</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-            <!-- Section Sites de tutoriels -->
-    <section class="mb-20">
-        <div class="bg-white shadow border border-slate-200 rounded-2xl p-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-emerald-600 mb-4">
-                2.Sites de tutoriels recommandés
-            </h2>
-            <p class="text-slate-600 mb-6">
-                Une sélection de sites pour réviser la programmation, les bases du web et les concepts avancés en informatique.
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                <!-- W3Schools -->
-                <a href="https://www.w3schools.com"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition">
-                    <h3 class="text-sm font-semibold text-slate-800">
-                        W3Schools
-                    </h3>
-                    <p class="text-xs text-slate-600 mt-1">
-                        Références rapides et tutoriels pour HTML, CSS, JavaScript, SQL et bien d’autres technologies web.[web:38]
-                    </p>
-                </a>
-
-                <!-- Tutorialspoint -->
-                <a href="https://www.tutorialspoint.com"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition">
-                    <h3 class="text-sm font-semibold text-slate-800">
-                        Tutorialspoint
-                    </h3>
-                    <p class="text-xs text-slate-600 mt-1">
-                        Cours structurés sur la programmation, l’électronique, les bases de données, les OS et bien plus.[web:30]
-                    </p>
-                </a>
-                 <a href="https://randomnerdtutorials.com/"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition">
-                    <h3 class="text-sm font-semibold text-slate-800">
-                        randomnerdtutorials
-                    </h3>
-                    <p class="text-xs text-slate-600 mt-1">
-                        Cours structurés sur la programmation, l’électronique, les bases de données, les OS et bien plus.[web:30]
-                    </p>
-                </a>
-
-                <!-- GeeksforGeeks -->
-                <a href="https://www.geeksforgeeks.org"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition">
-                    <h3 class="text-sm font-semibold text-slate-800">
-                        GeeksforGeeks
-                    </h3>
-                    <p class="text-xs text-slate-600 mt-1">
-                        Articles détaillés, exercices et préparation d’entretiens sur les structures de données, les algorithmes et l’informatique.[web:34]
-                    </p>
-                </a>
-
-                <!-- WayToLearnX -->
-                <a href="https://waytolearnx.com"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition">
-                    <h3 class="text-sm font-semibold text-slate-800">
-                        WayToLearnX
-                    </h3>
-                    <p class="text-xs text-slate-600 mt-1">
-                        Tutoriels en français sur la programmation (C, Java, Python, Web) avec des exemples simples et progressifs.[web:30]
-                    </p>
-                </a>
-
-                <!-- GeeksforGeeks (IoT/embarqués éventuellement) ou autre site type Panda -->
-                <a href="https://www.programiz.com"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition">
-                    <h3 class="text-sm font-semibold text-slate-800">
-                        Programiz
-                    </h3>
-                    <p class="text-xs text-slate-600 mt-1">
-                        Tutoriels clairs pour apprendre les langages comme C, C++, Python et Java avec des exemples interactifs.[web:32]
-                    </p>
-                </a>
-                  <!-- Documentation arduino -->
-                <a href="https://docs.arduino.cc/"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition">
-                    <h3 class="text-sm font-semibold text-slate-800">
-                        ArduinoDocs
-                    </h3>
-                    <p class="text-xs text-slate-600 mt-1">
-                        Documentation et projets avec arduino
-                    </p>
-                </a>
-
-                <!-- FreeCodeCamp par exemple -->
-                <a href="https://www.freecodecamp.org"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="block px-4 py-3 rounded-lg border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 transition">
-                    <h3 class="text-sm font-semibold text-slate-800">
-                        freeCodeCamp
-                    </h3>
-                    <p class="text-xs text-slate-600 mt-1">
-                        Parcours complets pour apprendre le développement web et JavaScript, avec exercices et certifications gratuites.[web:31]
-                    </p>
-                </a>
-
-            </div>
+          <!-- Débogage & énergie -->
+          <div class="card-hover bg-gradient-to-br from-amber-900/60 to-amber-800/60 p-6 rounded-xl border-l-4 border-amber-400">
+            <h3 class="text-2xl font-bold text-amber-100 mb-4 flex items-center">
+              <span class="text-3xl mr-3" aria-hidden="true"></span> Débogage et Analyse Énergétique
+            </h3>
+            <ul class="space-y-3 text-slate-100 text-sm">
+              <li class="flex items-start">
+                <span class="text-amber-300 mr-3 font-bold">•</span>
+                <span><strong>JTAG / SWD :</strong> interfaces standard pour ST‑Link, J‑Link et debug matériel pas‑à‑pas.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-amber-300 mr-3 font-bold">•</span>
+                <span><strong>Analyseurs logiques :</strong> décodage des bus I²C, SPI, UART pour vérifier les timings et protocoles.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-amber-300 mr-3 font-bold">•</span>
+                <span><strong>Traceurs d’énergie :</strong> mesure fine de la consommation pour optimiser les modes basse consommation. [web:72]</span>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
     </section>
 
-
-        <!-- Section 2: Références -->
-       <section class="mb-16">
-    <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-        <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">
-            3. Portails officiels & standards
+    <!-- Section 2: Sites de tutoriels -->
+    <section id="tutoriels" class="mb-20">
+      <div class="card-hover rounded-2xl p-8 border border-slate-800">
+        <h2 class="text-2xl md:text-3xl font-bold text-emerald-200 mb-4">
+          2. Sites de tutoriels recommandés
         </h2>
-        
-        <p class="text-lg text-slate-700 mb-8 leading-relaxed">
-            Avant d’explorer des tutoriels ou des projets, il est essentiel de connaître les sites officiels et les standards qui font référence en systèmes embarqués.
+        <p class="text-slate-300 mb-6">
+          Sélection de sites pour réviser la programmation, le web et les concepts avancés en informatique.
         </p>
-        
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
 
-            <!-- Documentation Architecture -->
-            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
-                <h4 class="text-lg font-bold text-emerald-700 mb-4">Architectures processeur</h4>
-                <ul class="space-y-2 text-slate-700">
-                    <li>
-                        <a href="https://www.arm.com/architecture/learn-the-architecture/a-profile"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            ARM – Architecture Reference & guides A‑profile
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://riscv.org/technical/specifications/"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            RISC‑V – Spécifications officielles de l’ISA
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            <!-- Systèmes RTOS -->
-            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
-                <h4 class="text-lg font-bold text-emerald-700 mb-4">Systèmes d’exploitation temps réel</h4>
-                <ul class="space-y-2 text-slate-700">
-                    <li>
-                        <a href="https://www.freertos.org/features.html"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            FreeRTOS – Site officiel & documentation
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/zephyrproject-rtos/example-application"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            Zephyr RTOS – Projet et exemples sur GitHub
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            <!-- Forums et Standards -->
-            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
-                <h4 class="text-lg font-bold text-emerald-700 mb-4">Communautés & bonnes pratiques</h4>
-                <ul class="space-y-2 text-slate-700">
-                    <li>
-                        <a href="https://stackoverflow.com/questions/tagged/embedded"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            Stack Overflow – Questions taguées « embedded »
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.misra.org.uk"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            MISRA C – Standards de codage pour l’embarqué critique
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <!-- W3Schools -->
+          <a href="https://www.w3schools.com"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition">
+            <h3 class="text-sm font-semibold text-slate-50">
+              W3Schools
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Références rapides et tutoriels pour HTML, CSS, JavaScript, SQL et d’autres technos web. [web:30]
+            </p>
+          </a>
 
+          <!-- Tutorialspoint -->
+          <a href="https://www.tutorialspoint.com"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition">
+            <h3 class="text-sm font-semibold text-slate-50">
+              Tutorialspoint
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Cours structurés sur programmation, électronique, bases de données, OS et plus. [web:30]
+            </p>
+          </a>
+
+          <!-- Random Nerd Tutorials -->
+          <a href="https://randomnerdtutorials.com/"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition">
+            <h3 class="text-sm font-semibold text-slate-50">
+              Random Nerd Tutorials
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Tutoriels pratiques ESP32, ESP8266, capteurs, MQTT et projets IoT complets. [web:72]
+            </p>
+          </a>
+
+          <!-- GeeksforGeeks -->
+          <a href="https://www.geeksforgeeks.org"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition">
+            <h3 class="text-sm font-semibold text-slate-50">
+              GeeksforGeeks
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Articles détaillés, exercices et préparation d’entretiens (algo, structures de données, systèmes). [web:69]
+            </p>
+          </a>
+
+          <!-- WayToLearnX -->
+          <a href="https://waytolearnx.com"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition">
+            <h3 class="text-sm font-semibold text-slate-50">
+              WayToLearnX
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Tutoriels en français sur C, Java, Python, Web, avec progression pas à pas. [web:30]
+            </p>
+          </a>
+
+          <!-- Programiz -->
+          <a href="https://www.programiz.com"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition">
+            <h3 class="text-sm font-semibold text-slate-50">
+              Programiz
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Tutoriels clairs pour C, C++, Python, Java avec exemples interactifs. [web:69]
+            </p>
+          </a>
+
+          <!-- Arduino docs -->
+          <a href="https://docs.arduino.cc/"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition">
+            <h3 class="text-sm font-semibold text-slate-50">
+              Arduino Docs
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Documentation officielle, API des cartes, et nombreux exemples pour Arduino. [web:74]
+            </p>
+          </a>
+
+          <!-- freeCodeCamp -->
+          <a href="https://www.freecodecamp.org"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block px-4 py-3 rounded-lg border border-slate-700 hover:border-emerald-500 hover:bg-slate-900 transition">
+            <h3 class="text-sm font-semibold text-slate-50">
+              freeCodeCamp
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Parcours complets pour le développement web et JavaScript, avec certifications gratuites. [web:69]
+            </p>
+          </a>
         </div>
-    </div>
-</section>
+      </div>
+    </section>
 
-
-        <!-- Section 3: Vidéos YouTube -->
-       <section class="mb-16">
-    <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-slate-200">
-        <h2 class="text-3xl font-bold text-emerald-600 mb-6 pb-3 border-b-2 border-emerald-200">
-            4. Références et Communautés
+    <!-- Section 3: Portails officiels & standards -->
+    <section id="portails-officiels" class="mb-16">
+      <div class="card-hover p-8 md:p-10 rounded-2xl">
+        <h2 class="text-3xl font-bold text-emerald-300 mb-6 pb-3 border-b-2 border-emerald-500/60">
+          3. Portails officiels & standards
         </h2>
-        
-        <p class="text-lg text-slate-700 mb-8 leading-relaxed">
-            Le domaine des systèmes embarqués évolue rapidement. Voici quelques références pour maintenir vos connaissances à jour.
+
+        <p class="text-lg text-slate-200 mb-8 leading-relaxed">
+          Les spécifications officielles et standards de codage servent de base solide pour des systèmes embarqués robustes.
         </p>
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+          <!-- Architectures processeur -->
+          <div class="card-hover bg-gradient-to-br from-emerald-900/60 to-emerald-800/60 p-6 rounded-xl border-l-4 border-emerald-400">
+            <h4 class="text-lg font-bold text-emerald-100 mb-4">Architectures processeur</h4>
+            <ul class="space-y-2 text-slate-100 text-sm">
+              <li>
+                <a href="https://www.arm.com/architecture/learn-the-architecture/a-profile"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  ARM – Guides Architecture A‑profile
+                </a>
+              </li>
+              <li>
+                <a href="https://riscv.org/technical/specifications/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  RISC‑V – Spécifications officielles ISA
+                </a>
+              </li>
+            </ul>
+          </div>
 
-            <!-- Docs architecture -->
-            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
-                <h4 class="text-lg font-bold text-emerald-700 mb-4">Documentation Architecture</h4>
-                <ul class="space-y-2 text-slate-700">
-                    <li>
-                        <a href="https://developer.arm.com/architectures/a-profile-architecture"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            ARM Architecture Reference Manuals
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://riscv.org/technical/specifications/"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            Spécification technique RISC-V ISA
-                        </a>
-                    </li>
-                </ul>
-            </div>
+          <!-- Systèmes d’exploitation temps réel -->
+          <div class="card-hover bg-gradient-to-br from-emerald-900/60 to-emerald-800/60 p-6 rounded-xl border-l-4 border-emerald-400">
+            <h4 class="text-lg font-bold text-emerald-100 mb-4">Systèmes d’exploitation temps réel</h4>
+            <ul class="space-y-2 text-slate-100 text-sm">
+              <li>
+                <a href="https://www.freertos.org/features.html"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  FreeRTOS – Fonctionnalités et docs officielles [web:74]
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/zephyrproject-rtos/example-application"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  Zephyr RTOS – Exemples officiels GitHub [web:72]
+                </a>
+              </li>
+            </ul>
+          </div>
 
-            <!-- RTOS -->
-            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
-                <h4 class="text-lg font-bold text-emerald-700 mb-4">Systèmes RTOS</h4>
-                <ul class="space-y-2 text-slate-700">
-                    <li>
-                        <a href="https://www.freertos.org/features.html"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            Documentation officielle FreeRTOS
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/zephyrproject-rtos"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            Projet et communauté Zephyr RTOS
-                        </a>
-                    </li>
-                </ul>
-            </div>
+          <!-- Communautés & bonnes pratiques -->
+          <div class="card-hover bg-gradient-to-br from-emerald-900/60 to-emerald-800/60 p-6 rounded-xl border-l-4 border-emerald-400">
+            <h4 class="text-lg font-bold text-emerald-100 mb-4">Communautés & bonnes pratiques</h4>
+            <ul class="space-y-2 text-slate-100 text-sm">
+              <li>
+                <a href="https://stackoverflow.com/questions/tagged/embedded"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  Stack Overflow – Questions tag « embedded »
+                </a>
+              </li>
+              <li>
+                <a href="https://www.misra.org.uk"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  MISRA C – Standards de codage pour systèmes critiques
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <!-- Forums / standards -->
-            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-600 shadow-sm card-hover">
-                <h4 class="text-lg font-bold text-emerald-700 mb-4">Forums et Standards</h4>
-                <ul class="space-y-2 text-slate-700">
-                    <li>
-                        <a href="https://stackoverflow.com/questions/tagged/embedded"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            Stack Overflow (tag embedded)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.misra.org.uk"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="text-emerald-700 hover:text-emerald-800 hover:underline">
-                            Standards de codage MISRA C
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    <!-- Section 4: Références et communautés -->
+    <section class="mb-16">
+      <div class="card-hover p-8 md:p-10 rounded-2xl">
+        <h2 class="text-3xl font-bold text-emerald-300 mb-6 pb-3 border-b-2 border-emerald-500/60">
+          4. Références et Communautés
+        </h2>
+
+        <p class="text-lg text-slate-200 mb-8 leading-relaxed">
+          Ces ressources vous aident à rester à jour sur les architectures, RTOS et bonnes pratiques modernes.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+          <!-- Docs architecture -->
+          <div class="card-hover bg-gradient-to-br from-emerald-900/60 to-emerald-800/60 p-6 rounded-xl border-l-4 border-emerald-400">
+            <h4 class="text-lg font-bold text-emerald-100 mb-4">Documentation Architecture</h4>
+            <ul class="space-y-2 text-slate-100 text-sm">
+              <li>
+                <a href="https://developer.arm.com/architectures/a-profile-architecture"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  ARM Architecture Reference Manuals
+                </a>
+              </li>
+              <li>
+                <a href="https://riscv.org/technical/specifications/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  Spécification technique RISC‑V ISA
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- RTOS -->
+          <div class="card-hover bg-gradient-to-br from-emerald-900/60 to-emerald-800/60 p-6 rounded-xl border-l-4 border-emerald-400">
+            <h4 class="text-lg font-bold text-emerald-100 mb-4">Systèmes RTOS</h4>
+            <ul class="space-y-2 text-slate-100 text-sm">
+              <li>
+                <a href="https://www.freertos.org/features.html"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  Documentation officielle FreeRTOS [web:74]
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/zephyrproject-rtos"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  Projet et communauté Zephyr RTOS [web:72]
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Forums / standards -->
+          <div class="card-hover bg-gradient-to-br from-emerald-900/60 to-emerald-800/60 p-6 rounded-xl border-l-4 border-emerald-400">
+            <h4 class="text-lg font-bold text-emerald-100 mb-4">Forums & Standards</h4>
+            <ul class="space-y-2 text-slate-100 text-sm">
+              <li>
+                <a href="https://stackoverflow.com/questions/tagged/embedded"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  Stack Overflow (tag embedded)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.misra.org.uk"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-emerald-200 hover:text-emerald-100 hover:underline">
+                  Standards de codage MISRA C
+                </a>
+              </li>
+            </ul>
+          </div>
 
         </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Conclusion -->
+    <section class="mb-16">
+      <div class="card-hover bg-gradient-to-br from-slate-900/70 to-slate-800/70 p-8 md:p-10 rounded-2xl border-l-4 border-slate-500">
+        <p class="text-lg text-slate-100 mb-8 leading-relaxed">
+          Vous disposez maintenant d’un ensemble de ressources pour approfondir l’architecture, le bas niveau et les RTOS, et rester à jour dans l’écosystème IoT.
+        </p>
+
+        <div class="text-center">
+          <a href="index.html"
+             class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
+            Retour à l'Accueil <span aria-hidden="true">⬅️</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-800 text-slate-300 mt-20 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="text-center md:text-left">
+          <h3 class="text-2xl font-bold mb-2 text-slate-50">
+            Waytolearn<span class="text-emerald-400">IoT</span>
+          </h3>
+          <p class="text-slate-400 text-sm">
+            Plateforme éducative pour Systèmes Embarqués & IoT.
+          </p>
+        </div>
+
+        <ul class="flex flex-wrap items-center justify-center gap-y-2 gap-x-6 text-sm">
+          <li><a href="index.html" class="hover:text-emerald-400">Accueil</a></li>
+          <li><a href="architecture.html" class="hover:text-emerald-400">Architecture CPU</a></li>
+          <li><a href="cycle.html" class="hover:text-emerald-400">Cycle Instruction</a></li>
+          <li><a href="memory.html" class="hover:text-emerald-400">Gestion Mémoire</a></li>
+          <li><a href="communication.html" class="hover:text-emerald-400">Communication</a></li>
+          <li><a href="rtos.html" class="hover:text-emerald-400">RTOS</a></li>
+          <li><a href="ressources.html" class="hover:text-emerald-400">Ressources</a></li>
+        </ul>
+      </div>
+
+      <p class="mt-6 pt-4 border-t border-slate-800 text-center text-xs text-slate-500">
+        &copy; 2025 WaytolearnIoT. Tous droits réservés.
+      </p>
     </div>
-</section>
+  </footer>
 
+  <script src="main.js" defer></script>
 
-        <!-- Section 4: Conclusion -->
-        <section class="mb-16">
-            <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-8 md:p-10 rounded-2xl shadow-md border-l-4 border-slate-600">
-                
-                <p class="text-lg text-slate-700 mb-8 leading-relaxed">
-                    Félicitations ! Vous avez parcouru les fondamentaux de l'ingénierie des systèmes embarqués IoT, de l'architecture CPU aux couches logicielles temps réel. Ces connaissances sont la base pour développer des dispositifs performants, fiables et économes en énergie.
-                </p>
-                
-                <div class="text-center">
-                    <a href="index.html" class="inline-block bg-slate-900 hover:bg-slate-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
-                        Retour à l'Accueil <span aria-hidden="true">⬅️</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-white mt-20 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h3 class="text-2xl font-bold mb-4">Waytolearn<span class="text-emerald-400">IoT</span></h3>
-                <p class="text-slate-400 mb-6">Plateforme éducative pour Systèmes Embarqués</p>
-                <p class="text-sm text-slate-500">&copy; 2025 WaytolearnIoT. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
-    
-    <script src="main.js" defer></script>
-<!-- Bouton retour en haut -->
-<button id="back-to-top"
-        aria-label="Revenir en haut de la page"
-        class="fixed bottom-6 right-6 z-50 hidden
-               h-10 w-10 rounded-full bg-emerald-600 text-white
-               flex items-center justify-center
-               shadow-lg hover:bg-emerald-700
-               transition-opacity duration-200">
-  ↑
-</button>
-
+  <!-- Bouton retour en haut -->
+  <button id="back-to-top"
+          aria-label="Revenir en haut de la page"
+          class="fixed bottom-6 right-6 z-50 hidden
+                 h-10 w-10 rounded-full bg-emerald-600 text-white
+                 flex items-center justify-center
+                 shadow-lg hover:bg-emerald-700
+                 transition-opacity duration-200">
+    ↑
+  </button>
 </body>
 </html>
