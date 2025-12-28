@@ -177,6 +177,42 @@
     @media (max-width:480px){
       .text-6xl{font-size:1.75rem}
     }
+
+    .logo-3d {
+  text-shadow: 
+    1px 1px 0px #e5e7eb,
+    2px 2px 0px #d1d5db,
+    3px 3px 0px #9ca3af,
+    4px 4px 0px #6b7280,
+    5px 5px 5px rgba(55, 65, 81, 0.6),
+    0px 0px 10px rgba(16, 185, 129, 0.3);
+  transform: perspective(500px) rotateX(10deg);
+  transition: all 0.3s ease;
+}
+
+.logo-3d:hover {
+  text-shadow: 
+    1px 1px 0px #f3f4f6,
+    2px 2px 0px #e5e7eb,
+    3px 3px 0px #d1d5db,
+    4px 4px 0px #9ca3af,
+    5px 5px 8px rgba(16, 185, 129, 0.8),
+    0px 0px 20px rgba(16, 185, 129, 0.5);
+  transform: perspective(500px) rotateX(5deg) translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .logo-3d {
+    text-shadow: 
+      1px 1px 0px #e5e7eb,
+      2px 2px 0px #d1d5db,
+      3px 3px 3px rgba(55, 65, 81, 0.5);
+    transform: perspective(300px) rotateX(5deg);
+  }
+}
+
+
+    
   </style>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -190,9 +226,10 @@
       <div class="flex justify-between items-center h-20">
 
         <!-- Logo -->
-        <a href="index.html" class="text-2xl font-bold text-slate-50 hover:text-emerald-400">
-          Waytolearn<span class="text-emerald-400">IoT</span>
-        </a>
+      <a href="index.html" class="text-2xl font-bold text-slate-50 hover:text-emerald-400 logo-3d">
+  Waytolearn<span class="text-emerald-400">IoT</span>
+</a>
+
 
         <!-- Hamburger -->
         <button id="nav-toggle" aria-expanded="false" aria-label="Ouvrir le menu">
@@ -306,7 +343,7 @@
           </p>
 
           <p class="mb-6">
-            Sur Waytolearn<span class="text-emerald-300">IoT</span>, tu apprends ce qui se passe « sous le capot » :
+           Sur Waytolearn<span class="text-emerald-300 logo-3d">IoT</span>, tu apprends ce qui se passe « sous le capot » :
             architectures CPU RISC, gestion mémoire, RTOS et communication embarquée.
           </p>
 
@@ -587,9 +624,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="text-center md:text-left">
-          <h3 class="text-2xl font-bold mb-2 text-slate-50">
-            Waytolearn<span class="text-emerald-400">IoT</span>
+          <h3 class="text-2xl font-bold mb-2 text-slate-50 logo-3d">
+          Waytolearn<span class="text-emerald-400">IoT</span>
           </h3>
+
           <p class="text-slate-400 text-sm">
             Plateforme éducative pour Systèmes Embarqués & IoT.
           </p>
